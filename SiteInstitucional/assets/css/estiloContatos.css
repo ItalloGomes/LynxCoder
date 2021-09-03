@@ -1,0 +1,78 @@
+section {
+    display: flex;
+    flex-flow: column nowrap;
+
+    align-items: center;
+}
+
+h1 {
+    font-size: 40px;
+    color: #333;
+
+    margin-top: 150px;
+}
+
+input {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+
+    text-align: center;
+}
+
+form button {
+    background-color: #625ACF;
+    color: #fff;
+    padding: 20px 50px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: background-color .5s ease-in-out;
+}
+
+    form button:hover {
+        background: #847ee2;
+    }
+
+.section-formulario img {
+    height: 300px;
+}
+
+    .section-formulario > div {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-around;
+        
+        margin-top: 70px;
+    }
+
+        .section-formulario form {
+            height: 300px;
+            width: 300px;
+
+            display: flex;
+            flex-flow: column nowrap;
+
+            align-items: center;
+            justify-content: space-evenly;
+
+            background: #fff;
+            box-shadow: 0 0 10px #30303023;
+            padding: 1% 2% 1% 5%;
+            border-radius: 50px;
+        }
+
+            .section-formulario form > div {
+                display: flex;
+                flex-flow: column nowrap;
+
+                align-items: center;
+            }
+
+.iframe-google-maps {
+    width: 800px;
+    height: 400px;
+
+    border-radius: 25px;
+}
