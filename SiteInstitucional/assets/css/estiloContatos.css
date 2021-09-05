@@ -16,8 +16,35 @@ input {
     border-top: none;
     border-right: none;
     border-left: none;
+    border-bottom: 2px solid #30303030;
 
     text-align: center;
+
+    font-size: 15px;
+    color: #303030;
+
+    padding: 3%;
+
+    width: 300px;
+}
+
+textarea {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 2px solid #30303030;
+
+    text-align: center;
+
+    font-size: 15px;
+    color: #303030;
+
+    padding: 3%;
+
+    height: 40px;
+    width: 300px;
+
+    resize: none;
 }
 
 form button {
@@ -49,7 +76,7 @@ form button {
 
         .section-formulario form {
             height: 300px;
-            width: 300px;
+            width: 400px;
 
             display: flex;
             flex-flow: column nowrap;
@@ -61,14 +88,10 @@ form button {
             box-shadow: 0 0 10px #30303023;
             padding: 1% 2% 1% 5%;
             border-radius: 50px;
+
+            overflow-y: auto;
         }
 
-            .section-formulario form > div {
-                display: flex;
-                flex-flow: column nowrap;
-
-                align-items: center;
-            }
 
 .iframe-google-maps {
     width: 800px;
