@@ -121,6 +121,12 @@
     border-radius: 15px;
 
     box-shadow: 0 0 1em 0 #7e7e7e;
+
+    transition: .5s;
+}
+
+.topico:hover{
+    transform: scale(1.1);
 }
 
 #topico-2{
