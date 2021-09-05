@@ -1,0 +1,326 @@
+:root{
+    --cor-principal: #49439C;
+    --azul-titulo: #25224F;
+    --branco-ideal: #f8f8ff;
+    --branco-gelo: #e6e6e6;
+    --ombre-rose-brosseau: #ffe9f8;
+}
+
+
+#companies-partners{
+    width: 100%;
+    height: auto;
+
+    background-color: var(--branco-ideal);
+
+    padding: 13vh;
+
+    font-size: larger;
+    color: var(--azul-titulo);
+    text-align: center;
+}
+
+.empresas{
+    width: 50%;
+
+    display: flex;
+    justify-content: space-around;
+
+    margin-top: 10vh;
+}
+
+.empresas img {
+    width: 90px;
+    
+    filter: sepia(1);
+
+    transition: .2s;
+}
+
+.empresas img:hover {
+    transform: scale(1.2);
+    filter: sepia(0);
+}
+
+#linxImage{
+    width: 100px;
+    position: relative;
+    top: -2.5vh;
+}
+
+#our-clients{
+    width: 100%;
+    height: 125vh;
+
+    background-color: var(--cor-principal);
+
+    padding: 25vh;
+
+    font-size: larger;
+    color: var(--branco-ideal);
+    text-align: center;
+}
+
+.container-slider-clientes{
+    width: 90%;
+    height: 40vh;
+    
+    display: flex;
+    justify-content: center;
+
+    margin-top: 15vh;
+}
+
+.slider-clientes{
+    width: 100%;
+    height: 80%;
+
+    background-color: var(--branco-ideal);
+
+    border-radius: 150px;
+}
+
+
+
+
+#inovation{
+    width: 100%;
+    height: 110vh;
+
+    background-color: var(--branco-gelo);
+
+    padding: 20vh;
+
+    font-size: x-large;
+    color: var(--azul-titulo);
+    text-align: center;
+}
+
+.topicos-projeto{
+    width: 100%;
+    height: 50vh;
+    
+    display: flex;
+    justify-content: space-around;
+
+    margin-top: 10vh;
+}
+
+.topico{
+    width: 18%;
+    height: 85%;
+
+    background-color: #ffffff;
+
+    display: grid;
+    place-items: center;
+    place-content: space-evenly;
+
+    text-align: center;
+
+    border-radius: 15px;
+
+    box-shadow: 0 0 1em 0 #7e7e7e;
+}
+
+#topico-2{
+    height: 100%;
+}
+
+#topico-4{
+    height: 75%;
+}
+
+.topico .icon{
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: -15%;
+
+    border: 1px solid var(--cor-principal);
+    border-radius: 10px;
+}
+
+.topico .icon img{
+    width: 50%;
+    height: 60%;
+}
+
+.topico h2{
+    font-size: x-large;
+    color: var(--cor-principal);
+    text-align: center;
+}
+
+
+
+#learnings{
+    width: 100%;
+    height: 130vh;
+
+    background-color: var(--branco-gelo);
+
+    padding: 20vh;
+
+    font-size: x-large;
+    color: var(--azul-titulo);
+    text-align: center;
+}
+
+.list-learnings{
+    width: 90%;
+    height: 55vh;
+    
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 10vh;
+
+    background-color: var(--ombre-rose-brosseau);
+}
+
+.learn{
+    width: 32%;
+    height: 100%;
+
+    background-color: #ffffff;
+
+    text-align: justify;
+}
+
+.learn img{
+    width: 100%;
+}
+
+.description-publication{
+    padding: 0% 10% 5% 10%;
+}
+
+.publisher-name{
+    font-size: small;
+}
+
+.publisher-name:hover{
+    color: #118111;
+}
+
+.publication-title{
+    font-size: 0.8em;
+}
+
+.publication-title a{
+    text-decoration: none;
+    color: black;
+}
+
+.publication-title a:hover{
+    color: #118111;
+}
+
+.button-click{
+    width: 25%;
+    height: 50px;
+
+    background-color: var(--cor-principal);
+
+    border: 1px solid ;
+    border-radius: 30px;
+
+    margin-top: 5vh;
+
+    font-size: 0.65em;
+    color: white;
+    text-decoration: none;
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition: .5s;
+}
+
+.button-click:hover{
+    background-color: #a7c9f0;
+
+    color: var(--azul-titulo);
+
+    border: 1px solid var(--azul-titulo);
+}
+
+#try-it{
+    width: 100%;
+    height: 85vh;
+
+    background-color: var(--ombre-rose-brosseau);
+
+    font-size: x-large;
+    color: var(--azul-titulo);
+    text-align: center;
+}
+
+.experience{
+    width: 100%;
+    height: 115vh;
+
+    position: relative;
+
+    z-index: 1;
+
+    background-color: white;
+}
+
+.title-experience{
+    height: 50vh;
+}
+
+.title-experience h1{
+    padding-top: 16vh;
+}
+
+.content-experience{
+    width: 100%;
+    height: 65vh;
+
+    display: flex;
+    justify-content: center;
+}
+
+.content-experience .part-1{
+    width: 50%;
+    height: 100%;
+
+    background-image: url('../img/team-spirit-cuate.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+}
+
+.content-experience .part-2{
+    width: 50%;
+    height: 100%;
+
+    display: grid;
+    place-content: center;
+    place-items: center;
+
+    background-color: rgb(117, 117, 113);
+}
+
+.content-experience .part-2 h1{
+    color: var(--branco-ideal);
+
+    margin-bottom: 5vh;
+}
+
+.content-experience .part-2 h2{
+    font-size: large;
+    color: var(--branco-ideal);
+}
+
+.content-experience .part-2 .button-click{
+    width: 70%;
+}
