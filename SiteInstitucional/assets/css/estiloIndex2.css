@@ -3,6 +3,7 @@
     --azul-titulo: #25224F;
     --branco-ideal: #f8f8ff;
     --branco-gelo: #e6e6e6;
+    --ombre-rose-brosseau: #ffe9f8;
 }
 
 
@@ -179,7 +180,7 @@
 
     margin-top: 10vh;
 
-    background-color: #ffe9f8;
+    background-color: var(--ombre-rose-brosseau);
 }
 
 .learn{
@@ -220,8 +221,8 @@
     color: #118111;
 }
 
-#resource-list{
-    width: 20%;
+.button-click{
+    width: 25%;
     height: 50px;
 
     background-color: var(--cor-principal);
@@ -242,10 +243,84 @@
     transition: .5s;
 }
 
-#resource-list:hover{
+.button-click:hover{
     background-color: #a7c9f0;
 
     color: var(--azul-titulo);
 
     border: 1px solid var(--azul-titulo);
+}
+
+#try-it{
+    width: 100%;
+    height: 85vh;
+
+    background-color: var(--ombre-rose-brosseau);
+
+    font-size: x-large;
+    color: var(--azul-titulo);
+    text-align: center;
+}
+
+.experience{
+    width: 100%;
+    height: 115vh;
+
+    position: relative;
+
+    z-index: 1;
+
+    background-color: white;
+}
+
+.title-experience{
+    height: 50vh;
+}
+
+.title-experience h1{
+    padding-top: 16vh;
+}
+
+.content-experience{
+    width: 100%;
+    height: 65vh;
+
+    display: flex;
+    justify-content: center;
+}
+
+.content-experience .part-1{
+    width: 50%;
+    height: 100%;
+
+    background-image: url('../img/team-spirit-cuate.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+}
+
+.content-experience .part-2{
+    width: 50%;
+    height: 100%;
+
+    display: grid;
+    place-content: center;
+    place-items: center;
+
+    background-color: rgb(117, 117, 113);
+}
+
+.content-experience .part-2 h1{
+    color: var(--branco-ideal);
+
+    margin-bottom: 5vh;
+}
+
+.content-experience .part-2 h2{
+    font-size: large;
+    color: var(--branco-ideal);
+}
+
+.content-experience .part-2 .button-click{
+    width: 70%;
 }
