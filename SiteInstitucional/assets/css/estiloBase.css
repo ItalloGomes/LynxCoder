@@ -1,13 +1,14 @@
+
 *{
     box-sizing: border-box;
     outline: none;
     margin: 0;
     padding: 0;
-    font-family: Roboto, Thin Sans, century gothic, Arial, sans-serif;
+    font-family: "Roboto" , "century gothic", sans-serif;
 }
 
 .container{
-    max-width: 1200px;
+    max-width: 1400px;
     width: 90%;
     margin: 0 auto;
     text-align: center;
@@ -19,59 +20,84 @@ _________________________________ */
 header{
     width: 100%;
     position: fixed;
+    z-index: 100;
+    transition: background .5s ease-in-out;
+}
 
-    z-index: 2;
+.header-active { 
+    background: #25224F;
+    transition: background .5s ease-in-out;
 }
 
 nav.navbar{
-
     width: 100%;
-    height: 100px;
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-nav.navbar img{
-    height: 30%;
+.navbar-active {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-nav.navbar ul{
-    background: #fff;
-    box-shadow: 0 0 10px #30303023;
+nav.navbar img {
+    height: 30%;
+    filter: drop-shadow(0 0 20px #f3f3f3);
+}
+
+nav.navbar-active img {
+    height: 60%;
+}
+
+nav.navbar ul {
+    background: #5743af;
+    box-shadow: 0 0 10px #ffffffa2;
     padding: 1% 2% 1% 5%;
     border-radius: 200px;
 }
 
-nav.navbar ul li{
+.nav.navbar-active ul {
+    background: #5743af;
+    box-shadow: 0 0 10px #ffffffa2;
+    padding: .5% 2% .5% 5%;
+    border-radius: 200px;
+}
+
+nav.navbar ul li, nav.navbar-active ul li{
     list-style: none;
     display: inline-block;
 }
 
-nav.navbar ul li:not(:last-of-type){
+nav ul li:not(:last-of-type){
     margin-right: 50px;
 }
 
-nav.navbar ul li a{
+nav ul li a{
     text-decoration: none;
     font-size: 15px;
-    color: #303030;
+    color: #fff;
     transition: color .3s ease-in-out, text-shadow .3s ease-in-out;
 }
 
-nav.navbar ul li a:hover{
+nav ul li a:hover{
     /* color: #A19DD7; */
     text-shadow: 0 0 10px #25224f80;
 }
 
-nav.navbar ul li a.li-checked{
-    color: #25224F;
+nav ul li a.li-checked{
+    color: #fff;
+    font-weight: 900;
     text-shadow: 0 0 10px #25224f80;
 }
 
-nav.navbar .btn-try{
-    background-color: #625ACF;
-    color: #fff;
+nav .btn-try{
+    background-color: #fff;
+    color: #25224F;
     padding: 20px 50px;
     border-radius: 50px;
     border: none;
@@ -79,8 +105,8 @@ nav.navbar .btn-try{
     transition: background-color .5s ease-in-out;
 }
 
-nav.navbar .btn-try:hover{
-    background: #847ee2;
+nav .btn-try:hover{
+    background: #cccaeb;
 }
 
 /* Footer 
