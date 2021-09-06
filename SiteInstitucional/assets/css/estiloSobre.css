@@ -1,0 +1,122 @@
+
+.body {
+    background-color: #ffffffa2;
+}
+
+
+.titulo {
+    padding-top: 200px;
+    margin: 10px 100px 20px 100px;
+    text-align: center;
+    font-size: 23px;
+    align-items: center;
+}
+
+.titulo h3 {
+    font-size: 18px;
+    margin: 20px 10px 20px 30px;
+}
+
+.titulo button {
+    margin: 20px 5px 5px 30px;
+    height: 50px;
+    width: 150px;
+    background-color: #625ACF;
+    color: #fff;
+    
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: background-color .5s ease-in-out;
+}
+   
+
+.titulo button:hover {
+    background: #847ee2;
+}
+
+
+.banner-dois {
+    
+   
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px 0;
+    margin-bottom: 50px;
+}
+
+.banner-dois img {
+    
+    height: 640px;
+    width: 700px;
+    margin: 0 20px 20px 50px;
+    float: left;
+
+}
+
+.banner-dois p {
+    margin-bottom: 10px;
+    text-align: justify;
+    width: 50%;
+    margin-right: 50px;
+}
+
+
+.box img {
+    height: 180px;
+    padding: 4%;
+}
+
+.box {
+    padding-bottom: 215px;
+    
+    
+}
+
+.box-item {
+    text-align: center;
+    display: inline-block;
+    width: 27%;
+    height: 350px;
+    padding: 0%;
+    background-color: rgb(236, 233, 233);
+    margin: 10px 10px 10px 10px;
+    border-radius: 15px;
+    color: #5743af;
+}
+
+.box-item p {
+    padding: 5%;
+    text-align: start;
+}
+
+.team {
+    height: 500px;
+    color: #5743af;
+    background-color: rgb(236, 233, 233);
+    border-radius: 20px;
+    margin-bottom: 200px;
+    
+}
+
+.team-item img {
+    height: 180px;
+    width: 180px;
+    margin: 0 30px 0 30px;
+}
+
+.team-item {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    /* padding:  10% 0 10%;
+     */
+}
+
+.team p {
+    font-size: 20px;
+    padding: 3%;
+}
+
