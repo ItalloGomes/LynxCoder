@@ -18,7 +18,7 @@
             <nav class="navbar" id="navBar">
                 <img id="logoNavbar" src="assets/img/logo-type2.png">
                 <ul>
-                    <li><a href="" class="li-checked">Home</a></li>
+                    <li><a href="#" class="li-checked">Home</a></li>
                     <li><a href="sobre.html">Sobre</a></li>
                     <li><a href="contatos.html">Contatos</a></li>
                     <li><button class="btn-try">Try for Free</button></li>
@@ -26,6 +26,30 @@
             </nav>
         </div>
     </header>
+
+    <div class="menu-mobile">
+        <nav>
+            <div class="section-nav">
+                <input type="checkbox" id="menu_hamb" class="input-menu">
+
+                <label for="menu_hamb">
+                    <div class="menu">
+                        <span class="hamburguer"></span>
+                    </div>
+                </label>
+
+                <label for="menu_hamb" class="btn-close">x</label>
+
+                <div class="box-menu">
+                    <a href="" class="li-checked">Home</a>
+                    <a href="sobre.html">Sobre</a>
+                    <a href="contatos.html">Contatos</a>
+
+                    <button class="btn-try">Try for Free</button>
+                </div>
+            </div>
+        </nav>
+    </div>
 
     <br><br><br><br><br><br><br>
 
@@ -139,7 +163,6 @@
                 navBar.classList.add('navbar-active');
                 navBar.classList.remove('navbar');
                 logoNavbar.src = "assets/img/logo-type3.1.png";
-
             }
             else {
                 header.classList.remove('header-active');
