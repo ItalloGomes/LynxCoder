@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="assets/img/logo-type3.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/estiloBase.css">
     <link rel="stylesheet" href="assets/css/estiloIndex2.css">
+
     <title>Lynx Coder 2</title>
 </head>
 <body>
@@ -43,36 +44,69 @@
 
         <h1>Ouça nossos clientes</h1>
 
-        <div class="container container-slider-clientes">
+        <div data-slide="sliderX" class="container container-slider-clientes">
 
             <div class="slider-clientes">
 
                 <div class="slide">
-                    <img src="" alt="">
-                    <div class="description-slide">
-                       <span class="text-description"></span>
-                       <span class="publisher-data"></span>
+                    
+                    <div class="img-publisher">
+                        <img src="https://igd-wp-uploads-pluginaws.s3.amazonaws.com/wp-content/uploads/2016/05/30105213/Qual-e%CC%81-o-Perfil-do-Empreendedor.jpg" alt="">
                     </div>
+                    
+                    <div class="description-slide">
+                       <span class="text-description">
+                           "Incrível, isso descreve a ideia da LynxCoder, após aplicar na minha empresa,
+                           os processos começaram a correr de maneira adequada."
+                        </span>
+                        <br><br>
+                       <span class="publisher-data">Rodrigo, Desenvolvedor</span>
+                    </div>
+
                 </div>
                 
                 <div class="slide">
-                    <img src="" alt="">
-                    <div class="description-slide">
-                       <span class="text-description"></span>
-                       <span class="publisher-data"></span>
+
+                    <div class="img-publisher">
+                        <img src="http://mulherlider.com.br/blog/wp-content/uploads/2016/05/foto-perfil-quadrara.png" alt="">
                     </div>
+                    
+                    <div class="description-slide">
+                       <span class="text-description">
+                            "A organização do time tomou uma dinâmica totalmente diferente, os problemas 
+                            ficaram muito mais fáceis de solucionar."
+                       </span>
+                       <br><br>
+                       <span class="publisher-data">Andréia, Team leader</span>
+                    </div>
+
                 </div>
 
                 <div class="slide">
-                    <img src="" alt="">
-                    <div class="description-slide">
-                       <span class="text-description"></span>
-                       <span class="publisher-data"></span>
+                    
+                    <div class="img-publisher">
+                        <img src="https://mundonegro.inf.br/wp-content/uploads/2019/03/Jorge-Bispo_1588_Corte.jpg" alt="">
                     </div>
+
+                    <div class="description-slide">
+                       <span class="text-description">
+                           "Gerir os atividades das squads nunca foi tão fácil, a dinâmica 'gameficada' 
+                           trás aos colaboradores uma descontração produtiva."
+                       </span>
+                       <br><br>
+                       <span class="publisher-data">Cecília, Diretora de Tecnologia</span>
+                    </div>
+                    
                 </div>
- 
                 
             </div>
+
+            <nav class="slide-nav">
+                <div class="slide-thumb"></div>
+
+                <button class="slide-prev">Anterior</button>
+                <button class="slide-next">Proximo</button>
+            </nav>
 
         </div>
 
@@ -230,6 +264,8 @@
             </div>
         </div>
     </footer>
+
+    <script src="./assets/js/slider.js"></script>
 
 </body>
 </html>
