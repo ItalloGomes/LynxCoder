@@ -11,8 +11,139 @@ _________________________________ */
         display: block;
     } 
 
+    .titulo {
+        padding-top: 70px;
+    }
+
+    .banner-dois {
+        background-color: #e7e5f0;
+        width: 100%;
+        display: grid;
+        place-items: center;
+        justify-content: space-around;
+        padding: 0px 0px;
+        margin-bottom: 50px;
+    }
+
+    .banner-dois img {
+    
+        height: 620px;
+        width: 680px;
+        margin: 0 0 0 0;
+        float: left;
+    
+    }
+
+    .banner-dois p {
+        position: relative;
+        top: -5vh;
+        width: 70%;
+    }
+
+    .box-item {
+        text-align: center;
+        display: inline-block;
+        width: 27%;
+        height: 350px;
+        padding: 2%;
+        background-color: white;
+        margin: 10px 10px 10px 10px;
+        border-radius: 15px;
+        color: #5743af;
+        box-shadow: 0 0 0.8em 0 #7e7e7e;
+
+        font-size: 15px;
+    }
+
+    .box img {
+        height: 130px;
+        padding: 2%;
+    }
+
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 830px) {
+
+    .titulo {
+        padding-top: 100px;
+    }
+
+    .titulo h1{
+        font-size: 22px;
+    }
+
+    .titulo h3{
+        font-size: 16px;
+    }
+
+    .banner-dois {
+        background-color: #e7e5f0;
+        width: 100%;
+        display: grid;
+        place-items: center;
+        justify-content: space-around;
+        padding: 0px 0px;
+    }
+
+    .banner-dois img {
+    
+        height: 520px;
+        width: 580px;
+        margin: 0 0 0 0;
+        float: left;
+    
+    }
+
+    .banner-dois p {
+        position: relative;
+        top: -1vh;
+        width: 70%;
+    }
+
+    .box {
+        padding-bottom: 215px;
+        background-color: #e7e5f0;
+        display: grid;
+        place-items: center;
+    }
+
+    .box-item {
+        text-align: center;
+        
+        display: grid;
+        
+        place-content: space-between;
+        place-items: center;
+        
+        width: 70%;
+        height: 300px;
+        padding: 2%;
+        background-color: white;
+        border-radius: 15px;
+        color: #5743af;
+        box-shadow: 0 0 0.8em 0 #7e7e7e;
+
+        font-size: 17px;
+    }
+
+    .box img {
+        height: 130px;
+        padding: 2%;
+    }
+
+    .team {
+        height: auto;
+        color: #5743af;
+        background-color: white;
+        border-radius: 20px;
+        margin-bottom: 200px;
+        
+    }
+
+    .team-item img {
+        height: 100px;
+        width: 100px;
+        margin: 0 30px 0 30px;
+    }
  
 }
