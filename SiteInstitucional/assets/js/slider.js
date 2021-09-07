@@ -47,7 +47,8 @@ class Slider{
     addThumbItems(){
         this.items.forEach(() => (this.thumb.innerHTML += "<span></span>"));
         this.thumbItems = Array.from(this.thumb.children);
-        console.log(this.thumbItems)
+        
+        // console.log(this.thumbItems)
     }
 
     automatiza(){
