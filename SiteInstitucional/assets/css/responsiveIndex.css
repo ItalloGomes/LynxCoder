@@ -1,7 +1,7 @@
 /* Media query 
 _________________________________ */
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1020px) {
     
     header {
         display: none;
@@ -83,4 +83,66 @@ _________________________________ */
         flex-direction: column-reverse;
     }
 
+    .topicos-projeto {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .topico {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 50px;
+    }
+
+    .topico h2 { font-size: 25px; }
+
+    .topico .icon {
+        margin-top: 0;
+    }
+
+    .icon {
+        width: 100px;
+        height: 100px;
+    }
+
+    .list-learnings{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .learn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+    }
+
+    .learn:first-of-type { margin-top: 0; }
+
+    .learn img{
+        width: auto;
+        height: 100%;
+    }
+
+}
+
+@media only screen and (max-width: 750px) {
+    .learn {
+        width: 100%;
+        flex-direction: column;
+        margin: 20px 0;
+    }
+
+    .learn img{
+        width: 100%;
+        height: auto;
+    }
+
+    .description-publication {
+        padding: 20px 0 50px;
+    }
+
+    .empresas img:not(:last-of-type) {
+        margin-right: 20px;
+    }
 }
