@@ -175,6 +175,14 @@ _________________________________ */
     text-align:justify;
 }
 
+.topics h1 {
+    color: #012241;
+}
+
+.topics:nth-child(2) h1 {
+    color: var(--color-gray);
+}
+
 .text-topics p {
     margin-top: 20px;
 }

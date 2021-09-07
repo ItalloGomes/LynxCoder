@@ -14,19 +14,6 @@
     text-align: center;
 }
 
-/* Media query 
-_________________________________ */
-
-@media screen and (max-width: 900px) {
-    header {
-        display: none;
-    }
-
-    .menu-mobile {
-        display: block;
-    }
-}
-
 /* Menu 
 _________________________________ */
 
@@ -124,7 +111,7 @@ nav .btn-try:hover{ background: #cccaeb; }
 _________________________________ */
 
 .menu-mobile {
-    /* display: none; */
+    display: none;
     z-index: 3000;
 }
 
