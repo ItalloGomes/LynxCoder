@@ -133,7 +133,7 @@ _________________________________ */
     margin: 30px 0;
 }
 
-.team img { height: 300px; }
+.team img { width: 50%; }
 
 .team h1, .team p, .team img {
     margin-left: 20%;
