@@ -275,6 +275,10 @@ footer{
     margin-bottom: 20px;
 }
 
+.collum-footer p{
+    margin-bottom: 10px;
+}
+
 .align-links-footer{
     width: 100%;
     padding: 100px 0 0 0;
