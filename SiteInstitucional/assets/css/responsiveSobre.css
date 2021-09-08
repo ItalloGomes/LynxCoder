@@ -11,33 +11,18 @@ _________________________________ */
         display: block;
     } 
 
-    .titulo {
-        padding-top: 70px;
-    }
-
-    .banner-dois {
-        background-color: #e7e5f0;
-        width: 100%;
-        display: grid;
-        place-items: center;
-        justify-content: space-around;
-        padding: 0px 0px;
-        margin-bottom: 50px;
+    .align-banner-dois {
+        flex-direction: column;
     }
 
     .banner-dois img {
-    
-        height: 620px;
-        width: 680px;
-        margin: 0 0 0 0;
-        float: left;
-    
+        width: 80%;
+        padding: 50px 0;
     }
 
     .banner-dois p {
-        position: relative;
-        top: -5vh;
-        width: 70%;
+        width: 100%;
+        padding: 0 0 50px;
     }
 
     .box-item {
@@ -60,45 +45,26 @@ _________________________________ */
         padding: 2%;
     }
 
+    .btn-default {
+        padding: 30px 40px;
+        width: 100%;
+        border-radius: 350px;
+        margin-bottom: 20px;
+    }
+
+    .titulo button {
+        padding: 40px 40px;
+        width: 100%;
+        border-radius: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* margin-bottom: 20px; */
+    }
+
 }
 
 @media only screen and (max-width: 830px) {
-
-    .titulo {
-        padding-top: 100px;
-    }
-
-    .titulo h1{
-        font-size: 22px;
-    }
-
-    .titulo h3{
-        font-size: 16px;
-    }
-
-    .banner-dois {
-        background-color: #e7e5f0;
-        width: 100%;
-        display: grid;
-        place-items: center;
-        justify-content: space-around;
-        padding: 0px 0px;
-    }
-
-    .banner-dois img {
-    
-        height: 520px;
-        width: 580px;
-        margin: 0 0 0 0;
-        float: left;
-    
-    }
-
-    .banner-dois p {
-        position: relative;
-        top: -1vh;
-        width: 70%;
-    }
 
     .box {
         padding-bottom: 215px;

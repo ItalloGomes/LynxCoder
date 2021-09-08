@@ -30,19 +30,6 @@ _________________________________ */
 
 @media only screen and (max-width: 830px) {
 
-    input {
-    
-        width: 250px;
-    }
-
-    .section-formulario img {
-        height: 150px;
-    }
-
-    .iframe-google-maps {
-    
-        width: 600px;
-    }
  
 }
 
@@ -50,11 +37,6 @@ _________________________________ */
 
     .section-formulario img {
         display: none;
-    }
-
-    .iframe-google-maps {
-    
-        width: 400px;
     }
  
 }

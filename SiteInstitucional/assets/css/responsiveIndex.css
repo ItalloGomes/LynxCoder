@@ -127,6 +127,16 @@ _________________________________ */
     #our-clients {
         display: none;
     }
+
+    .button-click{
+        padding: 40px 40px;
+        width: 90%;
+        border-radius: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 5%;
+    }
     
 }
 
@@ -149,4 +159,13 @@ _________________________________ */
     .empresas img:not(:last-of-type) {
         margin-right: 20px;
     }
+
+    .button-click {
+        margin-bottom: -100px;
+    }
+
+    .content-experience {
+        display: none;
+    }
+
 }
