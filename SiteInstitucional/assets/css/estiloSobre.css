@@ -102,7 +102,7 @@ body {
 }
 
 .team {
-    height: 500px;
+    height: 600px;
     color: #5743af;
     background-color: white;
     border-radius: 20px;
@@ -113,7 +113,8 @@ body {
 .team-item img {
     height: 180px;
     width: 180px;
-    margin: 0 30px 0 30px;
+    margin: 0 30px 20px 50px;
+    border-radius: 80px;
 }
 
 .team-item {
