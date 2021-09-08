@@ -1,3 +1,4 @@
+
 section {
     display: flex;
     flex-flow: column nowrap;
@@ -9,7 +10,7 @@ h1 {
     font-size: 40px;
     color: #333;
 
-    margin-top: 150px;
+    margin-top: 130px;
 }
 
 input {
@@ -94,8 +95,14 @@ form button {
 
 
 .iframe-google-maps {
+    position: relative;
+
+    top: -5vh;
+
     width: 800px;
     height: 400px;
 
     border-radius: 25px;
+
+    margin-bottom: 8vh;
 }
