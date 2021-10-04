@@ -1,8 +1,13 @@
-import com.github.britooo.looca.api.core.Looca;
+import br.com.lynxcoder.controller.Conexao;
+import br.com.lynxcoder.view.LoginScreen;
 
 public class Main {
     public static void main(String[] args) {
-        Looca looca = new Looca();
+//        Looca looca = new Looca();
+
+//        Conexao con = new Conexao();
+
+        LoginScreen ls = new LoginScreen();
 
 //        System.out.println(looca.getSistema()+"\n");
 //
