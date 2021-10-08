@@ -1,7 +1,8 @@
 package br.com.lynxcoder.view;
 
 import com.github.britooo.looca.api.core.Looca;
-import com.github.britooo.looca.api.group.discos.Disco;
+import com.github.britooo.looca.api.group.discos.Volume;
+import org.apache.commons.io.FileUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,13 +10,13 @@ import java.util.List;
 
 public class Dashboard extends JFrame {
     Looca looca = new Looca();
-    List<Disco> listDisco = looca.getGrupoDeDiscos().getDiscos();
+    List<Volume> listVolume = looca.getGrupoDeDiscos().getVolumes();
 
     // Labels
     JLabel lblNomeComputador;
     JLabel lblRamTotal;
     JLabel lblNomeProcessador;
-    JLabel lblDiscos;
+    JLabel lblVolumes;
 
     // Charts
     JProgressBar pgbRAM;
@@ -60,7 +61,7 @@ public class Dashboard extends JFrame {
         lblRamTotal.setFont(new Font("TimesNewRoman", Font.BOLD,12));
         lblRamTotal.setText(String.format(
             "Total RAM: %s",
-            toGB(looca.getMemoria().getTotal().toString())
+                FileUtils.byteCountToDisplaySize(looca.getMemoria().getTotal())
         ));
 
         lblNomeProcessador = new JLabel();
@@ -72,21 +73,21 @@ public class Dashboard extends JFrame {
             looca.getProcessador().getNome()
         ));
 
-        lblDiscos = new JLabel();
-        lblDiscos.setBounds(lblNomeComputador.getX(), lblNomeProcessador.getY() + lblNomeProcessador.getHeight() + 5, 700, 25);
-        lblDiscos.setForeground(Color.WHITE);
-        lblDiscos.setFont(new Font("TimesNewRoman", Font.BOLD,12));
+        lblVolumes = new JLabel();
+        lblVolumes.setBounds(lblNomeComputador.getX(), lblNomeProcessador.getY() + lblNomeProcessador.getHeight() + 5, 700, 25);
+        lblVolumes.setForeground(Color.WHITE);
+        lblVolumes.setFont(new Font("TimesNewRoman", Font.BOLD,12));
 
-        for (Disco d: listDisco) {
-            lblDiscos.setText(String.format(
-                "%sDisco %s: %s\n", lblDiscos.getText(), (char) (listDisco.indexOf(d) + 65), toGB(d.getTamanho().toString())
+        for (Volume v: listVolume) {
+            lblVolumes.setText(String.format(
+                "%sDisco %s: %s     ", lblVolumes.getText(), v.getPontoDeMontagem(), FileUtils.byteCountToDisplaySize(v.getTotal())
             ));
         }
     }
 
     private void initCharts() {
         pgbRAM = new JProgressBar();
-        pgbRAM.setBounds(5, lblDiscos.getY() + lblDiscos.getHeight() + 5, 700, 25);
+        pgbRAM.setBounds(5, lblVolumes.getY() + lblVolumes.getHeight() + 5, 700, 25);
         pgbRAM.setStringPainted(true);
         pgbRAM.setMaximum(100);
 
@@ -112,12 +113,16 @@ public class Dashboard extends JFrame {
 
                         Double usoRAM = (looca.getMemoria().getEmUso().doubleValue() / looca.getMemoria().getTotal().doubleValue()) * 100;
                         Double usoCPU = looca.getProcessador().getUso();
-                        Double usoDisco = 0.0;
 
-                        for (Disco d: listDisco) {
-                            usoDisco += d.getTamanhoAtualDaFila();
-                            System.out.println(d.getTamanhoAtualDaFila());
+                        Double total = 0.0;
+                        Double totalDisponivel = 0.0;
+
+                        for (Volume v: listVolume) {
+                            total += v.getTotal();
+                            totalDisponivel += v.getDisponivel();
                         }
+
+                        Double usoDisco = ((total - totalDisponivel) / total) * 100;
 
                         pgbRAM.setValue(usoRAM.intValue());
                         pgbCPU.setValue(usoCPU.intValue());
@@ -138,40 +143,9 @@ public class Dashboard extends JFrame {
         add(lblNomeComputador);
         add(lblRamTotal);
         add(lblNomeProcessador);
-        add(lblDiscos);
+        add(lblVolumes);
         add(pgbRAM);
         add(pgbCPU);
         add(pgbDisco);
-    }
-
-    public String toGB(String total) {
-        String totalGb = "";
-        Integer digitos;
-
-        switch(total.length()) {
-            case 10:
-                digitos = 1;
-                break;
-            case 11:
-                digitos = 2;
-                break;
-            case 12:
-                digitos = 3;
-                break;
-            default:
-                digitos = 4;
-                break;
-        }
-
-        for (int i = 1; i <= digitos; i++) {
-            totalGb += total.charAt(i -1);
-            if (i == digitos) totalGb += ",";
-        }
-
-        for (int i = 0; i < 3; i++) {
-            totalGb += total.charAt(i + digitos);
-        }
-
-        return totalGb += " GiB";
     }
 }
