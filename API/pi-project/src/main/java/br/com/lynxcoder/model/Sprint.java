@@ -2,41 +2,26 @@ package br.com.lynxcoder.model;
 
 import java.util.Objects;
 
-public class Squad {
+public class Sprint {
 
     private Integer id;
-    private String nome;
     private String descricao;
+    private Squad squad;
 
-    public Squad(){};
+    public Sprint() {}
 
-    public Squad(Integer id){
+    public Sprint(Integer id, String descricao, Squad squad) {
         this.id = id;
-        hashCode();
-    }
-
-    public Squad(String nome, String descricao) {
-        this.nome = nome;
         this.descricao = descricao;
-    }
-
-    public Squad(Integer id, String nome, String descricao) {
-
-        this(nome, descricao);
-        this.id = id;
-
+        this.squad = squad;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDescricao() {
@@ -47,12 +32,20 @@ public class Squad {
         this.descricao = descricao;
     }
 
+    public Squad getSquad() {
+        return squad;
+    }
+
+    public void setSquad(Squad squad) {
+        this.squad = squad;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Squad squad = (Squad) o;
-        return Objects.equals(id, squad.id);
+        Sprint sprint = (Sprint) o;
+        return id.equals(sprint.id);
     }
 
     @Override

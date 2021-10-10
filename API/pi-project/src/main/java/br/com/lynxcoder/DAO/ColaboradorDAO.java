@@ -2,6 +2,8 @@ package br.com.lynxcoder.DAO;
 
 import br.com.lynxcoder.controller.Conexao;
 import br.com.lynxcoder.model.Colaborador;
+import br.com.lynxcoder.model.Empresa;
+import br.com.lynxcoder.model.Squad;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,15 +19,19 @@ public class ColaboradorDAO {
     public Colaborador findCollaboratorByLogin(String login){
 
         String sql = "select * from tb_usuario where login = ?";
-        Connection conn = Conexao.getConnection();
-        try{
+
+        try(Connection conn = Conexao.getConnection()){
+
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, login);
 
             ResultSet rs = pstm.executeQuery();
 
             if(rs.wasNull()){
+
+                Conexao.closeConnection(conn, pstm);
                 return null;
+
             }
 
             Colaborador col = new Colaborador();
@@ -35,8 +41,10 @@ public class ColaboradorDAO {
             col.setLogin(rs.getString("login"));
             col.setSenha(rs.getString("senha"));
             col.setIdSupervisor(rs.getInt("fk_supervisor"));
-            col.setIdSquad(rs.getInt("fk_squad"));
-            col.setIdEmpresa(rs.getInt("fk_empresa"));
+            col.setSquad(new Squad(rs.getInt("fk_squad")));
+            col.setEmpresa(new Empresa(rs.getInt("fk_empresa")));
+
+            Conexao.closeConnection(conn, pstm);
 
             return col;
 

@@ -9,37 +9,30 @@ public class Usuario {
     private String cargo;
     private String login;
     private String senha;
-    private Integer idEmpresa;
-    private Integer idSquad;
+    private Empresa empresa;
+    private Squad squad;
 
     private Boolean isGestor;
 
-    public Usuario(){
+    public Usuario(){}
 
-    }
     public Usuario(Integer id, String nome, String cargo, String login, String senha,
                    Empresa empresa, Squad squad, Boolean isGestor) {
 
+        this(nome, cargo, login, senha, empresa, squad, isGestor);
         this.id = id;
+
+    }
+
+    public Usuario(String nome, String cargo, String login, String senha,
+                   Empresa empresa, Squad squad, Boolean isGestor) {
+
         this.nome = nome;
         this.cargo = cargo;
         this.login = login;
         this.senha = senha;
-        this.idEmpresa = empresa.getId();
-        this.idSquad = squad.getId();
-        this.isGestor = isGestor;
-
-    }
-
-    public Usuario(String nome, String cargo, String email, String senha,
-                   Empresa empresa, Squad squad, Boolean isGestor) {
-
-        this.nome = nome;
-        this.cargo = cargo;
-        this.login = email;
-        this.senha = senha;
-        this.idEmpresa = empresa.getId();
-        this.idSquad = squad.getId();
+        this.empresa = empresa;
+        this.squad = squad;
         this.isGestor = isGestor;
 
     }
@@ -84,20 +77,20 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public Integer getIdEmpresa() {
-        return idEmpresa;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    public void setIdEmpresa(Integer idEmpresa) {
-        this.idEmpresa = idEmpresa;
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
-    public Integer getIdSquad() {
-        return idSquad;
+    public Squad getSquad() {
+        return squad;
     }
 
-    public void setIdSquad(Integer idSquad) {
-        this.idSquad = idSquad;
+    public void setSquad(Squad squad) {
+        this.squad = squad;
     }
 
     public Boolean getGestor() {

@@ -14,18 +14,18 @@ public class Empresa {
     private String logradouro;
     private String numero;
 
+    public Empresa(){}
+
+    public Empresa(Integer id) {
+        this.id = id;
+        hashCode();
+    }
+
     public Empresa(Integer id, String nome, String CNPJ, String telefone, String estado,
                    String cidade, String CEP, String logradouro, String numero) {
 
+        this(nome, CNPJ, telefone, estado, cidade, CEP, logradouro, numero);
         this.id = id;
-        this.nome = nome;
-        this.CNPJ = CNPJ;
-        this.telefone = telefone;
-        this.estado = estado;
-        this.cidade = cidade;
-        this.CEP = CEP;
-        this.logradouro = logradouro;
-        this.numero = numero;
 
     }
 

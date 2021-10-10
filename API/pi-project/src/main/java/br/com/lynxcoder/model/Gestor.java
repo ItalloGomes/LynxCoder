@@ -2,9 +2,12 @@ package br.com.lynxcoder.model;
 
 public class Gestor extends Usuario{
 
-    public Gestor(String nome, String cargo, String login, String senha,
+    public Gestor(){}
+
+    public Gestor(Integer id, String nome, String cargo, String login, String senha,
                   Empresa empresa, Squad squad) {
 
-        super(nome, cargo, login, senha, empresa, squad, true);
+        super(id, nome, cargo, login, senha, empresa, squad, true);
     }
+
 }
