@@ -35,6 +35,7 @@ create table tb_usuario(
     ,cargo varchar(50) not null
     ,login varchar(100) not null
     ,senha varchar(100) not null
+    ,isGestor boolean
     ,fk_supervisor int
     ,foreign key(fk_supervisor) references tb_usuario(id_usuario)
     ,fk_squad int
@@ -114,6 +115,7 @@ values (
     ,"Estagiário"   -- ,cargo
     ,"itallo.gomes" -- ,login
     ,"urubu100"     -- ,senha
+    ,false			-- ,isGestor
     ,1              -- ,fk_supervisor
     ,1              -- ,fk_squad
     ,1              -- ,fk_empresa
@@ -123,6 +125,8 @@ values (
 select * from tb_empresa;
 select * from tb_squad;
 select * from tb_usuario;
+
+SELECT * FROM tb_usuario where login = 'itallo.gomes' and senha = 'urubu100';
 
 
 

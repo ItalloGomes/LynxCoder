@@ -9,31 +9,34 @@ public class Usuario {
     private String cargo;
     private String login;
     private String senha;
+    private Boolean isGestor;
+    private Usuario supervisor;
     private Empresa empresa;
     private Squad squad;
 
-    private Boolean isGestor;
-
     public Usuario(){}
 
-    public Usuario(Integer id, String nome, String cargo, String login, String senha,
-                   Empresa empresa, Squad squad, Boolean isGestor) {
-
-        this(nome, cargo, login, senha, empresa, squad, isGestor);
+    public Usuario(Integer id){
         this.id = id;
-
     }
 
     public Usuario(String nome, String cargo, String login, String senha,
-                   Empresa empresa, Squad squad, Boolean isGestor) {
-
+                   Boolean isGestor, Usuario supervisor, Empresa empresa, Squad squad) {
         this.nome = nome;
         this.cargo = cargo;
         this.login = login;
         this.senha = senha;
+        this.isGestor = isGestor;
+        this.supervisor = supervisor;
         this.empresa = empresa;
         this.squad = squad;
-        this.isGestor = isGestor;
+    }
+
+    public Usuario(Integer id, String nome, String cargo, String login, String senha,
+                   Boolean isGestor, Usuario supervisor, Empresa empresa, Squad squad) {
+
+        this(nome, cargo, login, senha, isGestor, supervisor, empresa, squad);
+        this.id = id;
 
     }
 
@@ -77,6 +80,22 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public Boolean getGestor() {
+        return isGestor;
+    }
+
+    public void setGestor(Boolean gestor) {
+        isGestor = gestor;
+    }
+
+    public Usuario getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(Usuario supervisor) {
+        this.supervisor = supervisor;
+    }
+
     public Empresa getEmpresa() {
         return empresa;
     }
@@ -91,14 +110,6 @@ public class Usuario {
 
     public void setSquad(Squad squad) {
         this.squad = squad;
-    }
-
-    public Boolean getGestor() {
-        return isGestor;
-    }
-
-    public void setGestor(Boolean gestor) {
-        isGestor = gestor;
     }
 
     @Override
