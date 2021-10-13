@@ -14,7 +14,7 @@ public class UsuarioDAO {
 
     public Usuario logar(String usuario, String senha){
 
-        String sql = "SELECT * FROM tb_usuario WHERE login = ? and senha = ?;";
+        String sql = "SELECT * FROM tb_usuario WHERE login = ? and senha = ?";
 
         try (Connection conn = Conexao.getConnection()) {
 
@@ -24,8 +24,10 @@ public class UsuarioDAO {
 
             ResultSet rs = pstm.executeQuery();
 
-            Usuario user = new Usuario();
-            while (rs.next()) {
+            Usuario user = null;
+
+            if(rs.next()) {
+                user = new Usuario();
                 user.setId(rs.getInt("id_usuario"));
                 user.setNome(rs.getString("nome_usuario"));
                 user.setCargo(rs.getString("cargo"));
@@ -36,6 +38,7 @@ public class UsuarioDAO {
                 user.setSquad(new Squad(rs.getInt("fk_squad")));
                 user.setEmpresa(new Empresa(rs.getInt("fk_empresa")));
             }
+            System.out.println(user);
 
             Conexao.closeConnection(conn, pstm);
 

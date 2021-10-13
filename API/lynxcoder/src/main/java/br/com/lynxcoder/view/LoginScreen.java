@@ -30,40 +30,39 @@ public class LoginScreen extends JFrame {
 
     private void initComponents() {
         lblLogo = new JLabel();
-        lblLogo.setBounds(((this.getWidth()/2)-105),50,200,100);
+        lblLogo.setBounds(((this.getWidth()/2)-83),50,150,100);
         lblLogo.setOpaque(true);
         lblLogo.setBackground(new Color(0,0,0,0));
-        ImageIcon background = new ImageIcon("src/assets/logo-type5.png");
-        background.setImage(background.getImage().getScaledInstance(200,100,Image.SCALE_SMOOTH));
+        ImageIcon background = new ImageIcon("src/assets/logo-type3.png");
+        background.setImage(background.getImage().getScaledInstance(lblLogo.getWidth(),100,Image.SCALE_SMOOTH));
         lblLogo.setIcon(background);
 
         lblUser = new JLabel();
         lblUser.setText("Usuário");
-        lblUser.setBounds(156, (lblLogo.getY()+lblLogo.getHeight()+60), 100, 35);
-        lblUser.setForeground(Color.BLACK);
-        lblUser.setFont(new Font( "Arial", Font.BOLD , 19));
+        lblUser.setBounds(160, (lblLogo.getY()+lblLogo.getHeight()+60), 100, 35);
+        lblUser.setForeground(new Color(194, 194, 194));
+        lblUser.setFont(new Font( "Arial", Font.ROMAN_BASELINE , 19));
 
         jtfUserName = new JTextField();
-        jtfUserName.setMargin(new Insets(20,20,0,0));
         jtfUserName.setBounds(40, (lblUser.getY()+lblUser.getHeight()), 300, 35);
         jtfUserName.setOpaque(true);
         jtfUserName.setFont(new Font( "Arial", Font.BOLD , 13));
-        jtfUserName.setForeground(Color.BLACK);
+        jtfUserName.setForeground(new Color(217, 217, 217));
         jtfUserName.setBackground(new Color(41, 72, 131));
         jtfUserName.setBorder(new LineBorder(new Color(22, 95, 192), 3));
         jtfUserName.setHorizontalAlignment(SwingConstants.CENTER);
 
         lblPass = new JLabel();
         lblPass.setText("Senha");
-        lblPass.setBounds(160, (jtfUserName.getY()+jtfUserName.getHeight()+5), 100, 35);
-        lblPass.setForeground(Color.BLACK);
-        lblPass.setFont(new Font( "Arial", Font.BOLD , 19));
+        lblPass.setBounds(164, (jtfUserName.getY()+jtfUserName.getHeight()+5), 100, 35);
+        lblPass.setForeground(new Color(194, 194, 194));
+        lblPass.setFont(new Font( "Arial", Font.ROMAN_BASELINE , 19));
 
         jpfPassword = new JPasswordField();
         jpfPassword.setBounds(jtfUserName.getX(), (lblPass.getY()+lblPass.getHeight()), 300, 35);
         jpfPassword.setOpaque(true);
         jpfPassword.setFont(new Font( "Arial", Font.BOLD , 13));
-        jpfPassword.setForeground(Color.BLACK);
+        jpfPassword.setForeground(new Color(217, 217, 217));
         jpfPassword.setBackground(new Color(41, 72, 131));
         jpfPassword.setBorder(new LineBorder(new Color(22, 95, 192), 3));
         jpfPassword.setHorizontalAlignment(SwingConstants.CENTER);
@@ -75,7 +74,7 @@ public class LoginScreen extends JFrame {
         btnLogin.setBackground(new Color(22, 95, 192));
         btnLogin.setFocusPainted(false);
         btnLogin.setFont(new Font( "Arial", Font.BOLD , 13));
-        btnLogin.setForeground(Color.BLACK);
+        btnLogin.setForeground(new Color(194, 194, 194));
         btnLogin.setBorder(null);
         btnLogin.addMouseListener(logar());
 
@@ -89,12 +88,18 @@ public class LoginScreen extends JFrame {
 
                 UsuarioDAO userDAO = new UsuarioDAO();
 
+                System.out.println(jtfUserName.getText() +" "+ new String(jpfPassword.getPassword()));
+
                 Usuario user = userDAO.logar(jtfUserName.getText(), new String(jpfPassword.getPassword()));
 
                 if( user != null ){
+                    System.out.println("Cebesta, ta logado guri!");
+                    Dashboard dashboard = new Dashboard(user);
                     dispose();
                 }else{
-                    JOptionPane.showMessageDialog(null, "Seu usuário não está cadastrado");
+                    JOptionPane.showMessageDialog(null, "Este usuário não está cadastrado");
+                    jtfUserName.setText("");
+                    jpfPassword.setText("");
                 }
 
             }

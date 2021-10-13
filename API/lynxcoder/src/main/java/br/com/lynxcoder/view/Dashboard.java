@@ -1,5 +1,6 @@
 package br.com.lynxcoder.view;
 
+import br.com.lynxcoder.model.Usuario;
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Volume;
 import org.apache.commons.io.FileUtils;
@@ -23,7 +24,7 @@ public class Dashboard extends JFrame {
     JProgressBar pgbCPU;
     JProgressBar pgbDisco;
 
-    public Dashboard() {
+    public Dashboard(Usuario user) {
         initDashboard();
         initLabels();
         initCharts();
