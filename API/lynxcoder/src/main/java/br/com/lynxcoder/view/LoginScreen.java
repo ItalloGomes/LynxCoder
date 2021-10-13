@@ -30,51 +30,51 @@ public class LoginScreen extends JFrame {
 
     private void initComponents() {
         lblLogo = new JLabel();
-        lblLogo.setBounds(((this.getWidth()/2)-83),50,150,100);
+        lblLogo.setBounds(((this.getWidth()/2)-67),50,120,100);
         lblLogo.setOpaque(true);
         lblLogo.setBackground(new Color(0,0,0,0));
-        ImageIcon background = new ImageIcon("src/assets/logo-type3.png");
+        ImageIcon background = new ImageIcon("src/assets/logo-type3.1.png");
         background.setImage(background.getImage().getScaledInstance(lblLogo.getWidth(),100,Image.SCALE_SMOOTH));
         lblLogo.setIcon(background);
 
         lblUser = new JLabel();
         lblUser.setText("Usuário");
-        lblUser.setBounds(160, (lblLogo.getY()+lblLogo.getHeight()+60), 100, 35);
-        lblUser.setForeground(new Color(194, 194, 194));
-        lblUser.setFont(new Font( "Arial", Font.ROMAN_BASELINE , 19));
+        lblUser.setBounds(41, (lblLogo.getY()+lblLogo.getHeight()+50), 100, 35);
+        lblUser.setForeground(new Color(229, 229, 229));
+        lblUser.setFont(new Font( "Century Gothic", Font.ROMAN_BASELINE , 19));
 
         jtfUserName = new JTextField();
-        jtfUserName.setBounds(40, (lblUser.getY()+lblUser.getHeight()), 300, 35);
+        jtfUserName.setBounds(40, (lblUser.getY()+lblUser.getHeight()-3), 300, 35);
         jtfUserName.setOpaque(true);
-        jtfUserName.setFont(new Font( "Arial", Font.BOLD , 13));
-        jtfUserName.setForeground(new Color(217, 217, 217));
-        jtfUserName.setBackground(new Color(41, 72, 131));
-        jtfUserName.setBorder(new LineBorder(new Color(22, 95, 192), 3));
+        jtfUserName.setFont(new Font( "Century Gothic", Font.BOLD , 13));
+        jtfUserName.setForeground(new Color(229, 229, 229));
+        jtfUserName.setBackground(new Color(22, 50, 107));
+        jtfUserName.setBorder(new LineBorder(new Color(22, 50, 107), 2));
         jtfUserName.setHorizontalAlignment(SwingConstants.CENTER);
 
         lblPass = new JLabel();
         lblPass.setText("Senha");
-        lblPass.setBounds(164, (jtfUserName.getY()+jtfUserName.getHeight()+5), 100, 35);
-        lblPass.setForeground(new Color(194, 194, 194));
-        lblPass.setFont(new Font( "Arial", Font.ROMAN_BASELINE , 19));
+        lblPass.setBounds(41, (jtfUserName.getY()+jtfUserName.getHeight()+5), 100, 35);
+        lblPass.setForeground(new Color(229, 229, 229));
+        lblPass.setFont(new Font( "Century Gothic", Font.ROMAN_BASELINE , 19));
 
         jpfPassword = new JPasswordField();
-        jpfPassword.setBounds(jtfUserName.getX(), (lblPass.getY()+lblPass.getHeight()), 300, 35);
+        jpfPassword.setBounds(jtfUserName.getX(), (lblPass.getY()+lblPass.getHeight()-3), 300, 35);
         jpfPassword.setOpaque(true);
-        jpfPassword.setFont(new Font( "Arial", Font.BOLD , 13));
-        jpfPassword.setForeground(new Color(217, 217, 217));
-        jpfPassword.setBackground(new Color(41, 72, 131));
-        jpfPassword.setBorder(new LineBorder(new Color(22, 95, 192), 3));
+        jpfPassword.setFont(new Font( "Century Gothic", Font.BOLD , 13));
+        jpfPassword.setForeground(new Color(229, 229, 229));
+        jpfPassword.setBackground(new Color(22, 50, 107));
+        jpfPassword.setBorder(new LineBorder(new Color(22, 50, 107), 2));
         jpfPassword.setHorizontalAlignment(SwingConstants.CENTER);
 
         btnLogin = new JButton();
         btnLogin.setText("Log-in");
-        btnLogin.setBounds(jtfUserName.getX(), (jpfPassword.getY()+jpfPassword.getHeight()+20), 100, 30);
+        btnLogin.setBounds(jtfUserName.getX(), (jpfPassword.getY()+jpfPassword.getHeight()+20), 300, 35);
         btnLogin.setOpaque(true);
         btnLogin.setBackground(new Color(22, 95, 192));
         btnLogin.setFocusPainted(false);
-        btnLogin.setFont(new Font( "Arial", Font.BOLD , 13));
-        btnLogin.setForeground(new Color(194, 194, 194));
+        btnLogin.setFont(new Font( "Century Gothic", Font.BOLD , 13));
+        btnLogin.setForeground(new Color(229, 229, 229));
         btnLogin.setBorder(null);
         btnLogin.addMouseListener(logar());
 
