@@ -359,3 +359,167 @@ _________________________________ */
 .infos_add h1{
     font-size: 25px;
 }
+
+/* Relatórios 
+_________________________________ */
+
+.rel{
+    flex-direction: column;
+    justify-content: start;
+    padding: 20px;
+}
+
+.report{
+    width: 60%;
+    height: max-content;
+    padding: 10px;
+    background: #fff;
+    display: flex;
+    justify-content: start;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #11101d1e; 
+}
+
+.cards_rep{
+    width: 350px;
+    height: 150px;
+    margin-right: 10px;
+    background: #f3f3f3;
+}
+
+h1.title_rel{
+    color: #1d1b31;
+    font-size: 40px;
+    padding: 40px 0;
+}
+
+h1.title_rel,
+p.title_rel{
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+p.title_rel{
+    color: #25224F;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+p.title_rel:last-of-type{
+    padding-top: 30px;
+}
+
+.content-table {
+    border-collapse: collapse;
+    font-size: 0.9em;
+    min-width: 400px;
+    width: 60%;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 10px #11101d1e;
+}
+  
+.content-table thead tr {
+    background-color: #322f50;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+  
+.content-table th,
+.content-table td {
+    padding: 12px 15px;
+}
+  
+.content-table tbody tr {
+    background: #fff;
+    border-bottom: 1px solid #dddddd;
+}
+  
+.content-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+  
+.content-table tbody tr:last-of-type {
+    border-bottom: 2px solid #43318f;
+}
+  
+.content-table tbody tr.active-row {
+    font-weight: bold;
+    color: #43318f;
+}
+
+.filter{
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 78px;
+    background: #25224F;
+    padding: 6px 14px;
+    z-index: 99;
+    transition: all 0.5s ease;
+}
+
+.filter.open{
+    width: 25%;
+}
+
+.filter .filter-details{
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.filter .filter-details .icon{
+    color: #fff;
+    width: 70px;
+    padding: 0 10px;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.filter .filter-details .logo_name{
+    color: #fff;
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.filter.open .filter-details .icon,
+.filter.open .filter-details .logo_name{
+    opacity: 1;
+}
+
+.filter .filter-details #btnFilter{
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 22px;
+    transition: all 0.4s ease;
+    font-size: 23px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.filter.open .filter-details #btnFilter{
+    text-align: right;
+}
+
+.filter i{
+    color: #fff;
+    height: 60px;
+    min-width: 50px;
+    font-size: 28px;
+    text-align: center;
+    line-height: 60px;
+}
+
+
