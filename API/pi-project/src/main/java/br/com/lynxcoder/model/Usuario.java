@@ -9,38 +9,34 @@ public class Usuario {
     private String cargo;
     private String login;
     private String senha;
-    private Integer idEmpresa;
-    private Integer idSquad;
-
     private Boolean isGestor;
+    private Usuario supervisor;
+    private Empresa empresa;
+    private Squad squad;
 
-    public Usuario(){
+    public Usuario(){}
 
-    }
-    public Usuario(Integer id, String nome, String cargo, String login, String senha,
-                   Empresa empresa, Squad squad, Boolean isGestor) {
-
+    public Usuario(Integer id){
         this.id = id;
+    }
+
+    public Usuario(String nome, String cargo, String login, String senha,
+                   Boolean isGestor, Usuario supervisor, Empresa empresa, Squad squad) {
         this.nome = nome;
         this.cargo = cargo;
         this.login = login;
         this.senha = senha;
-        this.idEmpresa = empresa.getId();
-        this.idSquad = squad.getId();
         this.isGestor = isGestor;
-
+        this.supervisor = supervisor;
+        this.empresa = empresa;
+        this.squad = squad;
     }
 
-    public Usuario(String nome, String cargo, String email, String senha,
-                   Empresa empresa, Squad squad, Boolean isGestor) {
+    public Usuario(Integer id, String nome, String cargo, String login, String senha,
+                   Boolean isGestor, Usuario supervisor, Empresa empresa, Squad squad) {
 
-        this.nome = nome;
-        this.cargo = cargo;
-        this.login = email;
-        this.senha = senha;
-        this.idEmpresa = empresa.getId();
-        this.idSquad = squad.getId();
-        this.isGestor = isGestor;
+        this(nome, cargo, login, senha, isGestor, supervisor, empresa, squad);
+        this.id = id;
 
     }
 
@@ -84,28 +80,36 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public Integer getIdEmpresa() {
-        return idEmpresa;
-    }
-
-    public void setIdEmpresa(Integer idEmpresa) {
-        this.idEmpresa = idEmpresa;
-    }
-
-    public Integer getIdSquad() {
-        return idSquad;
-    }
-
-    public void setIdSquad(Integer idSquad) {
-        this.idSquad = idSquad;
-    }
-
     public Boolean getGestor() {
         return isGestor;
     }
 
     public void setGestor(Boolean gestor) {
         isGestor = gestor;
+    }
+
+    public Usuario getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(Usuario supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public Squad getSquad() {
+        return squad;
+    }
+
+    public void setSquad(Squad squad) {
+        this.squad = squad;
     }
 
     @Override

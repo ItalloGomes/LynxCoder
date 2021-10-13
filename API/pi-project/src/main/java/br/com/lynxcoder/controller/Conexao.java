@@ -2,6 +2,7 @@ package br.com.lynxcoder.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Conexao {
@@ -35,6 +36,19 @@ public class Conexao {
             e.printStackTrace();
         }
 
+    }
+
+    public static void closeConnection(Connection conn, PreparedStatement pstm){
+        try{
+
+            if(conn != null && pstm != null){
+                conn.close();
+                pstm.close();
+            }
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
