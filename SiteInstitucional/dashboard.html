@@ -83,8 +83,17 @@
 
             <div class="info_perfil">
                 <h4>Bem vindo</h4>
-                <h3>Mateus Breno</h3>
+                <h1>Mateus Breno</h1>
+                <h4>Colaborador</h4>
+
+                <div class="hr"></div>
+
+                <p>Editar Perfil</p>
             </div>
+        </div>
+
+        <div class="infos_add">
+            <h1>Informações Adicionais</h1>
         </div>
     </section>
 
@@ -99,21 +108,27 @@
     let searchBtn = document.querySelector(".bx-search");
 
     closeBtn.addEventListener("click", ()=> {
+
         sidebar.classList.toggle("open");
         menuBtnChange();
+        
     });
 
     searchBtn.addEventListener("click", ()=> { 
+
         sidebar.classList.toggle("open");
         menuBtnChange();
+
     });
 
     function menuBtnChange() {
+
         if(sidebar.classList.contains("open")) {
             closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
         } else {
             closeBtn.classList.replace("bx-menu-alt-right","bx-menu");
         }
+
     }
 
 </script>
