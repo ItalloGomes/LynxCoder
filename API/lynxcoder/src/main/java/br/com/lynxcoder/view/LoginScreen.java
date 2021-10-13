@@ -94,6 +94,7 @@ public class LoginScreen extends JFrame {
 
                 if( user != null ){
                     System.out.println("Cebesta, ta logado guri!");
+                    Dashboard dashboard = new Dashboard(user);
                     dispose();
                 }else{
                     JOptionPane.showMessageDialog(null, "Este usuário não está cadastrado");
