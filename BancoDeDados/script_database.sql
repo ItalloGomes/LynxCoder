@@ -108,6 +108,13 @@ values (
     ,"Uma squad braba" -- descrição
 );
 
+insert into tb_squad
+values (
+	null			   -- id_squad
+    ,"subadiquirência"   -- nome_squad
+    ,"Uma squad pra lá de bagdá" -- descrição
+);
+
 insert into tb_usuario
 values (
 	null            --  id_usuario
@@ -121,6 +128,19 @@ values (
     ,1              -- ,fk_empresa
 );
 
+insert into tb_usuario
+values (
+	null            --  id_usuario
+    ,"Aleff Kelvin" -- ,nome_usuario
+    ,"Estagiário"   -- ,cargo
+    ,"aleff.stampini" -- ,login
+    ,"asd123"     -- ,senha
+    ,false			-- ,isGestor
+    ,1              -- ,fk_supervisor
+    ,2              -- ,fk_squad
+    ,1              -- ,fk_empresa
+);
+
 
 select * from tb_empresa;
 select * from tb_squad;
@@ -128,6 +148,7 @@ select * from tb_usuario;
 
 SELECT * FROM tb_usuario where login = 'itallo.gomes' and senha = 'urubu100';
 
+select count(id_usuario) from tb_usuario;
 
 
 

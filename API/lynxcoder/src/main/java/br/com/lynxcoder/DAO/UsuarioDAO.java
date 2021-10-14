@@ -38,7 +38,6 @@ public class UsuarioDAO {
                 user.setSquad(new Squad(rs.getInt("fk_squad")));
                 user.setEmpresa(new Empresa(rs.getInt("fk_empresa")));
             }
-            System.out.println(user);
 
             Conexao.closeConnection(conn, pstm);
 

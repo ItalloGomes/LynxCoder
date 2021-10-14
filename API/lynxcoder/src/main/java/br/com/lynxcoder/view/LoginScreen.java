@@ -88,8 +88,6 @@ public class LoginScreen extends JFrame {
 
                 UsuarioDAO userDAO = new UsuarioDAO();
 
-                System.out.println(jtfUserName.getText() +" "+ new String(jpfPassword.getPassword()));
-
                 Usuario user = userDAO.logar(jtfUserName.getText(), new String(jpfPassword.getPassword()));
 
                 if( user != null ){
@@ -97,7 +95,7 @@ public class LoginScreen extends JFrame {
                     Dashboard dashboard = new Dashboard(user);
                     dispose();
                 }else{
-                    JOptionPane.showMessageDialog(null, "Este usuário não está cadastrado");
+                    JOptionPane.showMessageDialog(null, "Usuário e/ou senha incorreto(s)!");
                     jtfUserName.setText("");
                     jpfPassword.setText("");
                 }
