@@ -8,9 +8,9 @@
     <link rel="shortcut icon" href="assets/img/logo-type3.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/estiloBase.css">
     <link rel="stylesheet" href="assets/css/responsiveDashboard.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <title>Portal Lynx Coder | Relatórios</title>
+    <title>Portal Lynx Coder | Desempenho</title>
 </head>
 
 <body>
@@ -75,62 +75,85 @@
         </ul>
     </div>
 
-    <section class="home-section rel">
-        <h1 class="title_rel">Relatórios</h1>
-
-        <p class="title_rel">Individual</p>
-        <div class="report" id="relInd">
-            <div class="cards_rep">
-
+    <section class="home-section">
+        <div class="dashboard">
+            <div class="dash_left">
+                <div class="components">
+                    <h1>Meu computador</h1>
+    
+                    <div class="dash_align">
+                        <div class="info_components">
+                            <div class="dash_item">
+                                <h4>CPU</h4>
+        
+                                <div class="canvas">
+                                    <canvas id="cpuCanvas"></canvas>
+                                </div>
+                            </div>
+                            <div class="dash_item">
+                                <h4>Disco</h4>
+            
+                                <div class="canvas">
+                                    <canvas id="discoCanvas"></canvas>
+                                </div>
+                            </div>
+                            <div class="dash_item">
+                                <h4 style="margin-bottom: 2px;">Memória</h4>
+            
+                                <div class="canvas">
+                                    <canvas id="memoriaCanvas"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="components">
+                    <h1>Sprint</h1>
+                    
+                    <br><br><br>
+                    <div class="chart_sprint">
+                        <div class="canvas">
+                            <canvas id="testLine"></canvas>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="components">
+                    <h1>Atividades</h1>
+    
+                    <br><br><br>
+                    <div class="chart_atvds">
+                        <div class="canvas">
+                            <canvas id="testBar"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="cards_rep">
-                
+            <div class="dash_right">
+                <h1>Atividades Pendentes</h1>
+
+                <div class="atvds">
+                    <div class="card_atvd">
+                        <h2>N°2</h2>
+                        <h1>%0</h1>
+                    </div>
+
+                    <div class="card_atvd">
+                        <h2>N°3</h2>
+                        <h1>%50</h1>
+                    </div>
+
+                    <div class="card_atvd">
+                        <h2>N°4</h2>
+                        <h1>%80</h1>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <p class="title_rel">Equipe</p>
-        <table class="content-table">
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Nome</th>
-                    <th>Pontos</th>
-                    <th>Atividades</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Domenic</td>
-                    <td>88,110</td>
-                    <td>3/5</td>
-                </tr>
-
-                <tr class="active-row">
-                    <td>2</td>
-                    <td>Sally</td>
-                    <td>72,400</td>
-                    <td>6/6</td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>Nick</td>
-                    <td>52,300</td>
-                    <td>1/8</td>
-                </tr>
-            </tbody>
-        </table>
     </section>
-
-    <div class="filter">
-        <div class="filter-details">
-            <i class='bx bxs-filter-alt icon'></i>
-            <div class="logo_name">Filtros</div>
-            <i class='bx bxs-left-arrow'id="btnFilter"></i>
-        </div>
-    </div>
 
 </body>
 
@@ -188,3 +211,109 @@
     }
 
 </script>
+
+<script>
+    var cpu_canvas = document.getElementById('cpuCanvas');
+    var disco_canvas = document.getElementById('discoCanvas');
+    var memory_canvas = document.getElementById('memoriaCanvas');
+    var test_bar = document.getElementById('testBar');
+    var test_line = document.getElementById('testLine');
+
+    var graficoCpu = new Chart(
+        cpu_canvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Usado', 'Livre'],
+                datasets: [{
+                    data: [310000000, 131000000],
+                    backgroundColor: ['#25224F', '#43318f']
+                }]
+            },
+            options: {
+                legend: {
+                    display: false,
+                },
+            }
+        }
+    );
+
+    var graficoDisco = new Chart(
+        disco_canvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Usado', 'Livre'],
+                datasets: [{
+                    data: [120000000, 131000000],
+                    backgroundColor: ['#25224F', '#43318f']
+                }]
+            },
+            options: {
+                legend: {
+                    display: false,
+                },
+            }
+        }
+    );
+
+    var graficoMemoria = new Chart(
+        memory_canvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Usado', 'Livre'],
+                datasets: [{
+                    data: [31000000, 131000000],
+                    backgroundColor: ['#25224F', '#43318f']
+                }]
+            },
+            options: {
+                legend: {
+                    display: false,
+                },
+            }
+        }
+    );
+
+    let graficoLine = new Chart(test_line, {
+        type: 'line',
+        data: {
+            labels: ['ATVD1', 'ATVD2', 'ATVD3', 'ATVD4'],
+            datasets: [ {
+                data: [100, 0, 50, 80],
+                backgroundColor: ['#52cc68', '#605ca1', '#605ca1', '#605ca1']
+            }]
+        },
+        options: {
+            title: {
+                // text: "Number of passengers carried in 2017 (in mio.)",
+                display: false
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+    let graficoBar = new Chart(test_bar, {
+        type: 'bar',
+        data: {
+            labels: ['ATVD1', 'ATVD2', 'ATVD3', 'ATVD4'],
+            datasets: [ {
+                data: [100, 0, 50, 80],
+                backgroundColor: ['#52cc68', '#605ca1', '#605ca1', '#605ca1']
+            }]
+        },
+        options: {
+            title: {
+                // text: "Number of passengers carried in 2017 (in mio.)",
+                display: false
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+    Chart.defaults.global.defaultFontColor = "#303030";
+</script>
+
+
