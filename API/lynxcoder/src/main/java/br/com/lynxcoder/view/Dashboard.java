@@ -7,9 +7,11 @@ import org.apache.commons.io.FileUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
-public class Dashboard extends JFrame {
+public class Dashboard extends JFrame implements MouseListener {
 
     Looca looca = new Looca();
     List<Volume> listVolume = looca.getGrupoDeDiscos().getVolumes();
@@ -25,40 +27,58 @@ public class Dashboard extends JFrame {
     private final String COLOR_DARK_TEXT = "#333";
     private final String COLOR_LIGHT_TEXT = "#f3f3f3";
 
-    private int mainScreenX;
-    private Double iconAlpha = 0.5;
+    private int screenX;
+    private int screenWidth;
+    private int screenHeight;
 
     // Navbar
     JPanel pnlNavbar;
 
     JLabel lblNavBemVindo;
     JLabel lblNavUsuario;
-
     JLabel lblNavInfoIcon;
     JLabel lblNavInfo;
-
     JLabel lblNavGraficosIcon;
     JLabel lblNavGraficos;
-
     JLabel lblNavProcessosIcon;
     JLabel lblNavProcessos;
 
-    // Computer labels
+    // Icons
+    ImageIcon infoIcon;
+    ImageIcon graficosIcon;
+    ImageIcon processosIcon;
+
+    ImageIcon infoUnselectedIcon;
+    ImageIcon graficosUnselectedIcon;
+    ImageIcon processosUnselectedIcon;
+
+    // Info Screen
+    JPanel pnlInfoScreen;
+
     JLabel lblNomeComputador;
     JLabel lblRamTotal;
     JLabel lblNomeProcessador;
     JLabel lblVolumes;
 
-    // Charts
+    // Charts Screen
+    JPanel pnlChartsScreen;
+
     JProgressBar pgbRAM;
     JProgressBar pgbCPU;
     JProgressBar pgbDisco;
 
+    // Processes Screen
+    JPanel pnlProcessesScreen;
+
     public Dashboard(Usuario user) {
         initDashboard();
+        initIcons();
         initNavbar();
-        initLabels();
-        initCharts();
+
+        initInfoScreen();
+        initChartsScreen();
+        initProcessesScreen();
+
         initInfoGetter();
 
         add();
@@ -69,9 +89,13 @@ public class Dashboard extends JFrame {
 
     public Dashboard() {
         initDashboard();
+        initIcons();
         initNavbar();
-        initLabels();
-        initCharts();
+
+        initInfoScreen();
+        initChartsScreen();
+        initProcessesScreen();
+
         initInfoGetter();
 
         add();
@@ -80,7 +104,7 @@ public class Dashboard extends JFrame {
 
     private void initDashboard() {
         setTitle("Dashboard");
-        setSize(1044,700);
+        setSize(1044, 700);
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -88,12 +112,37 @@ public class Dashboard extends JFrame {
         this.getContentPane().setBackground(Color.decode(COLOR_BACKGROUND));
     }
 
+    private void initIcons() {
+        // Standard Icons
+        infoIcon = new ImageIcon("src/assets/info-nav-icon.png");
+        infoIcon.setImage(infoIcon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+
+        graficosIcon = new ImageIcon("src/assets/grafico-nav-icon.png");
+        graficosIcon.setImage(graficosIcon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+
+        processosIcon = new ImageIcon("src/assets/processos-nav-icon.png");
+        processosIcon.setImage(processosIcon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+
+        // Unselected Icons
+        infoUnselectedIcon = new ImageIcon("src/assets/info-nav-unselected-icon.png");
+        infoUnselectedIcon.setImage(infoUnselectedIcon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+
+        graficosUnselectedIcon = new ImageIcon("src/assets/grafico-nav-unselected-icon.png");
+        graficosUnselectedIcon.setImage(graficosUnselectedIcon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+
+        processosUnselectedIcon = new ImageIcon("src/assets/processos-nav-unselected-icon.png");
+        processosUnselectedIcon.setImage(processosUnselectedIcon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
+    }
+
     private void initNavbar() {
         pnlNavbar = new JPanel();
         pnlNavbar.setBounds(0, 0, 200, 700);
         pnlNavbar.setBackground(Color.decode(COLOR_NAVBAR));
         pnlNavbar.setLayout(null);
-        mainScreenX = pnlNavbar.getX() + pnlNavbar.getWidth() + 50;
+
+        screenX = pnlNavbar.getX() + pnlNavbar.getWidth() + 50;
+        screenWidth = 1044 - (screenX + 50);
+        screenHeight = 600;
 
         lblNavBemVindo = new JLabel();
         lblNavBemVindo.setBounds(
@@ -101,7 +150,7 @@ public class Dashboard extends JFrame {
         );
         lblNavBemVindo.setHorizontalAlignment(SwingConstants.CENTER);
         lblNavBemVindo.setForeground(Color.decode(COLOR_LIGHT_TEXT));
-        lblNavBemVindo.setFont(new Font(FONT, Font.PLAIN,16));
+        lblNavBemVindo.setFont(new Font(FONT, Font.PLAIN, 16));
         lblNavBemVindo.setText("Bem-Vindo(a)");
 
         lblNavUsuario = new JLabel();
@@ -111,7 +160,7 @@ public class Dashboard extends JFrame {
         );
         lblNavUsuario.setHorizontalAlignment(SwingConstants.CENTER);
         lblNavUsuario.setForeground(Color.decode(COLOR_LIGHT_TEXT));
-        lblNavUsuario.setFont(new Font(FONT, Font.BOLD,20));
+        lblNavUsuario.setFont(new Font(FONT, Font.BOLD, 20));
         lblNavUsuario.setText("DANIEL");
 //        lblNavbarUsuario.setText(user.getNome());
 
@@ -123,10 +172,9 @@ public class Dashboard extends JFrame {
         lblNavInfoIcon.setHorizontalAlignment(SwingConstants.CENTER);
         lblNavInfoIcon.setOpaque(true);
         lblNavInfoIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        lblNavInfoIcon.setBackground(new Color(0,0,0,0));
-        ImageIcon infoIcon = new ImageIcon("src/assets/info-nav-icon.png");
-        infoIcon.setImage(infoIcon.getImage().getScaledInstance(75,75,Image.SCALE_SMOOTH));
+        lblNavInfoIcon.setBackground(new Color(0, 0, 0, 0));
         lblNavInfoIcon.setIcon(infoIcon);
+        lblNavInfoIcon.addMouseListener(this);
 
         lblNavInfo = new JLabel();
         lblNavInfo.setBounds(
@@ -135,7 +183,7 @@ public class Dashboard extends JFrame {
         );
         lblNavInfo.setHorizontalAlignment(SwingConstants.CENTER);
         lblNavInfo.setForeground(Color.decode(COLOR_LIGHT_TEXT));
-        lblNavInfo.setFont(new Font(FONT, Font.PLAIN,16));
+        lblNavInfo.setFont(new Font(FONT, Font.PLAIN, 16));
         lblNavInfo.setText("Info");
 
         lblNavGraficosIcon = new JLabel();
@@ -146,10 +194,9 @@ public class Dashboard extends JFrame {
         lblNavGraficosIcon.setHorizontalAlignment(SwingConstants.CENTER);
         lblNavGraficosIcon.setOpaque(true);
         lblNavGraficosIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        lblNavGraficosIcon.setBackground(new Color(0,0,0,0));
-        ImageIcon graficosIcon = new ImageIcon("src/assets/grafico-nav-unselected-icon.png");
-        graficosIcon.setImage(graficosIcon.getImage().getScaledInstance(75,75,Image.SCALE_SMOOTH));
-        lblNavGraficosIcon.setIcon(graficosIcon);
+        lblNavGraficosIcon.setBackground(new Color(0, 0, 0, 0));
+        lblNavGraficosIcon.setIcon(graficosUnselectedIcon);
+        lblNavGraficosIcon.addMouseListener(this);
 
         lblNavGraficos = new JLabel();
         lblNavGraficos.setBounds(
@@ -158,7 +205,7 @@ public class Dashboard extends JFrame {
         );
         lblNavGraficos.setHorizontalAlignment(SwingConstants.CENTER);
         lblNavGraficos.setForeground(Color.decode(COLOR_LIGHT_TEXT));
-        lblNavGraficos.setFont(new Font(FONT, Font.PLAIN,16));
+        lblNavGraficos.setFont(new Font(FONT, Font.PLAIN, 16));
         lblNavGraficos.setText("Gráficos");
 
         lblNavProcessosIcon = new JLabel();
@@ -169,10 +216,9 @@ public class Dashboard extends JFrame {
         lblNavProcessosIcon.setHorizontalAlignment(SwingConstants.CENTER);
         lblNavProcessosIcon.setOpaque(true);
         lblNavProcessosIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        lblNavProcessosIcon.setBackground(new Color(0,0,0,0));
-        ImageIcon processosIcon = new ImageIcon("src/assets/processos-nav-unselected-icon.png");
-        processosIcon.setImage(processosIcon.getImage().getScaledInstance(75,75,Image.SCALE_SMOOTH));
-        lblNavProcessosIcon.setIcon(processosIcon);
+        lblNavProcessosIcon.setBackground(new Color(0, 0, 0, 0));
+        lblNavProcessosIcon.setIcon(processosUnselectedIcon);
+        lblNavProcessosIcon.addMouseListener(this);
 
         lblNavProcessos = new JLabel();
         lblNavProcessos.setBounds(
@@ -181,64 +227,67 @@ public class Dashboard extends JFrame {
         );
         lblNavProcessos.setHorizontalAlignment(SwingConstants.CENTER);
         lblNavProcessos.setForeground(Color.decode(COLOR_LIGHT_TEXT));
-        lblNavProcessos.setFont(new Font(FONT, Font.PLAIN,16));
+        lblNavProcessos.setFont(new Font(FONT, Font.PLAIN, 16));
         lblNavProcessos.setText("Processos");
 
     }
 
-    private void initLabels() {
+    private void initInfoScreen() {
+        pnlInfoScreen = new JPanel();
+        pnlInfoScreen.setBounds(
+                screenX, 25, screenWidth, screenHeight
+        );
+        pnlInfoScreen.setBackground(Color.decode(COLOR_BACKGROUND));
+        pnlInfoScreen.setLayout(null);
+
         lblNomeComputador = new JLabel();
         lblNomeComputador.setBounds(
-                mainScreenX,
-                25, 700, 25
+                0, 0, 700, 25
         );
         lblNomeComputador.setForeground(Color.decode(COLOR_DARK_TITLE));
-        lblNomeComputador.setFont(new Font(FONT, Font.BOLD,20));
+        lblNomeComputador.setFont(new Font(FONT, Font.BOLD, 20));
         lblNomeComputador.setText(String.format(
-            "%s %s - Executando como %s",
-            looca.getSistema().getFabricante(),
-            looca.getSistema().getSistemaOperacional(),
-            looca.getSistema().getPermissao() ? "admin" : "usuário padrão"
+                "%s %s - Executando como %s",
+                looca.getSistema().getFabricante(),
+                looca.getSistema().getSistemaOperacional(),
+                looca.getSistema().getPermissao() ? "admin" : "usuário padrão"
         ));
 
         lblRamTotal = new JLabel();
         lblRamTotal.setBounds(
-                mainScreenX,
-                lblNomeComputador.getY() + lblNomeComputador.getHeight() + 5,
+                0, lblNomeComputador.getY() + lblNomeComputador.getHeight() + 5,
                 700, 25
         );
         lblRamTotal.setForeground(Color.decode(COLOR_DARK_TEXT));
-        lblRamTotal.setFont(new Font(FONT, Font.PLAIN,12));
+        lblRamTotal.setFont(new Font(FONT, Font.PLAIN, 12));
         lblRamTotal.setText(String.format(
-            "Total RAM: %s",
+                "Total RAM: %s",
                 FileUtils.byteCountToDisplaySize(looca.getMemoria().getTotal())
         ));
 
         lblNomeProcessador = new JLabel();
         lblNomeProcessador.setBounds(
-                mainScreenX,
-                lblRamTotal.getY() + lblRamTotal.getHeight() + 5,
+                0, lblRamTotal.getY() + lblRamTotal.getHeight() + 5,
                 700, 25
         );
         lblNomeProcessador.setForeground(Color.decode(COLOR_DARK_TEXT));
-        lblNomeProcessador.setFont(new Font(FONT, Font.PLAIN,12));
+        lblNomeProcessador.setFont(new Font(FONT, Font.PLAIN, 12));
         lblNomeProcessador.setText(String.format(
-            "Processador: %s",
-            looca.getProcessador().getNome()
+                "Processador: %s",
+                looca.getProcessador().getNome()
         ));
 
         lblVolumes = new JLabel();
         lblVolumes.setBounds(
-                mainScreenX,
-                lblNomeProcessador.getY() + lblNomeProcessador.getHeight() + 5,
+                0, lblNomeProcessador.getY() + lblNomeProcessador.getHeight() + 5,
                 700, 25
         );
         lblVolumes.setForeground(Color.decode(COLOR_DARK_TEXT));
-        lblVolumes.setFont(new Font(FONT, Font.PLAIN,12));
+        lblVolumes.setFont(new Font(FONT, Font.PLAIN, 12));
 
-        for (Volume v: listVolume) {
+        for (Volume v : listVolume) {
             lblVolumes.setText(String.format(
-                "%sDisco %s: %s     ",
+                    "%sDisco %s: %s     ",
                     lblVolumes.getText(),
                     v.getPontoDeMontagem(),
                     FileUtils.byteCountToDisplaySize(v.getTotal())
@@ -246,11 +295,18 @@ public class Dashboard extends JFrame {
         }
     }
 
-    private void initCharts() {
+    private void initChartsScreen() {
+        pnlChartsScreen = new JPanel();
+        pnlChartsScreen.setBounds(
+                screenX, 25, screenWidth, screenHeight
+        );
+        pnlChartsScreen.setBackground(Color.decode(COLOR_BACKGROUND));
+        pnlChartsScreen.setLayout(null);
+        pnlChartsScreen.setVisible(false);
+
         pgbRAM = new JProgressBar();
         pgbRAM.setBounds(
-                mainScreenX,
-                lblVolumes.getY() + lblVolumes.getHeight() + 5,
+                0, lblVolumes.getY() + lblVolumes.getHeight() + 5,
                 700, 25
         );
         pgbRAM.setStringPainted(true);
@@ -258,8 +314,7 @@ public class Dashboard extends JFrame {
 
         pgbCPU = new JProgressBar();
         pgbCPU.setBounds(
-                mainScreenX,
-                pgbRAM.getY() + pgbRAM.getHeight() + 5,
+                0, pgbRAM.getY() + pgbRAM.getHeight() + 5,
                 700, 25
         );
         pgbCPU.setStringPainted(true);
@@ -267,44 +322,50 @@ public class Dashboard extends JFrame {
 
         pgbDisco = new JProgressBar();
         pgbDisco.setBounds(
-                mainScreenX,
-                pgbCPU.getY() + pgbCPU.getHeight() + 5,
+                0, pgbCPU.getY() + pgbCPU.getHeight() + 5,
                 700, 25
         );
         pgbDisco.setStringPainted(true);
         pgbDisco.setMaximum(100);
     }
 
+    private void initProcessesScreen() {
+        pnlProcessesScreen = new JPanel();
+        pnlProcessesScreen.setBounds(
+                screenX, 25, screenWidth, screenHeight
+        );
+        pnlProcessesScreen.setBackground(Color.decode(COLOR_BACKGROUND));
+        pnlProcessesScreen.setLayout(null);
+        pnlProcessesScreen.setVisible(false);
+    }
+
     private void initInfoGetter() {
 
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (true) {
-                        Thread.sleep(1000);
+        new Thread(() -> {
+            try {
+                while (true) {
+                    Thread.sleep(1000);
 
-                        Double usoRAM = (looca.getMemoria().getEmUso().doubleValue() / looca.getMemoria().getTotal().doubleValue()) * 100;
-                        Double usoCPU = looca.getProcessador().getUso();
+                    Double usoRAM = (looca.getMemoria().getEmUso().doubleValue() / looca.getMemoria().getTotal().doubleValue()) * 100;
+                    Double usoCPU = looca.getProcessador().getUso();
 
-                        Double total = 0.0;
-                        Double totalDisponivel = 0.0;
+                    Double total = 0.0;
+                    Double totalDisponivel = 0.0;
 
-                        for (Volume v: listVolume) {
-                            total += v.getTotal();
-                            totalDisponivel += v.getDisponivel();
-                        }
-
-                        Double usoDisco = ((total - totalDisponivel) / total) * 100;
-
-                        populateCharts(usoRAM, usoCPU, usoDisco);
-                        insertInDatabase(usoRAM, usoCPU, usoDisco);
+                    for (Volume v : listVolume) {
+                        total += v.getTotal();
+                        totalDisponivel += v.getDisponivel();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                    Double usoDisco = ((total - totalDisponivel) / total) * 100;
+
+                    populateCharts(usoRAM, usoCPU, usoDisco);
+                    insertInDatabase(usoRAM, usoCPU, usoDisco);
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }.start();
+        }).start();
     }
 
     private void populateCharts(Double usoRAM, Double usoCPU, Double usoDisco) {
@@ -318,7 +379,7 @@ public class Dashboard extends JFrame {
     }
 
     private void insertInDatabase(Double usoRAM, Double usoCPU, Double usoDisco) {
-       //
+        //
     }
 
     public void add() {
@@ -327,25 +388,73 @@ public class Dashboard extends JFrame {
 
         pnlNavbar.add(lblNavBemVindo);
         pnlNavbar.add(lblNavUsuario);
-
         pnlNavbar.add(lblNavInfoIcon);
         pnlNavbar.add(lblNavInfo);
-
         pnlNavbar.add(lblNavGraficosIcon);
         pnlNavbar.add(lblNavGraficos);
-
         pnlNavbar.add(lblNavProcessosIcon);
         pnlNavbar.add(lblNavProcessos);
 
-        // Computer labels
-        add(lblNomeComputador);
-        add(lblRamTotal);
-        add(lblNomeProcessador);
-        add(lblVolumes);
+        // Info Screen
+        add(pnlInfoScreen);
 
-        // Charts
-        add(pgbRAM);
-        add(pgbCPU);
-        add(pgbDisco);
+        pnlInfoScreen.add(lblNomeComputador);
+        pnlInfoScreen.add(lblRamTotal);
+        pnlInfoScreen.add(lblNomeProcessador);
+        pnlInfoScreen.add(lblVolumes);
+
+        // Charts Screen
+        add(pnlChartsScreen);
+
+        pnlChartsScreen.add(pgbRAM);
+        pnlChartsScreen.add(pgbCPU);
+        pnlChartsScreen.add(pgbDisco);
+
+        // Processes Screen
+        add(pnlProcessesScreen);
+
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        Object source = e.getSource();
+
+        if (lblNavInfoIcon.equals(source) && !pnlInfoScreen.isVisible()) {
+            pnlInfoScreen.setVisible(true);
+            pnlChartsScreen.setVisible(false);
+            pnlProcessesScreen.setVisible(false);
+
+            lblNavInfoIcon.setIcon(infoIcon);
+            lblNavGraficosIcon.setIcon(graficosUnselectedIcon);
+            lblNavProcessosIcon.setIcon(processosUnselectedIcon);
+        } else if (lblNavGraficosIcon.equals(source) && !pnlChartsScreen.isVisible()) {
+            pnlInfoScreen.setVisible(false);
+            pnlChartsScreen.setVisible(true);
+            pnlProcessesScreen.setVisible(false);
+
+            lblNavInfoIcon.setIcon(infoUnselectedIcon);
+            lblNavGraficosIcon.setIcon(graficosIcon);
+            lblNavProcessosIcon.setIcon(processosUnselectedIcon);
+        } else if (lblNavProcessosIcon.equals(source) && !pnlProcessesScreen.isVisible()) {
+            pnlInfoScreen.setVisible(false);
+            pnlChartsScreen.setVisible(false);
+            pnlProcessesScreen.setVisible(true);
+
+            lblNavInfoIcon.setIcon(infoUnselectedIcon);
+            lblNavGraficosIcon.setIcon(graficosUnselectedIcon);
+            lblNavProcessosIcon.setIcon(processosIcon);
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {}
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {}
 }
