@@ -540,8 +540,8 @@ _________________________________ */
 
 .components{
     width: 100%;
-    padding: 40px;
-    border-radius: 20px;
+    padding: 20px;
+    border-radius: 4px;
     background: #fff;
     margin-bottom: 20px;
 }
@@ -577,10 +577,10 @@ _________________________________ */
     width: 32%;
     height: 150px;
     border-bottom: 40px solid #ebebeb;
-    border-top: 20px solid #ebebeb;
-    border-right: 20px solid #ebebeb;
-    border-left: 20px solid #ebebeb;
-    border-radius: 10px;
+    border-top: 10px solid #ebebeb;
+    border-right: 10px solid #ebebeb;
+    border-left: 10px solid #ebebeb;
+    border-radius: 4px;
 }
 
 .canvas{
@@ -606,7 +606,7 @@ _________________________________ */
 
 .chart_atvds{
     width: 80%;
-    height: 200px;
+    height: 250px;
     background: #fff;
     padding: 0 0 50px;
     margin: 0 auto;
@@ -614,14 +614,14 @@ _________________________________ */
 
 .dash_right{
     width: 29%;
-    border-radius: 20px;
+    border-radius: 4px;
     padding: 0 20px;
     background: #fff;
 }
 
 .dash_right h1{
     text-align: center;
-    padding: 40px 20px 0;
+    padding: 20px 20px 0;
 }
 
 .atvds{
@@ -635,7 +635,7 @@ _________________________________ */
 .card_atvd{
     width: 100%;
     background: #8c7bd4;
-    border-radius: 10px;
+    border-radius: 4px;
     padding: 20px 20px 25px;
     margin-bottom: 10px;
 }

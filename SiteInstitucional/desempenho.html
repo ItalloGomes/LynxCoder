@@ -98,7 +98,7 @@
                                 </div>
                             </div>
                             <div class="dash_item">
-                                <h4 style="margin-bottom: 2px;">Memória</h4>
+                                <h4>Memória</h4>
             
                                 <div class="canvas">
                                     <canvas id="memoriaCanvas"></canvas>
@@ -226,7 +226,8 @@
                 labels: ['Usado', 'Livre'],
                 datasets: [{
                     data: [310000000, 131000000],
-                    backgroundColor: ['#25224F', '#43318f']
+                    backgroundColor: ['#43318f', '#25224F'],
+                    borderWidth: 0
                 }]
             },
             options: {
@@ -244,7 +245,8 @@
                 labels: ['Usado', 'Livre'],
                 datasets: [{
                     data: [120000000, 131000000],
-                    backgroundColor: ['#25224F', '#43318f']
+                    backgroundColor: ['#43318f', '#25224F'],
+                    borderWidth: 0
                 }]
             },
             options: {
@@ -262,7 +264,8 @@
                 labels: ['Usado', 'Livre'],
                 datasets: [{
                     data: [31000000, 131000000],
-                    backgroundColor: ['#25224F', '#43318f']
+                    backgroundColor: ['#43318f', '#25224F'],
+                    borderWidth: 0
                 }]
             },
             options: {
@@ -278,13 +281,12 @@
         data: {
             labels: ['ATVD1', 'ATVD2', 'ATVD3', 'ATVD4'],
             datasets: [ {
-                data: [100, 0, 50, 80],
+                data: [80, 0, 40, 50],
                 backgroundColor: ['#52cc68', '#605ca1', '#605ca1', '#605ca1']
             }]
         },
         options: {
             title: {
-                // text: "Number of passengers carried in 2017 (in mio.)",
                 display: false
             },
             legend: {
@@ -299,12 +301,12 @@
             labels: ['ATVD1', 'ATVD2', 'ATVD3', 'ATVD4'],
             datasets: [ {
                 data: [100, 0, 50, 80],
-                backgroundColor: ['#52cc68', '#605ca1', '#605ca1', '#605ca1']
+                backgroundColor: ['#52cc68', '#605ca1', '#605ca1', '#605ca1'],
+                borderWidth: 0
             }]
         },
         options: {
             title: {
-                // text: "Number of passengers carried in 2017 (in mio.)",
                 display: false
             },
             legend: {
