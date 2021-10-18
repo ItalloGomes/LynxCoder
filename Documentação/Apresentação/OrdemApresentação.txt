@@ -1,0 +1,29 @@
+- Contextualização do Projeto (3 Slides que melhor explicam seu projeto);
+
+- Site institucional
+
+- Entregáveis:
+
+ - Diagrama da Solução – Visão Técnica:
+ - BPMN
+ - Mockup de Tela
+
+- Mostrar o que está funcionando;
+
+ - Protótipo Funcional do Java (login - dashboard desktop) 
+ - JAR inicial rodando em Cliente Linux em VM
+
+ - dashboard
+
+- Explicar uma parte DESAFIADORA técnica, seja código ou configuração;
+
+ - Desenvolver o JFrame a mão, tornando nosso projeto ímpar
+ - Desenvolvemos uma API NODE para tratar os dados e ligar os artefatos
+
+- Conclusão;
+
+- Agradecimento;
+
+ - Alpe
+ - Bandtec
+ - Linx
