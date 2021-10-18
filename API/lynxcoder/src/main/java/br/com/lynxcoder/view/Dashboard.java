@@ -1,5 +1,7 @@
 package br.com.lynxcoder.view;
 
+import br.com.lynxcoder.DAO.MaquinaDAO;
+import br.com.lynxcoder.model.Maquina;
 import br.com.lynxcoder.model.Usuario;
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Volume;
@@ -105,6 +107,38 @@ public class Dashboard extends JFrame implements MouseListener {
 
         initMonitoradorDeHardware();
         initMonitoradorDeProcessos();
+
+        MaquinaDAO maqDao = new MaquinaDAO();
+
+        if(!maqDao.hasMaquina(user)) {
+
+            int response = JOptionPane.showConfirmDialog(null, "Essa é sua máquina principal?");
+            System.out.println(response);
+            switch (response) {
+                case 0:
+
+                    Maquina maquina = new Maquina();
+                    maquina.setTipoCPU(looca.getProcessador().getNome());
+                    maquina.setTotalMemoria(byteCountConvert(looca.getMemoria().getTotal()));
+                    long totalDisco = 0;
+                    for (Volume v : listVolume) {
+                        totalDisco += v.getTotal();
+                    }
+                    maquina.setTotalDisco(byteCountConvert(totalDisco));
+                    maquina.setSistemaOperacional(looca.getSistema().getFabricante() + " "
+                            + looca.getSistema().getSistemaOperacional() + " "
+                            + looca.getSistema().getArquitetura());
+                    maquina.setUsuario(user);
+
+                    maqDao.adicionarMaquina(user, maquina);
+
+                    break;
+                case 2:
+
+                    break;
+            }
+
+        }
 
         add();
         setVisible(true);

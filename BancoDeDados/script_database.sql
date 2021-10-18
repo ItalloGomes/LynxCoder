@@ -153,8 +153,3 @@ select * from tb_maquina;
 SELECT * FROM tb_usuario where login = 'itallo.gomes' and senha = 'urubu100';
 
 select count(id_usuario) from tb_usuario;
-
-
-
-
-    
