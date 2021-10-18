@@ -39,7 +39,7 @@
 
             <li>
                 <a href="desempenho.html">
-                    <i class='bx bx-line-chart'></i>
+                    <i class='bx bxs-dashboard'></i>
                     <span class="links_name">Desempenho</span>
                 </a>
                 <span class="tooltip">Desempenho</span>
@@ -47,7 +47,7 @@
 
             <li>
                 <a href="relatorios.html">
-                    <i class='bx bxs-dashboard'></i>
+                    <i class='bx bx-line-chart'></i>
                     <span class="links_name">Relatórios</span>
                 </a>
                 <span class="tooltip">Relatórios</span>
@@ -136,18 +136,18 @@
 
                 <div class="atvds">
                     <div class="card_atvd">
-                        <h2>N°2</h2>
-                        <h1>%0</h1>
+                        <h2><b>N°2</b> - Atividade...</h2>
+                        <p>0%</p>
                     </div>
 
                     <div class="card_atvd">
-                        <h2>N°3</h2>
-                        <h1>%50</h1>
+                        <h2><b>N°3</b> - Atividade...</h2>
+                        <p>50%</p>
                     </div>
 
                     <div class="card_atvd">
-                        <h2>N°4</h2>
-                        <h1>%80</h1>
+                        <h2><b>N°4</b> - Atividade...</h2>
+                        <p>80%</p>
                     </div>
                 </div>
             </div>
@@ -225,12 +225,21 @@
             data: {
                 labels: ['Usado', 'Livre'],
                 datasets: [{
-                    data: [310000000, 131000000],
-                    backgroundColor: ['#43318f', '#25224F'],
+                    data: [10, 90],
+                    backgroundColor: ['#43318f', '#d2befa'],
                     borderWidth: 0
                 }]
             },
             options: {
+                elements: {
+                    center: {
+                        text: '10%',
+                        color: '#43318f',
+                        sidePadding: 50,
+                        minFontSize: 18,
+                    }
+                },
+                cutoutPercentage: 85,
                 legend: {
                     display: false,
                 },
@@ -244,12 +253,21 @@
             data: {
                 labels: ['Usado', 'Livre'],
                 datasets: [{
-                    data: [120000000, 131000000],
-                    backgroundColor: ['#43318f', '#25224F'],
+                    data: [40, 60],
+                    backgroundColor: ['#43318f', '#d2befa'],
                     borderWidth: 0
                 }]
             },
             options: {
+                elements: {
+                    center: {
+                        text: '40%',
+                        color: '#43318f',
+                        sidePadding: 50,
+                        minFontSize: 18,
+                    }
+                },
+                cutoutPercentage: 85,
                 legend: {
                     display: false,
                 },
@@ -263,12 +281,21 @@
             data: {
                 labels: ['Usado', 'Livre'],
                 datasets: [{
-                    data: [31000000, 131000000],
-                    backgroundColor: ['#43318f', '#25224F'],
+                    data: [80, 20],
+                    backgroundColor: ['#43318f', '#d2befa'],
                     borderWidth: 0
                 }]
             },
             options: {
+                elements: {
+                    center: {
+                        text: '80%',
+                        color: '#43318f',
+                        sidePadding: 50,
+                        minFontSize: 18,
+                    }
+                },
+                cutoutPercentage: 85,
                 legend: {
                     display: false,
                 },
@@ -281,8 +308,10 @@
         data: {
             labels: ['ATVD1', 'ATVD2', 'ATVD3', 'ATVD4'],
             datasets: [ {
-                data: [80, 0, 40, 50],
-                backgroundColor: ['#52cc68', '#605ca1', '#605ca1', '#605ca1']
+                data: [100, 0, 40, 50],
+                backgroundColor: ['#322f5036', '#322f5036', '#322f5036', '#322f5036'],
+                borderColor: ['#605ca1', '#605ca1', '#605ca1', '#605ca1'],
+                borderWidth: 3
             }]
         },
         options: {
@@ -301,8 +330,9 @@
             labels: ['ATVD1', 'ATVD2', 'ATVD3', 'ATVD4'],
             datasets: [ {
                 data: [100, 0, 50, 80],
-                backgroundColor: ['#52cc68', '#605ca1', '#605ca1', '#605ca1'],
-                borderWidth: 0
+                backgroundColor: ['#52cc6852', '#322f5036', '#322f5036', '#322f5036'],
+                borderColor: ['#52cc68', '#605ca1', '#605ca1', '#605ca1'],
+                borderWidth: 2
             }]
         },
         options: {
@@ -311,11 +341,50 @@
             },
             legend: {
                 display: false
+            },
+            scales: {
+                xAxes: [{
+                    barThickness : 50
+                }]
             }
         }
     });
 
     Chart.defaults.global.defaultFontColor = "#303030";
+    Chart.pluginService.register({
+        beforeDraw: function (chart) {
+            if (chart.config.options.elements.center) {
+            var ctx = chart.chart.ctx;
+
+            var centerConfig = chart.config.options.elements.center;
+            var fontStyle = centerConfig.fontStyle || 'Arial';
+            var txt = centerConfig.text;
+            var color = centerConfig.color || '#000';
+            var sidePadding = centerConfig.sidePadding || 20;
+            var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
+
+            ctx.font = "30px " + fontStyle;
+
+            var stringWidth = ctx.measureText(txt).width;
+            var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+            var widthRatio = elementWidth / stringWidth;
+            var newFontSize = Math.floor(30 * widthRatio);
+            var elementHeight = (chart.innerRadius * 2);
+
+            var fontSizeToUse = Math.min(newFontSize, elementHeight);
+
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+            var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+            ctx.font = fontSizeToUse+"px " + fontStyle;
+            ctx.fillStyle = color;
+
+            ctx.fillText(txt, centerX, centerY);
+            }
+        }
+    });
 </script>
 
 

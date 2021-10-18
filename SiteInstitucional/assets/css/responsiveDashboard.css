@@ -348,7 +348,7 @@ _________________________________ */
 
 .infos_add{
     width: 35%;
-    height: 500px;
+    height: max-content;
     background: #fff;
     text-align: center;
     box-shadow: 0 0 10px #11101d1e;
@@ -358,6 +358,14 @@ _________________________________ */
 
 .infos_add h1{
     font-size: 25px;
+}
+
+.infos_add p:first-of-type{
+    padding: 40px 0 15px;
+}
+
+.infos_add p{
+    padding: 15px 0;
 }
 
 /* Relatórios 
@@ -560,9 +568,9 @@ _________________________________ */
 
 .dashboard h1{
     text-transform: capitalize;
-    font-weight: 800;
-    /* font-size: 20px; */
-    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 21px;
+    margin-bottom: 25px;
 }
 
 .info_components{
@@ -573,23 +581,37 @@ _________________________________ */
 }
 
 .dash_item{
-    background: #ebebeb;
+    background: #f3f3f3;
     width: 32%;
-    height: 150px;
-    border-bottom: 40px solid #ebebeb;
-    border-top: 10px solid #ebebeb;
-    border-right: 10px solid #ebebeb;
-    border-left: 10px solid #ebebeb;
+    /* height: 150px; */
+    border-top: 10px solid #f3f3f3;
+    border-left: 10px solid #f3f3f3;
+    border-right: 10px solid #f3f3f3;
+    border-bottom: 40px solid #f3f3f3;
     border-radius: 4px;
+}
+
+.dash_item h4{
+    margin-bottom: 20px;
 }
 
 .canvas{
     width: 100%;
     height: 100%;
-    padding: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.info_canvas{
+    margin-top: 20px;
+}
+
+.info_canvas h1{
+    color: #322f50;
+    font-weight: 700;
+    font-size: 30px;
 }
 
 #MyCanvas{
@@ -634,20 +656,23 @@ _________________________________ */
 
 .card_atvd{
     width: 100%;
-    background: #8c7bd4;
+    background: #f6f6fb;
     border-radius: 4px;
     padding: 20px 20px 25px;
     margin-bottom: 10px;
 }
 
-.card_atvd h1{
-    color: #fff;
-    padding: 0;
-    margin: 0;
-    font-size: 40px;
+.card_atvd h2{
+    color: #312f5a;
+    font-size: 15px;
+    font-weight: 500;
 }
 
-.card_atvd h2{
-    color: #fff;
-    font-size: 15px;
+.card_atvd p{
+    color: #312f5a;
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: 700;
 }
+
+
