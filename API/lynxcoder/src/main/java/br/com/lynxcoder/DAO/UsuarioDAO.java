@@ -30,6 +30,7 @@ public class UsuarioDAO {
                 user = new Usuario();
                 user.setId(rs.getInt("id_usuario"));
                 user.setNome(rs.getString("nome_usuario"));
+                user.setFoto(rs.getString("foto_usuario"));
                 user.setCargo(rs.getString("cargo"));
                 user.setLogin(rs.getString("login"));
                 user.setSenha(rs.getString("senha"));

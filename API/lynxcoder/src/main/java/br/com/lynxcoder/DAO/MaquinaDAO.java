@@ -45,22 +45,20 @@ public class MaquinaDAO {
 
         if(!hasMaquina(user)){
 
-            String sql = "insert into tb_maquina values ( null ,?,?,?,?,?,?,?)";
+            String sql = "insert into tb_maquina values ( null, ?, ?, ?, ?, ?)";
 
             Connection conn = Conexao.getConnection();
 
             try {
 
                 PreparedStatement pstm = conn.prepareStatement(sql);
-                pstm.setString(1, maquina.getMarca());
-                pstm.setString(2, maquina.getModelo());
-                pstm.setString(3, maquina.getTipoCPU());
-                pstm.setDouble(4, maquina.getTotalMemoria());
-                pstm.setDouble(5, maquina.getTotalDisco());
-                pstm.setString(6, maquina.getSistemaOperacional());
-                pstm.setInt(7, user.getId());
+                pstm.setString(1, maquina.getTipoCPU());
+                pstm.setString(2, maquina.getTotalMemoria());
+                pstm.setString(3, maquina.getTotalDisco());
+                pstm.setString(4, maquina.getSistemaOperacional());
+                pstm.setInt(5, user.getId());
 
-                pstm.executeQuery();
+                pstm.execute();
 
                 System.out.println("Máquina Cadastrada");
 

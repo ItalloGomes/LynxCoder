@@ -20,6 +20,7 @@ create table tb_sprint(
 create table tb_empresa(
 	id_empresa int primary key auto_increment
     ,nome_empresa varchar(100) not null
+    ,logo_empresa text
     ,CNPJ_empresa varchar(100) not null
     ,telefone_empresa varchar(15)
     ,estado_empresa varchar(100)
@@ -32,6 +33,7 @@ create table tb_empresa(
 create table tb_usuario(
 	id_usuario int primary key auto_increment
     ,nome_usuario varchar(50) not null
+    ,foto_usuario text
     ,cargo varchar(50) not null
     ,login varchar(100) not null
     ,senha varchar(100) not null
@@ -57,12 +59,10 @@ create table tb_feedback(
 
 create table tb_maquina(
 	id_maquina int primary key auto_increment
-    ,marca varchar(45)
-    ,modelo varchar(45)
     ,tipoCPU varchar(100)
-    ,totalMemoria decimal(3,1)
-    ,totalDisco decimal(5,1)
-    ,sistemaOperacional varchar(100)
+    ,totalMemoria varchar(15)
+    ,totalDisco varchar(15)
+    ,sistemaOperacional varchar(150)
     ,fk_usuario int
     ,foreign key(fk_usuario) references tb_usuario(id_usuario)
 );
@@ -92,6 +92,7 @@ insert into tb_empresa
 values (
 	null				  -- id_empresa
 	,"Alpe"				  -- nome_empresa
+    ,null				  -- logo_empresa
     ,"05.889.172/0001-81" -- cnpj_empresa
     ,"(11) 2391 9634"     -- telefone
     ,"São Paulo"		  -- estado
@@ -119,6 +120,7 @@ insert into tb_usuario
 values (
 	null            --  id_usuario
     ,"Itallo Gomes" -- ,nome_usuario
+    ,null			-- foto_usuario
     ,"Estagiário"   -- ,cargo
     ,"itallo.gomes" -- ,login
     ,"urubu100"     -- ,senha
@@ -132,6 +134,7 @@ insert into tb_usuario
 values (
 	null            --  id_usuario
     ,"Aleff Kelvin" -- ,nome_usuario
+    ,null			-- foto_usuario
     ,"Estagiário"   -- ,cargo
     ,"aleff.stampini" -- ,login
     ,"asd123"     -- ,senha
@@ -145,6 +148,7 @@ values (
 select * from tb_empresa;
 select * from tb_squad;
 select * from tb_usuario;
+select * from tb_maquina;
 
 SELECT * FROM tb_usuario where login = 'itallo.gomes' and senha = 'urubu100';
 

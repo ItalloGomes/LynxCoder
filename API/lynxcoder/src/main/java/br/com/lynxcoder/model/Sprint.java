@@ -52,4 +52,13 @@ public class Sprint {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public String toString() {
+        return "Sprint{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", squad=" + squad +
+                '}';
+    }
 }

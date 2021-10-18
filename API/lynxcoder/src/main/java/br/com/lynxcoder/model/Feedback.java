@@ -86,4 +86,16 @@ public class Feedback {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public String toString() {
+        return "Feedback{" +
+                "id=" + id +
+                ", tipo='" + tipo + '\'' +
+                ", mensagem='" + mensagem + '\'' +
+                ", aproveitamento=" + aproveitamento +
+                ", usuario=" + usuario +
+                ", sprint=" + sprint +
+                '}';
+    }
 }

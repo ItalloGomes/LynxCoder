@@ -6,6 +6,7 @@ public class Empresa {
 
     private Integer id;
     private String nome;
+    private String logo;
     private String CNPJ;
     private String telefone;
     private String estado;
@@ -21,18 +22,19 @@ public class Empresa {
         hashCode();
     }
 
-    public Empresa(Integer id, String nome, String CNPJ, String telefone, String estado,
+    public Empresa(Integer id, String nome, String logo, String CNPJ, String telefone, String estado,
                    String cidade, String CEP, String logradouro, String numero) {
 
-        this(nome, CNPJ, telefone, estado, cidade, CEP, logradouro, numero);
+        this(nome, logo, CNPJ, telefone, estado, cidade, CEP, logradouro, numero);
         this.id = id;
 
     }
 
-    public Empresa(String nome, String CNPJ, String telefone, String estado,
+    public Empresa(String nome, String logo, String CNPJ, String telefone, String estado,
                    String cidade, String CEP, String logradouro, String numero) {
 
         this.nome = nome;
+        this.logo = logo;
         this.CNPJ = CNPJ;
         this.telefone = telefone;
         this.estado = estado;
@@ -53,6 +55,14 @@ public class Empresa {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public String getCNPJ() {
@@ -122,5 +132,21 @@ public class Empresa {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Empresa{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", logo='" + logo + '\'' +
+                ", CNPJ='" + CNPJ + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", estado='" + estado + '\'' +
+                ", cidade='" + cidade + '\'' +
+                ", CEP='" + CEP + '\'' +
+                ", logradouro='" + logradouro + '\'' +
+                ", numero='" + numero + '\'' +
+                '}';
     }
 }

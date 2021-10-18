@@ -6,6 +6,7 @@ public class Usuario {
 
     private Integer id;
     private String nome;
+    private String foto;
     private String cargo;
     private String login;
     private String senha;
@@ -18,11 +19,13 @@ public class Usuario {
 
     public Usuario(Integer id){
         this.id = id;
+        hashCode();
     }
 
-    public Usuario(String nome, String cargo, String login, String senha,
+    public Usuario(String nome, String foto, String cargo, String login, String senha,
                    Boolean isGestor, Usuario supervisor, Empresa empresa, Squad squad) {
         this.nome = nome;
+        this.foto = foto;
         this.cargo = cargo;
         this.login = login;
         this.senha = senha;
@@ -32,10 +35,10 @@ public class Usuario {
         this.squad = squad;
     }
 
-    public Usuario(Integer id, String nome, String cargo, String login, String senha,
+    public Usuario(Integer id, String nome, String foto, String cargo, String login, String senha,
                    Boolean isGestor, Usuario supervisor, Empresa empresa, Squad squad) {
 
-        this(nome, cargo, login, senha, isGestor, supervisor, empresa, squad);
+        this(nome, foto,cargo, login, senha, isGestor, supervisor, empresa, squad);
         this.id = id;
 
     }
@@ -54,6 +57,14 @@ public class Usuario {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     public String getCargo() {
@@ -130,6 +141,7 @@ public class Usuario {
         return "Usuario{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
+                ", foto='" + foto + '\'' +
                 ", cargo='" + cargo + '\'' +
                 ", login='" + login + '\'' +
                 ", senha='" + senha + '\'' +

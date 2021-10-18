@@ -5,21 +5,17 @@ import java.util.Objects;
 public class Maquina {
 
     private Integer id;
-    private String marca;
-    private String modelo;
     private String tipoCPU;
-    private Double totalMemoria;
-    private Double totalDisco;
+    private String totalMemoria;
+    private String totalDisco;
     private String sistemaOperacional;
     private Usuario usuario;
 
     public Maquina() {
     }
 
-    public Maquina(String marca, String modelo, String tipoCPU, Double totalMemoria,
-                   Double totalDisco, String sistemaOperacional, Usuario usuario) {
-        this.marca = marca;
-        this.modelo = modelo;
+    public Maquina(String tipoCPU, String totalMemoria,
+                   String totalDisco, String sistemaOperacional, Usuario usuario) {
         this.tipoCPU = tipoCPU;
         this.totalMemoria = totalMemoria;
         this.totalDisco = totalDisco;
@@ -27,10 +23,10 @@ public class Maquina {
         this.usuario = usuario;
     }
 
-    public Maquina(Integer id, String marca, String modelo, String tipoCPU, Double totalMemoria,
-                   Double totalDisco, String sistemaOperacional, Usuario usuario) {
+    public Maquina(Integer id, String tipoCPU, String totalMemoria,
+                   String totalDisco, String sistemaOperacional, Usuario usuario) {
 
-        this(marca, modelo, tipoCPU, totalMemoria, totalDisco, sistemaOperacional, usuario);
+        this(tipoCPU, totalMemoria, totalDisco, sistemaOperacional, usuario);
         this.id = id;
 
     }
@@ -43,22 +39,6 @@ public class Maquina {
         this.id = id;
     }
 
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
     public String getTipoCPU() {
         return tipoCPU;
     }
@@ -67,19 +47,19 @@ public class Maquina {
         this.tipoCPU = tipoCPU;
     }
 
-    public Double getTotalMemoria() {
+    public String getTotalMemoria() {
         return totalMemoria;
     }
 
-    public void setTotalMemoria(Double totalMemoria) {
+    public void setTotalMemoria(String totalMemoria) {
         this.totalMemoria = totalMemoria;
     }
 
-    public Double getTotalDisco() {
+    public String getTotalDisco() {
         return totalDisco;
     }
 
-    public void setTotalDisco(Double totalDisco) {
+    public void setTotalDisco(String totalDisco) {
         this.totalDisco = totalDisco;
     }
 
@@ -110,5 +90,17 @@ public class Maquina {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Maquina{" +
+                "id=" + id +
+                ", tipoCPU='" + tipoCPU + '\'' +
+                ", totalMemoria=" + totalMemoria +
+                ", totalDisco=" + totalDisco +
+                ", sistemaOperacional='" + sistemaOperacional + '\'' +
+                ", usuario=" + usuario +
+                '}';
     }
 }
