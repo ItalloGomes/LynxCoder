@@ -385,7 +385,6 @@ _________________________________ */
     display: flex;
     justify-content: start;
     border-radius: 4px;
-    box-shadow: 0 0 10px #11101d1e; 
     position: relative;
 }
 
@@ -476,7 +475,6 @@ p.title_rel:last-of-type{
     width: 70%;
     border-radius: 5px 5px 0 0;
     overflow: hidden;
-    box-shadow: 0 0 10px #11101d1e;
 }
   
 .content-table thead tr {

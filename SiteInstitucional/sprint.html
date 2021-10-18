@@ -38,19 +38,27 @@
             </li>
 
             <li>
-                <a href="dashboard.html">
-                    <i class='bx bxs-dashboard'></i>
-                    <span class="links_name">Dashboard</span>
+                <a href="equipe.html">
+                    <i class='bx bxs-group'></i>
+                    <span class="links_name">Equipe</span>
                 </a>
-                <span class="tooltip">Dashboard</span>
+                <span class="tooltip">Equipe</span>
             </li>
 
             <li>
-                <a href="relatorios.html">
-                    <i class='bx bx-line-chart'></i>
-                    <span class="links_name">Relatórios</span>
+                <a href="sprint.html">
+                    <i class='bx bxs-bar-chart-alt-2'></i>
+                    <span class="links_name">Sprint</span>
                 </a>
-                <span class="tooltip">Relatórios</span>
+                <span class="tooltip">Sprint</span>
+            </li>
+
+            <li>
+                <a href="">
+                    <i class='bx bxs-cog'></i>
+                    <span class="links_name">Configurações</span>
+                </a>
+                <span class="tooltip">Configurações</span>
             </li>
 
             <li class="profile">
@@ -69,37 +77,7 @@
 
     <section class="home-section">
         <div class="dashboard">
-            <div class="dash_left">
-                <div class="components">
-                    <h1>Meu computador</h1>
-    
-                    <div class="dash_align">
-                        <div class="info_components">
-                            <div class="dash_item">
-                                <h4>CPU</h4>
-        
-                                <div class="canvas">
-                                    <canvas id="cpuCanvas"></canvas>
-                                </div>
-                            </div>
-                            <div class="dash_item">
-                                <h4>Disco</h4>
-            
-                                <div class="canvas">
-                                    <canvas id="discoCanvas"></canvas>
-                                </div>
-                            </div>
-                            <div class="dash_item">
-                                <h4>Memória</h4>
-            
-                                <div class="canvas">
-                                    <canvas id="memoriaCanvas"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
+            <div class="dash_left">  
                 <div class="components">
                     <h1>Sprint</h1>
                     
@@ -205,95 +183,9 @@
 </script>
 
 <script>
-    var cpu_canvas = document.getElementById('cpuCanvas');
-    var disco_canvas = document.getElementById('discoCanvas');
-    var memory_canvas = document.getElementById('memoriaCanvas');
+
     var test_bar = document.getElementById('testBar');
     var test_line = document.getElementById('testLine');
-
-    var graficoCpu = new Chart(
-        cpu_canvas, {
-            type: 'doughnut',
-            data: {
-                labels: ['Usado', 'Livre'],
-                datasets: [{
-                    data: [10, 90],
-                    backgroundColor: ['#43318f', '#d2befa'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                elements: {
-                    center: {
-                        text: '10%',
-                        color: '#43318f',
-                        sidePadding: 50,
-                        minFontSize: 18,
-                    }
-                },
-                cutoutPercentage: 85,
-                legend: {
-                    display: false,
-                },
-            }
-        }
-    );
-
-    var graficoDisco = new Chart(
-        disco_canvas, {
-            type: 'doughnut',
-            data: {
-                labels: ['Usado', 'Livre'],
-                datasets: [{
-                    data: [40, 60],
-                    backgroundColor: ['#43318f', '#d2befa'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                elements: {
-                    center: {
-                        text: '40%',
-                        color: '#43318f',
-                        sidePadding: 50,
-                        minFontSize: 18,
-                    }
-                },
-                cutoutPercentage: 85,
-                legend: {
-                    display: false,
-                },
-            }
-        }
-    );
-
-    var graficoMemoria = new Chart(
-        memory_canvas, {
-            type: 'doughnut',
-            data: {
-                labels: ['Usado', 'Livre'],
-                datasets: [{
-                    data: [80, 20],
-                    backgroundColor: ['#43318f', '#d2befa'],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                elements: {
-                    center: {
-                        text: '80%',
-                        color: '#43318f',
-                        sidePadding: 50,
-                        minFontSize: 18,
-                    }
-                },
-                cutoutPercentage: 85,
-                legend: {
-                    display: false,
-                },
-            }
-        }
-    );
 
     let graficoLine = new Chart(test_line, {
         type: 'line',
