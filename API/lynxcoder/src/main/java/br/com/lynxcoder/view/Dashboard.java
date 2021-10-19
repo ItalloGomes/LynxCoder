@@ -1,6 +1,8 @@
 package br.com.lynxcoder.view;
 
+import br.com.lynxcoder.DAO.LeituraDAO;
 import br.com.lynxcoder.DAO.MaquinaDAO;
+import br.com.lynxcoder.model.Leitura;
 import br.com.lynxcoder.model.Maquina;
 import br.com.lynxcoder.model.Usuario;
 import com.github.britooo.looca.api.core.Looca;
@@ -21,7 +23,11 @@ public class Dashboard extends JFrame implements MouseListener {
     Looca looca = new Looca();
     List<Volume> listVolume = looca.getGrupoDeDiscos().getVolumes();
 
+    MaquinaDAO maqDao;
+    LeituraDAO leitura;
+
     Usuario user;
+    Maquina maquinaUser;
 
     private final String COLOR_BACKGROUND = "#e7e5f0";
     private final String COLOR_NAVBAR = "#43318f";
@@ -106,15 +112,13 @@ public class Dashboard extends JFrame implements MouseListener {
         initHardwareScreen();
         initProcessesScreen();
 
-        initMonitoradorDeHardware();
-        initMonitoradorDeProcessos();
-
-        MaquinaDAO maqDao = new MaquinaDAO();
+        maqDao = new MaquinaDAO();
 
         if(!maqDao.hasMaquina(user)) {
 
             int response = JOptionPane.showConfirmDialog(null, "Essa é sua máquina principal?");
             System.out.println(response);
+
             switch (response) {
                 case 0:
 
@@ -131,13 +135,26 @@ public class Dashboard extends JFrame implements MouseListener {
                             + looca.getSistema().getArquitetura());
                     maquina.setUsuario(user);
 
+                    this.maquinaUser = maquina;
                     maqDao.adicionarMaquina(user, maquina);
+
+                    initMonitoradorDeHardware();
+                    initMonitoradorDeProcessos();
 
                     break;
                 case 2:
-
+                    dispose();
+                    break;
+                default:
                     break;
             }
+
+        } else {
+
+            this.maquinaUser = maqDao.findMaquina(user);
+
+            initMonitoradorDeHardware();
+            initMonitoradorDeProcessos();
 
         }
 
@@ -147,53 +164,6 @@ public class Dashboard extends JFrame implements MouseListener {
         this.user = user;
     }
 
-    public Dashboard() {
-        initDashboard();
-        initIcons();
-        initNavbar();
-
-        initHardwareScreen();
-        initProcessesScreen();
-
-        initMonitoradorDeHardware();
-        initMonitoradorDeProcessos();
-
-        MaquinaDAO maqDao = new MaquinaDAO();
-
-        if(!maqDao.hasMaquina(user)) {
-
-            int response = JOptionPane.showConfirmDialog(null, "Essa é sua máquina principal?");
-            System.out.println(response);
-            switch (response) {
-                case 0:
-
-                    Maquina maquina = new Maquina();
-                    maquina.setTipoCPU(looca.getProcessador().getNome());
-                    maquina.setTotalMemoria(FileUtils.byteCountToDisplaySize(looca.getMemoria().getTotal()));
-                    long totalDisco = 0;
-                    for (Volume v : listVolume) {
-                        totalDisco += v.getTotal();
-                    }
-                    maquina.setTotalDisco(FileUtils.byteCountToDisplaySize(totalDisco));
-                    maquina.setSistemaOperacional(looca.getSistema().getFabricante() + " "
-                            + looca.getSistema().getSistemaOperacional() + " "
-                            + looca.getSistema().getArquitetura());
-                    maquina.setUsuario(user);
-
-                    maqDao.adicionarMaquina(user, maquina);
-
-                    break;
-                case 2:
-
-                    break;
-            }
-
-        }
-
-        add();
-        setVisible(true);
-    }
-
     private void initDashboard() {
         setTitle("Dashboard");
         setSize(1044, 700);
@@ -201,7 +171,7 @@ public class Dashboard extends JFrame implements MouseListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
-<<<<<<< Updated upstream
+
         this.getContentPane().setBackground(Color.decode(COLOR_BACKGROUND));
     }
 
@@ -294,23 +264,8 @@ public class Dashboard extends JFrame implements MouseListener {
         lblNavProcessos.setForeground(newColorWithAlpha(Color.decode(COLOR_LIGHT_TEXT), 150));
         lblNavProcessos.setFont(new Font(FONT, Font.PLAIN, 16));
         lblNavProcessos.setText("Processos");
-=======
+
         this.getContentPane().setBackground(new Color(38, 24, 71));
-
-    }
-
-    private void initLabels() {
-        lblNomeComputador = new JLabel();
-        lblNomeComputador.setBounds(5, 10, 700, 25);
-        lblNomeComputador.setForeground(Color.WHITE);
-        lblNomeComputador.setFont(new Font("TimesNewRoman", Font.BOLD,20));
-        lblNomeComputador.setText(String.format(
-            "%s %s - Executando como %s",
-            looca.getSistema().getFabricante(),
-            looca.getSistema().getSistemaOperacional(),
-            looca.getSistema().getPermissao() ? "admin" : "usuário padrão"
-        ));
->>>>>>> Stashed changes
 
     }
 
@@ -587,7 +542,7 @@ public class Dashboard extends JFrame implements MouseListener {
         new Thread(() -> {
             try {
                 while (true) {
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
 
                     // RAM
                     Long usoRAM = looca.getMemoria().getEmUso();
@@ -609,6 +564,7 @@ public class Dashboard extends JFrame implements MouseListener {
 
                     showInfo(usoRAM, percentUsoVolumes, percentUsoCPU, percentUsoRAM);
                     insertInDatabase(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -676,7 +632,14 @@ public class Dashboard extends JFrame implements MouseListener {
     }
 
     private void insertInDatabase(Double percentUsoRAM, Double percentUsoCPU, Double percentUsoVolumes) {
-        //
+        Leitura dado = new Leitura();
+        dado.setPorcentagemUsoMemoria(percentUsoRAM);
+        dado.setPorcentagemUsoCPU(percentUsoCPU);
+        dado.setPorcentagemUsoDisco(percentUsoVolumes);
+        dado.setMaquina(maquinaUser);
+
+        leitura = new LeituraDAO();
+        leitura.save(dado);
     }
 
     public void add() {

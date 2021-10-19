@@ -12,6 +12,42 @@ import java.sql.SQLException;
 
 public class MaquinaDAO {
 
+    public Maquina findMaquina(Usuario user){
+
+        String sql = "select * from tb_maquina where fk_usuario = ?";
+
+        Connection conn = Conexao.getConnection();
+        try {
+
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, user.getId());
+
+            ResultSet rs = pstm.executeQuery();
+
+            Maquina maq10 = null;
+            while (rs.next()){
+                maq10 = new Maquina(
+                        rs.getInt("id_maquina"),
+                        rs.getString("tipoCPU"),
+                        rs.getString("totalMemoria"),
+                        rs.getString("totalDisco"),
+                        rs.getString("sistemaOperacional"),
+                        new Usuario(rs.getInt("fk_usuario"))
+                );
+            }
+
+            Conexao.closeConnection(conn, pstm);
+            return maq10;
+
+        }catch (SQLException e){
+            Conexao.closeConnection(conn);
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
     public boolean hasMaquina(Usuario user){
 
         String sql = "select * from tb_maquina where fk_usuario = ?";
@@ -45,11 +81,7 @@ public class MaquinaDAO {
 
         if(!hasMaquina(user)){
 
-<<<<<<< Updated upstream
-            String sql = "insert into tb_maquina values (?, ?, ?, ?, ?)";
-=======
-            String sql = "insert into tb_maquina values ( null, ?, ?, ?, ?, ?)";
->>>>>>> Stashed changes
+            String sql = "insert into tb_maquina values (null, ?, ?, ?, ?, ?)";
 
             Connection conn = Conexao.getConnection();
 
