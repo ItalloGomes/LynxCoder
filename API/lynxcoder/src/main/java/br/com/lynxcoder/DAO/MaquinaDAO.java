@@ -82,12 +82,13 @@ public class MaquinaDAO {
         if(!hasMaquina(user)){
 
             String sql = "insert into tb_maquina values (null, ?, ?, ?, ?, ?)";
+            String sqlServer = "insert into tb_maquina values (?, ?, ?, ?, ?)";
 
             Connection conn = Conexao.getConnection();
 
             try {
 
-                PreparedStatement pstm = conn.prepareStatement(sql);
+                PreparedStatement pstm = conn.prepareStatement(sqlServer);
                 pstm.setString(1, maquina.getTipoCPU());
                 pstm.setString(2, maquina.getTotalMemoria());
                 pstm.setString(3, maquina.getTotalDisco());
