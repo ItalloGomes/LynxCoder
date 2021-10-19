@@ -135,8 +135,9 @@ public class Dashboard extends JFrame implements MouseListener {
                             + looca.getSistema().getArquitetura());
                     maquina.setUsuario(user);
 
-                    this.maquinaUser = maquina;
                     maqDao.adicionarMaquina(user, maquina);
+
+                    this.maquinaUser = maqDao.findMaquina(user);
 
                     initMonitoradorDeHardware();
                     initMonitoradorDeProcessos();
