@@ -49,8 +49,8 @@ public class Dashboard extends JFrame implements MouseListener {
     // Navbar
     JPanel pnlNavbar;
 
-    JLabel lblNavBemVindo;
     JLabel lblNavUsuario;
+    JLabel lblNavCargo;
     JLabel lblNavHardwareIcon;
     JLabel lblNavHardware;
     JLabel lblNavProcessosIcon;
@@ -104,6 +104,8 @@ public class Dashboard extends JFrame implements MouseListener {
     JScrollPane spnListaProcessos;
 
     public Dashboard(Usuario user) {
+
+        this.user = user;
 
         initDashboard();
         initIcons();
@@ -161,8 +163,6 @@ public class Dashboard extends JFrame implements MouseListener {
 
         add();
         setVisible(true);
-
-        this.user = user;
     }
 
     private void initDashboard() {
@@ -202,24 +202,25 @@ public class Dashboard extends JFrame implements MouseListener {
         screenWidth = 1044 - (screenX + 50);
         screenHeight = 600;
 
-        lblNavBemVindo = new JLabel();
-        lblNavBemVindo.setBounds(
-                0, 25, pnlNavbar.getWidth(), 25
-        );
-        lblNavBemVindo.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNavBemVindo.setForeground(Color.decode(COLOR_LIGHT_TEXT));
-        lblNavBemVindo.setFont(new Font(FONT, Font.PLAIN, 16));
-        lblNavBemVindo.setText("Bem-Vindo(a)");
-
         lblNavUsuario = new JLabel();
         lblNavUsuario.setBounds(
-                0, lblNavBemVindo.getY() + lblNavBemVindo.getHeight(),
+                0, 25,
                 pnlNavbar.getWidth(), 25
         );
         lblNavUsuario.setHorizontalAlignment(SwingConstants.CENTER);
         lblNavUsuario.setForeground(Color.decode(COLOR_LIGHT_TEXT));
         lblNavUsuario.setFont(new Font(FONT, Font.BOLD, 20));
         lblNavUsuario.setText(user.getNome());
+
+        lblNavCargo = new JLabel();
+        lblNavCargo.setBounds(
+                0, lblNavUsuario.getY() + lblNavUsuario.getHeight(),
+                pnlNavbar.getWidth(), 25
+        );
+        lblNavCargo.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNavCargo.setForeground(Color.decode(COLOR_LIGHT_TEXT));
+        lblNavCargo.setFont(new Font(FONT, Font.PLAIN, 16));
+        lblNavCargo.setText(user.getCargo());
 
         lblNavHardwareIcon = new JLabel();
         lblNavHardwareIcon.setBounds(
@@ -645,8 +646,8 @@ public class Dashboard extends JFrame implements MouseListener {
         // Navbar
         add(pnlNavbar);
 
-        pnlNavbar.add(lblNavBemVindo);
         pnlNavbar.add(lblNavUsuario);
+        pnlNavbar.add(lblNavCargo);
         pnlNavbar.add(lblNavHardwareIcon);
         pnlNavbar.add(lblNavHardware);
         pnlNavbar.add(lblNavProcessosIcon);
