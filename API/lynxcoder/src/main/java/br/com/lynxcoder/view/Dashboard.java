@@ -21,6 +21,8 @@ import java.util.Objects;
 public class Dashboard extends JFrame implements MouseListener {
 
     Looca looca = new Looca();
+    private final int threadSleep = 5000;
+
     List<Volume> listVolume = looca.getGrupoDeDiscos().getVolumes();
 
     MaquinaDAO maqDao;
@@ -543,7 +545,7 @@ public class Dashboard extends JFrame implements MouseListener {
         new Thread(() -> {
             try {
                 while (true) {
-                    Thread.sleep(2000);
+                    Thread.sleep(threadSleep);
 
                     // RAM
                     Long usoRAM = looca.getMemoria().getEmUso();
@@ -578,7 +580,7 @@ public class Dashboard extends JFrame implements MouseListener {
         new Thread(() -> {
             try {
                 while (true) {
-                    Thread.sleep(3000);
+                    Thread.sleep(threadSleep);
 
                     lblProcessos.setText(String.format(
                             "Processos (%d)", looca.getGrupoDeProcessos().getTotalProcessos()
