@@ -45,7 +45,11 @@ public class MaquinaDAO {
 
         if(!hasMaquina(user)){
 
+<<<<<<< Updated upstream
             String sql = "insert into tb_maquina values (?, ?, ?, ?, ?)";
+=======
+            String sql = "insert into tb_maquina values ( null, ?, ?, ?, ?, ?)";
+>>>>>>> Stashed changes
 
             Connection conn = Conexao.getConnection();
 

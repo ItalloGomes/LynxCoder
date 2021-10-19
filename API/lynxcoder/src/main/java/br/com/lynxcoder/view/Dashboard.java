@@ -98,6 +98,7 @@ public class Dashboard extends JFrame implements MouseListener {
     JScrollPane spnListaProcessos;
 
     public Dashboard(Usuario user) {
+
         initDashboard();
         initIcons();
         initNavbar();
@@ -157,6 +158,38 @@ public class Dashboard extends JFrame implements MouseListener {
         initMonitoradorDeHardware();
         initMonitoradorDeProcessos();
 
+        MaquinaDAO maqDao = new MaquinaDAO();
+
+        if(!maqDao.hasMaquina(user)) {
+
+            int response = JOptionPane.showConfirmDialog(null, "Essa é sua máquina principal?");
+            System.out.println(response);
+            switch (response) {
+                case 0:
+
+                    Maquina maquina = new Maquina();
+                    maquina.setTipoCPU(looca.getProcessador().getNome());
+                    maquina.setTotalMemoria(FileUtils.byteCountToDisplaySize(looca.getMemoria().getTotal()));
+                    long totalDisco = 0;
+                    for (Volume v : listVolume) {
+                        totalDisco += v.getTotal();
+                    }
+                    maquina.setTotalDisco(FileUtils.byteCountToDisplaySize(totalDisco));
+                    maquina.setSistemaOperacional(looca.getSistema().getFabricante() + " "
+                            + looca.getSistema().getSistemaOperacional() + " "
+                            + looca.getSistema().getArquitetura());
+                    maquina.setUsuario(user);
+
+                    maqDao.adicionarMaquina(user, maquina);
+
+                    break;
+                case 2:
+
+                    break;
+            }
+
+        }
+
         add();
         setVisible(true);
     }
@@ -168,6 +201,7 @@ public class Dashboard extends JFrame implements MouseListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+<<<<<<< Updated upstream
         this.getContentPane().setBackground(Color.decode(COLOR_BACKGROUND));
     }
 
@@ -260,6 +294,23 @@ public class Dashboard extends JFrame implements MouseListener {
         lblNavProcessos.setForeground(newColorWithAlpha(Color.decode(COLOR_LIGHT_TEXT), 150));
         lblNavProcessos.setFont(new Font(FONT, Font.PLAIN, 16));
         lblNavProcessos.setText("Processos");
+=======
+        this.getContentPane().setBackground(new Color(38, 24, 71));
+
+    }
+
+    private void initLabels() {
+        lblNomeComputador = new JLabel();
+        lblNomeComputador.setBounds(5, 10, 700, 25);
+        lblNomeComputador.setForeground(Color.WHITE);
+        lblNomeComputador.setFont(new Font("TimesNewRoman", Font.BOLD,20));
+        lblNomeComputador.setText(String.format(
+            "%s %s - Executando como %s",
+            looca.getSistema().getFabricante(),
+            looca.getSistema().getSistemaOperacional(),
+            looca.getSistema().getPermissao() ? "admin" : "usuário padrão"
+        ));
+>>>>>>> Stashed changes
 
     }
 
