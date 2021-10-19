@@ -91,7 +91,7 @@ public class LoginScreen extends JFrame {
                 Usuario user = userDAO.logar(jtfUserName.getText(), new String(jpfPassword.getPassword()));
 
                 if( user != null ){
-                    System.out.println("Cebesta, ta logado guri!");
+                    System.out.println("Logando...");
                     Dashboard dashboard = new Dashboard(user);
                     dispose();
                 }else{

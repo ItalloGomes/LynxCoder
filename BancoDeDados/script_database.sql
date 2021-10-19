@@ -149,6 +149,7 @@ select * from tb_empresa;
 select * from tb_squad;
 select * from tb_usuario;
 select * from tb_maquina;
+select * from tb_leitura;
 
 SELECT * FROM tb_usuario where login = 'itallo.gomes' and senha = 'urubu100';
 

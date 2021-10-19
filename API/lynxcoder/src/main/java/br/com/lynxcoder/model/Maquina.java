@@ -14,6 +14,11 @@ public class Maquina {
     public Maquina() {
     }
 
+    public Maquina(Integer id){
+        this.id = id;
+        hashCode();
+    }
+
     public Maquina(String tipoCPU, String totalMemoria,
                    String totalDisco, String sistemaOperacional, Usuario usuario) {
         this.tipoCPU = tipoCPU;

@@ -1,6 +1,8 @@
 package br.com.lynxcoder.view;
 
+import br.com.lynxcoder.DAO.LeituraDAO;
 import br.com.lynxcoder.DAO.MaquinaDAO;
+import br.com.lynxcoder.model.Leitura;
 import br.com.lynxcoder.model.Maquina;
 import br.com.lynxcoder.model.Usuario;
 import com.github.britooo.looca.api.core.Looca;
@@ -21,7 +23,11 @@ public class Dashboard extends JFrame implements MouseListener {
     Looca looca = new Looca();
     List<Volume> listVolume = looca.getGrupoDeDiscos().getVolumes();
 
+    MaquinaDAO maqDao;
+    LeituraDAO leitura;
+
     Usuario user;
+    Maquina maquinaUser;
 
     private final String COLOR_BACKGROUND = "#e7e5f0";
     private final String COLOR_NAVBAR = "#43318f";
@@ -98,6 +104,7 @@ public class Dashboard extends JFrame implements MouseListener {
     JScrollPane spnListaProcessos;
 
     public Dashboard(Usuario user) {
+
         initDashboard();
         initIcons();
         initNavbar();
@@ -105,15 +112,13 @@ public class Dashboard extends JFrame implements MouseListener {
         initHardwareScreen();
         initProcessesScreen();
 
-        initMonitoradorDeHardware();
-        initMonitoradorDeProcessos();
-
-        MaquinaDAO maqDao = new MaquinaDAO();
+        maqDao = new MaquinaDAO();
 
         if(!maqDao.hasMaquina(user)) {
 
             int response = JOptionPane.showConfirmDialog(null, "Essa é sua máquina principal?");
             System.out.println(response);
+
             switch (response) {
                 case 0:
 
@@ -132,11 +137,25 @@ public class Dashboard extends JFrame implements MouseListener {
 
                     maqDao.adicionarMaquina(user, maquina);
 
-                    break;
-                case 2:
+                    this.maquinaUser = maqDao.findMaquina(user);
+
+                    initMonitoradorDeHardware();
+                    initMonitoradorDeProcessos();
 
                     break;
+                case 2:
+                    dispose();
+                    break;
+                default:
+                    break;
             }
+
+        } else {
+
+            this.maquinaUser = maqDao.findMaquina(user);
+
+            initMonitoradorDeHardware();
+            initMonitoradorDeProcessos();
 
         }
 
@@ -146,21 +165,6 @@ public class Dashboard extends JFrame implements MouseListener {
         this.user = user;
     }
 
-    public Dashboard() {
-        initDashboard();
-        initIcons();
-        initNavbar();
-
-        initHardwareScreen();
-        initProcessesScreen();
-
-        initMonitoradorDeHardware();
-        initMonitoradorDeProcessos();
-
-        add();
-        setVisible(true);
-    }
-
     private void initDashboard() {
         setTitle("Dashboard");
         setSize(1044, 700);
@@ -168,6 +172,7 @@ public class Dashboard extends JFrame implements MouseListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+
         this.getContentPane().setBackground(Color.decode(COLOR_BACKGROUND));
     }
 
@@ -214,8 +219,7 @@ public class Dashboard extends JFrame implements MouseListener {
         lblNavUsuario.setHorizontalAlignment(SwingConstants.CENTER);
         lblNavUsuario.setForeground(Color.decode(COLOR_LIGHT_TEXT));
         lblNavUsuario.setFont(new Font(FONT, Font.BOLD, 20));
-        lblNavUsuario.setText("DANIEL");
-//        lblNavbarUsuario.setText(user.getNome());
+        lblNavUsuario.setText(user.getNome());
 
         lblNavHardwareIcon = new JLabel();
         lblNavHardwareIcon.setBounds(
@@ -261,6 +265,8 @@ public class Dashboard extends JFrame implements MouseListener {
         lblNavProcessos.setFont(new Font(FONT, Font.PLAIN, 16));
         lblNavProcessos.setText("Processos");
 
+        this.getContentPane().setBackground(new Color(38, 24, 71));
+
     }
 
     private void initHardwareScreen() {
@@ -274,8 +280,8 @@ public class Dashboard extends JFrame implements MouseListener {
         // Sistema
         pnlSistema = new JPanel();
         pnlSistema.setBounds(
-                0, 25,
-                hardwarePnlWidth - 100, hardwarePnlHeight
+                25, 25,
+                hardwarePnlWidth - 75, hardwarePnlHeight
         );
         pnlSistema.setBackground(Color.WHITE);
         pnlSistema.setLayout(null);
@@ -317,7 +323,7 @@ public class Dashboard extends JFrame implements MouseListener {
         pnlVolumes = new JPanel();
         pnlVolumes.setBounds(
                 pnlSistema.getX() + pnlSistema.getWidth() + 25,
-                pnlSistema.getY(), hardwarePnlWidth + 100, hardwarePnlHeight
+                pnlSistema.getY(), hardwarePnlWidth + 50, hardwarePnlHeight
         );
         pnlVolumes.setBackground(Color.WHITE);
         pnlVolumes.setLayout(null);
@@ -360,7 +366,7 @@ public class Dashboard extends JFrame implements MouseListener {
         pgbVolumes = new JProgressBar();
         pgbVolumes.setBounds(
                 pnlX, lblVolumesEmUso.getY() + lblVolumesEmUso.getHeight() + 5,
-                400, 25
+                350, 25
         );
         pgbVolumes.setStringPainted(true);
         pgbVolumes.setMaximum(100);
@@ -368,7 +374,7 @@ public class Dashboard extends JFrame implements MouseListener {
         // CPU
         pnlCPU = new JPanel();
         pnlCPU.setBounds(
-                0, pnlSistema.getY() + pnlSistema.getHeight() + 25,
+                25, pnlSistema.getY() + pnlSistema.getHeight() + 25,
                 hardwarePnlWidth, hardwarePnlHeight
         );
         pnlCPU.setBackground(Color.WHITE);
@@ -406,7 +412,7 @@ public class Dashboard extends JFrame implements MouseListener {
         pnlRAM = new JPanel();
         pnlRAM.setBounds(
                 pnlCPU.getX() + pnlCPU.getWidth() + 25,
-                pnlCPU.getY(), hardwarePnlWidth, hardwarePnlHeight
+                pnlCPU.getY(), hardwarePnlWidth - 25, hardwarePnlHeight
         );
         pnlRAM.setBackground(Color.WHITE);
         pnlRAM.setLayout(null);
@@ -443,7 +449,7 @@ public class Dashboard extends JFrame implements MouseListener {
         pgbRAM = new JProgressBar();
         pgbRAM.setBounds(
                 pnlX, lblRAMEmUso.getY() + lblRAMEmUso.getHeight() + 5,
-                300, 25
+                275, 25
         );
         pgbRAM.setStringPainted(true);
         pgbRAM.setMaximum(100);
@@ -536,7 +542,7 @@ public class Dashboard extends JFrame implements MouseListener {
         new Thread(() -> {
             try {
                 while (true) {
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
 
                     // RAM
                     Long usoRAM = looca.getMemoria().getEmUso();
@@ -558,6 +564,7 @@ public class Dashboard extends JFrame implements MouseListener {
 
                     showInfo(usoRAM, percentUsoVolumes, percentUsoCPU, percentUsoRAM);
                     insertInDatabase(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -587,7 +594,6 @@ public class Dashboard extends JFrame implements MouseListener {
                     });
 
                     spnListaProcessos.removeAll();
-                    
                     Integer indexY = 0;
                     for (Processo p: listProcessos) {
                         spnListaProcessos.add(newLabelNome(p, indexY));
@@ -625,7 +631,14 @@ public class Dashboard extends JFrame implements MouseListener {
     }
 
     private void insertInDatabase(Double percentUsoRAM, Double percentUsoCPU, Double percentUsoVolumes) {
-        //
+        Leitura dado = new Leitura();
+        dado.setPorcentagemUsoMemoria(percentUsoRAM);
+        dado.setPorcentagemUsoCPU(percentUsoCPU);
+        dado.setPorcentagemUsoDisco(percentUsoVolumes);
+        dado.setMaquina(maquinaUser);
+
+        leitura = new LeituraDAO();
+        leitura.save(dado);
     }
 
     public void add() {
@@ -700,7 +713,7 @@ public class Dashboard extends JFrame implements MouseListener {
 
     private JLabel newLabelNome(Processo p, Integer indexY) {
         JLabel lbl = new JLabel();
-        lbl.setBounds(0, indexY + 5, 200,25);
+        lbl.setBounds(10, indexY + 5, 300,25);
         lbl.setText("Nome: " + p.getNome());
         lbl.setForeground(Color.decode(COLOR_DARK_TEXT));
         lbl.setFont(new Font(FONT, Font.PLAIN, 12));
@@ -709,7 +722,7 @@ public class Dashboard extends JFrame implements MouseListener {
 
     private JLabel newLabelRAM(Processo p, Integer indexY) {
         JLabel lbl = new JLabel();
-        lbl.setBounds(200, indexY + 5, 200,25);
+        lbl.setBounds(300, indexY + 5, 200,25);
         lbl.setText(String.format(
                 "RAM: %.2f",
                 p.getUsoMemoria()
@@ -721,7 +734,7 @@ public class Dashboard extends JFrame implements MouseListener {
 
     private JLabel newLabelCPU(Processo p, Integer indexY) {
         JLabel lbl = new JLabel();
-        lbl.setBounds(400, indexY + 5, 200,25);
+        lbl.setBounds(500, indexY + 5, 200,25);
         lbl.setText(String.format(
                 "CPU: %.2f",
                 p.getUsoCpu()

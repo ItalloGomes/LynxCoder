@@ -11,11 +11,15 @@ public class Conexao {
 
         try {
 
-            String url = "jdbc:mysql://localhost:3306/dbLynxCoder";
-            String user = "root";
-            String pass = "asd123";
+            String userLocal = "root";
+            String passLocal = "asd123";
+            String urlLocal = "jdbc:mysql://localhost:3306/dbLynxCoder";
 
-            return DriverManager.getConnection(url, user, pass);
+            String userServer = "lynxcoder";
+            String passServer = "#Gfgrupo3";
+            String urlServer = "jdbc:sqlserver://srvlynxcoder.database.windows.net:1433;database=dbLynxCoder;encrypt=true;trustServerCertificate=true;";
+
+            return DriverManager.getConnection(urlLocal, userLocal, passLocal);
 
         } catch (SQLException e) {
             e.printStackTrace();
