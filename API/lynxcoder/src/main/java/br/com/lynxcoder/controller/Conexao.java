@@ -19,7 +19,7 @@ public class Conexao {
             String passServer = "#Gfgrupo3";
             String urlServer = "jdbc:sqlserver://srvlynxcoder.database.windows.net:1433;database=dbLynxCoder;encrypt=true;trustServerCertificate=true;";
 
-            return DriverManager.getConnection(urlServer, userServer, passServer);
+            return DriverManager.getConnection(urlLocal, userLocal, passLocal);
 
         } catch (SQLException e) {
             e.printStackTrace();
