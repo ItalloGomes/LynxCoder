@@ -218,8 +218,7 @@ public class Dashboard extends JFrame implements MouseListener {
         lblNavUsuario.setHorizontalAlignment(SwingConstants.CENTER);
         lblNavUsuario.setForeground(Color.decode(COLOR_LIGHT_TEXT));
         lblNavUsuario.setFont(new Font(FONT, Font.BOLD, 20));
-        lblNavUsuario.setText("DANIEL");
-//        lblNavbarUsuario.setText(user.getNome());
+        lblNavUsuario.setText(user.getNome());
 
         lblNavHardwareIcon = new JLabel();
         lblNavHardwareIcon.setBounds(
@@ -280,8 +279,8 @@ public class Dashboard extends JFrame implements MouseListener {
         // Sistema
         pnlSistema = new JPanel();
         pnlSistema.setBounds(
-                0, 25,
-                hardwarePnlWidth - 100, hardwarePnlHeight
+                25, 25,
+                hardwarePnlWidth - 75, hardwarePnlHeight
         );
         pnlSistema.setBackground(Color.WHITE);
         pnlSistema.setLayout(null);
@@ -323,7 +322,7 @@ public class Dashboard extends JFrame implements MouseListener {
         pnlVolumes = new JPanel();
         pnlVolumes.setBounds(
                 pnlSistema.getX() + pnlSistema.getWidth() + 25,
-                pnlSistema.getY(), hardwarePnlWidth + 100, hardwarePnlHeight
+                pnlSistema.getY(), hardwarePnlWidth + 50, hardwarePnlHeight
         );
         pnlVolumes.setBackground(Color.WHITE);
         pnlVolumes.setLayout(null);
@@ -366,7 +365,7 @@ public class Dashboard extends JFrame implements MouseListener {
         pgbVolumes = new JProgressBar();
         pgbVolumes.setBounds(
                 pnlX, lblVolumesEmUso.getY() + lblVolumesEmUso.getHeight() + 5,
-                400, 25
+                350, 25
         );
         pgbVolumes.setStringPainted(true);
         pgbVolumes.setMaximum(100);
@@ -374,7 +373,7 @@ public class Dashboard extends JFrame implements MouseListener {
         // CPU
         pnlCPU = new JPanel();
         pnlCPU.setBounds(
-                0, pnlSistema.getY() + pnlSistema.getHeight() + 25,
+                25, pnlSistema.getY() + pnlSistema.getHeight() + 25,
                 hardwarePnlWidth, hardwarePnlHeight
         );
         pnlCPU.setBackground(Color.WHITE);
@@ -412,7 +411,7 @@ public class Dashboard extends JFrame implements MouseListener {
         pnlRAM = new JPanel();
         pnlRAM.setBounds(
                 pnlCPU.getX() + pnlCPU.getWidth() + 25,
-                pnlCPU.getY(), hardwarePnlWidth, hardwarePnlHeight
+                pnlCPU.getY(), hardwarePnlWidth - 25, hardwarePnlHeight
         );
         pnlRAM.setBackground(Color.WHITE);
         pnlRAM.setLayout(null);
@@ -449,7 +448,7 @@ public class Dashboard extends JFrame implements MouseListener {
         pgbRAM = new JProgressBar();
         pgbRAM.setBounds(
                 pnlX, lblRAMEmUso.getY() + lblRAMEmUso.getHeight() + 5,
-                300, 25
+                275, 25
         );
         pgbRAM.setStringPainted(true);
         pgbRAM.setMaximum(100);
@@ -594,7 +593,6 @@ public class Dashboard extends JFrame implements MouseListener {
                     });
 
                     spnListaProcessos.removeAll();
-                    
                     Integer indexY = 0;
                     for (Processo p: listProcessos) {
                         spnListaProcessos.add(newLabelNome(p, indexY));
@@ -714,7 +712,7 @@ public class Dashboard extends JFrame implements MouseListener {
 
     private JLabel newLabelNome(Processo p, Integer indexY) {
         JLabel lbl = new JLabel();
-        lbl.setBounds(0, indexY + 5, 200,25);
+        lbl.setBounds(10, indexY + 5, 300,25);
         lbl.setText("Nome: " + p.getNome());
         lbl.setForeground(Color.decode(COLOR_DARK_TEXT));
         lbl.setFont(new Font(FONT, Font.PLAIN, 12));
@@ -723,7 +721,7 @@ public class Dashboard extends JFrame implements MouseListener {
 
     private JLabel newLabelRAM(Processo p, Integer indexY) {
         JLabel lbl = new JLabel();
-        lbl.setBounds(200, indexY + 5, 200,25);
+        lbl.setBounds(300, indexY + 5, 200,25);
         lbl.setText(String.format(
                 "RAM: %.2f",
                 p.getUsoMemoria()
@@ -735,7 +733,7 @@ public class Dashboard extends JFrame implements MouseListener {
 
     private JLabel newLabelCPU(Processo p, Integer indexY) {
         JLabel lbl = new JLabel();
-        lbl.setBounds(400, indexY + 5, 200,25);
+        lbl.setBounds(500, indexY + 5, 200,25);
         lbl.setText(String.format(
                 "CPU: %.2f",
                 p.getUsoCpu()
