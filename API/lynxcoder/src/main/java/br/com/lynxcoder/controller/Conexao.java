@@ -17,7 +17,7 @@ public class Conexao {
 
             String userServer = "lynxcoder";
             String passServer = "#Gfgrupo3";
-            String urlServer = "jdbc:sqlserver://srvlynxcoder.database.windows.net:1433;database=dbLynxCoder;encrypt=true;trustServerCertificate=true;";
+            String urlServer = "jdbc:sqlserver://srvlynxcoder.database.windows.net:1433;database=dbLynxCoder;encrypt=true;trustServerCertificate=false;";
 
             return DriverManager.getConnection(urlServer, userServer, passServer);
 

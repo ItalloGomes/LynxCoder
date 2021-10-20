@@ -180,17 +180,17 @@ public class Dashboard extends JFrame implements MouseListener {
 
     private void initIcons() {
         // Standard Icons
-        hardwareIcon = new ImageIcon("src/assets/hardware-nav-icon.png");
+        hardwareIcon = new ImageIcon(getClass().getClassLoader().getResource("hardware-nav-icon.png"));
         hardwareIcon.setImage(hardwareIcon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
 
-        processosIcon = new ImageIcon("src/assets/processos-nav-icon.png");
+        processosIcon = new ImageIcon(getClass().getClassLoader().getResource("processos-nav-icon.png"));
         processosIcon.setImage(processosIcon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
 
         // Unselected Icons
-        hardwareUnselectedIcon = new ImageIcon("src/assets/hardware-nav-unselected-icon.png");
+        hardwareUnselectedIcon = new ImageIcon(getClass().getClassLoader().getResource("hardware-nav-unselected-icon.png"));
         hardwareUnselectedIcon.setImage(hardwareUnselectedIcon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
 
-        processosUnselectedIcon = new ImageIcon("src/assets/processos-nav-unselected-icon.png");
+        processosUnselectedIcon = new ImageIcon(getClass().getClassLoader().getResource("processos-nav-unselected-icon.png"));
         processosUnselectedIcon.setImage(processosUnselectedIcon.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH));
     }
 
