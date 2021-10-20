@@ -8,6 +8,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Objects;
 
 public class LoginScreen extends JFrame {
 
@@ -33,7 +34,7 @@ public class LoginScreen extends JFrame {
         lblLogo.setBounds(((this.getWidth()/2)-67),50,120,100);
         lblLogo.setOpaque(true);
         lblLogo.setBackground(new Color(0,0,0,0));
-        ImageIcon background = new ImageIcon("src/assets/logo-type3.1.png");
+        ImageIcon background = new ImageIcon(getClass().getClassLoader().getResource("logo-type3.1.png"));
         background.setImage(background.getImage().getScaledInstance(lblLogo.getWidth(),100,Image.SCALE_SMOOTH));
         lblLogo.setIcon(background);
 
