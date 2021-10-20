@@ -21,6 +21,8 @@ public class LoginScreen extends JFrame {
 
     JButton btnLogin;
 
+    private final String COLOR_BACKGROUND = "#43318f";
+
     public LoginScreen(){
         initJFrame();
         initComponents();
@@ -49,8 +51,9 @@ public class LoginScreen extends JFrame {
         jtfUserName.setOpaque(true);
         jtfUserName.setFont(new Font( "Century Gothic", Font.BOLD , 13));
         jtfUserName.setForeground(new Color(229, 229, 229));
-        jtfUserName.setBackground(new Color(22, 50, 107));
-        jtfUserName.setBorder(new LineBorder(new Color(22, 50, 107), 2));
+        jtfUserName.setCaretColor(Color.WHITE);
+        jtfUserName.setBackground(new Color(34, 5, 108));
+        jtfUserName.setBorder(new LineBorder(new Color(34, 5, 108), 2));
         jtfUserName.setHorizontalAlignment(SwingConstants.CENTER);
 
         lblPass = new JLabel();
@@ -64,18 +67,19 @@ public class LoginScreen extends JFrame {
         jpfPassword.setOpaque(true);
         jpfPassword.setFont(new Font( "Century Gothic", Font.BOLD , 13));
         jpfPassword.setForeground(new Color(229, 229, 229));
-        jpfPassword.setBackground(new Color(22, 50, 107));
-        jpfPassword.setBorder(new LineBorder(new Color(22, 50, 107), 2));
+        jpfPassword.setCaretColor(Color.WHITE);
+        jpfPassword.setBackground(new Color(34, 5, 108));
+        jpfPassword.setBorder(new LineBorder(new Color(34, 5, 108), 2));
         jpfPassword.setHorizontalAlignment(SwingConstants.CENTER);
 
         btnLogin = new JButton();
         btnLogin.setText("Log-in");
         btnLogin.setBounds(jtfUserName.getX(), (jpfPassword.getY()+jpfPassword.getHeight()+20), 300, 35);
         btnLogin.setOpaque(true);
-        btnLogin.setBackground(new Color(22, 95, 192));
+        btnLogin.setBackground(new Color(240, 240, 240));
         btnLogin.setFocusPainted(false);
         btnLogin.setFont(new Font( "Century Gothic", Font.BOLD , 13));
-        btnLogin.setForeground(new Color(229, 229, 229));
+        btnLogin.setForeground(Color.decode(COLOR_BACKGROUND));
         btnLogin.setBorder(null);
         btnLogin.addMouseListener(logar());
 
@@ -116,13 +120,15 @@ public class LoginScreen extends JFrame {
             @Override
             public void mouseEntered(MouseEvent e) {
                 btnLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                btnLogin.setBackground(new Color(8, 104, 232));
+                btnLogin.setBackground(new Color(59, 11, 131));
+                btnLogin.setForeground(new Color(240, 240, 240));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 btnLogin.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                btnLogin.setBackground(new Color(22, 95, 192));
+                btnLogin.setBackground(new Color(240, 240, 240));
+                btnLogin.setForeground(new Color(59, 11, 131));
             }
         };
 
@@ -135,7 +141,7 @@ public class LoginScreen extends JFrame {
         this.setLayout(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.getContentPane().setBackground(new Color(41, 72, 131));
+        this.getContentPane().setBackground(Color.decode(COLOR_BACKGROUND));
         this.setFocusable(true);
     }
 
