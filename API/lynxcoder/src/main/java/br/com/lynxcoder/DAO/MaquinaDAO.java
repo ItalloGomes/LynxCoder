@@ -88,7 +88,7 @@ public class MaquinaDAO {
 
             try {
 
-                PreparedStatement pstm = conn.prepareStatement(sql);
+                PreparedStatement pstm = conn.prepareStatement(sqlServer);
                 pstm.setString(1, maquina.getTipoCPU());
                 pstm.setString(2, maquina.getTotalMemoria());
                 pstm.setString(3, maquina.getTotalDisco());

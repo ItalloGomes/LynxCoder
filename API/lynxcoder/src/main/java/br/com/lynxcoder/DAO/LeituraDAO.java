@@ -22,7 +22,7 @@ public class LeituraDAO {
 
             String now = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
-            PreparedStatement pstm = conn.prepareStatement(sql);
+            PreparedStatement pstm = conn.prepareStatement(sqlServer);
             pstm.setDouble(1, leitura.getPorcentagemUsoCPU());
             pstm.setDouble(2, leitura.getPorcentagemUsoMemoria());
             pstm.setDouble(3, leitura.getPorcentagemUsoDisco());
