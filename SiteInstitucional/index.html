@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="assets/css/responsiveIndex.css">
 
     <script src="./assets/js/header.js"></script>
+    <script src="./assets/js/index.js"></script>
 
     <title>Lynx Coder</title>
 </head>
@@ -54,6 +55,31 @@
                 </div>
             </div>
         </nav>
+    </div>
+
+    <div class="box-cadastro ocult" id="boxCad">
+        <form id="form_cadEmpresa" method="post" class="box-cadEmpresa">
+            <h1>Registre sua Empresa!</h1>
+            <p>Para finalizar nos informe algumas informações da sua empresa</p>
+            <div class="hr" style="width: 100%;"></div>
+
+            <input name="nomeEmpresa" class="inputAll" type="text" placeholder="Nome da Empresa">
+            <input name="cnpj" class="inputMet" type="text" placeholder="CNPJ">
+            <input name="cep" class="inputMet" type="text" placeholder="CEP">
+            <input name="endereco" class="inputAll" type="text" placeholder="Endereço">
+            <input name="telefone" class="inputMet" type="text" placeholder="Telefone">
+            <input name="numero" class="inputMet" type="text" placeholder="Número">
+            <input name="cidade" class="inputMet" type="text" placeholder="Cidade">
+            <input name="estado" class="inputMet" type="text" placeholder="UF">
+            <input name="bairro" class="inputMet" type="text" placeholder="Bairro">
+            <input name="logradouro" class="inputMet" type="text" placeholder="Logradouro">
+            
+            <div class="hr"></div>
+
+            <input class="inputAll" type="submit" value="Enviar Informações">
+
+            <div class="closed" onclick="closedForm()">X</div>
+        </form>
     </div>
 
     <br><br><br><br><br><br><br>
@@ -223,13 +249,12 @@
             <h1>Cadastre sua empresa!</h1>
             <p>Preencha o campo com um email para entrarmos em contato com você!</p>
 
-            <form action="" class="cad-email">
+            <div class="cad-email">
                 <input type="email" placeholder="Email">
-                <input type="submit" value="Enviar">
-            </form>
+                <button onclick="openForm()">Enviar</button>
+            </div>
         </div>
     </section>
-
 
     <section id="learnings">
         <div class="container">

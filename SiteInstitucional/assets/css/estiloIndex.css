@@ -222,7 +222,7 @@ _________________________________ */
 
 .empresas img {
     width: 100px;
-    filter: sepia(1);
+    /* filter: sepia(1); */
     transition: .2s;
 }
 
@@ -232,7 +232,7 @@ _________________________________ */
 
 .empresas img:hover {
     transform: scale(1.2);
-    filter: sepia(0);
+    /* filter: sepia(0); */
 }
 
 #linxImage{
@@ -378,7 +378,8 @@ _________________________________ */
     width: 40%;
 }
 
-.cad-email input[type="submit"]{
+.cad-email input[type="submit"],
+.cad-email button{
     border: none;
     border-radius: 0 4px 4px 0;
     padding: 15px 20px;
@@ -389,10 +390,127 @@ _________________________________ */
     transition: .5s ease-in-out;
 }
 
-.cad-email input[type="submit"]:hover{
+.cad-email input[type="submit"]:hover,
+.cad-email button:hover{
     background-color: var(--color-primary);
     margin-left: -20px;
 }
+
+.box-cadastro{
+    width: 100%;
+    height: 100vh;
+    background: #42318f71;
+    box-shadow: 0 0 10px #30303034;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: .5s ease-in-out;
+    z-index: 4000;
+    position: fixed;
+}
+
+.ocult{
+    opacity: 0;
+    pointer-events: none;
+    transition: .5s ease-in-out;
+}
+
+.color-body{
+    background: #5f99d3;
+    transition: .5s ease-in-out;
+}
+
+.box-cadastro input:first-of-type{margin-top: 15px;}
+.box-cadastro input:last-of-type{margin-bottom: 15px;}
+
+.box-cadastro input{
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 15px 4%;
+    border: none;
+    background: #f3f3f3;
+}
+
+.link{
+    cursor: pointer;
+    text-decoration: underline;
+    color: #5f99d3;
+    transition: .5s ease-in-out;
+}
+
+.link:hover{
+    color: #3272b3;
+}
+
+.hr{
+    border-bottom: 1px solid #dadde1;
+    height: 1px;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.box-cadEmpresa{
+    width: 50%;
+    height: 90vh;
+    background: #fff;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #303030;
+    position: relative;
+}
+
+.closed{
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #fd4747;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #fff;
+}
+
+.box-cadEmpresa-finish{
+    opacity: 0;
+    pointer-events: none;
+    transition: .5s ease-in-out;
+}
+
+.box-cadEmpresa input{
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 15px 4%;
+    border: none;
+    background: #f3f3f3;
+}
+
+.box-cadEmpresa input[type='submit']{
+    background: #49439C;
+    cursor: pointer;
+    font-size: 17px;
+    color: #f3f3f3;
+    box-shadow: none;
+    transition: .4s ease-in-out;
+}
+
+.box-cadEmpresa input[type='submit']:hover{background: #5fc55f;}
+
+.inputAll{width: 90%;}
+.inputMet{width: 43%;}
+
+.box-cadEmpresa input:first-of-type{margin-top: 15px;}
+.box-cadEmpresa input:last-of-type{margin-bottom: 15px;}
 
 
 /* Inovation

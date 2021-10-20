@@ -124,6 +124,10 @@ _________________________________ */
         height: 100%;
     }
 
+    .cad-email input[type="email"]{
+        width: 80%;
+    }
+
     #our-clients {
         display: none;
     }

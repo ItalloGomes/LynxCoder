@@ -299,14 +299,60 @@ _________________________________ */
 /* Perfil 
 _________________________________ */
 
-.perfil{
+.align_perfil{
     width: 65%;
+}
+
+.perfil{
+    color: #1d1b31;
+    width: 100%;
     height: max-content;
     padding: 20px 20px 50px;
     background: #fff;
     display: flex;
     justify-content: flex-end;
     border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.perfil:last-of-type{ 
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.perfil:last-of-type h1{
+    color: #1d1b31;
+    margin-bottom: 20px;
+}
+
+.conquistas{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.conquistas_item{
+    width: 32%;
+    height: 200px;
+    background: #ebebeb;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+}
+
+.conquistas_item h1:first-child{
+    font-size: 20px;
+    font-weight: 100;
+}
+
+.conquistas_item h1:last-of-type{
+    font-size: 40px;
+    font-weight: 500;
 }
 
 .img_perfil{
@@ -357,6 +403,7 @@ _________________________________ */
     font-size: 21px;
     margin-bottom: 25px;
     text-align: center;
+    color: #1d1b31;
 }
 
 .infos_add .card_atvd p{
@@ -747,5 +794,39 @@ _________________________________ */
     margin-top: 10px;
     font-weight: 700;
 }
+
+.card_atvd h3{
+    color: #11101d;
+    font-size: 17px;
+    margin-top: 10px;
+    font-weight: 100;
+}
+
+.card_atvd h4{
+    color: #312f5a;
+    font-size: 15px;
+    margin-top: 10px;
+    text-decoration: underline;
+    font-weight: 100;
+}
+
+.btn_more_card{
+    width: 100%;
+    background: #5642af;
+    border-radius: 4px;
+    padding: 5px 5px;
+    text-align: center;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: .5s ease-in-out;
+}
+
+.btn_more_card:hover{
+    background: #6e57d4;
+    color: #fff;
+}
+
 
 
