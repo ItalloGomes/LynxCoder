@@ -6,9 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="assets/img/logo-type3.png" type="image/x-icon">
+
     <link rel="stylesheet" href="assets/css/estiloBase.css">
     <link rel="stylesheet" href="assets/css/estiloIndex.css">
     <link rel="stylesheet" href="assets/css/responsiveIndex.css">
+
+    <script src="./assets/js/header.js"></script>
+
     <title>Lynx Coder</title>
 </head>
 
@@ -76,9 +80,7 @@
         <div class="container">
             <h1>Vamos nos transformar em uma equipe melhor, juntos.</h1>
             <p>conecte-se com sua equipe e esteja a par de todas as atividades do seu time
-                em andamento, mesmo que a distância.
-
-            </p>
+                em andamento, mesmo que a distância.</p>
 
             <img src="assets/img/network.png" alt="">
         </div>
@@ -216,6 +218,19 @@
         </div>
     </section>
 
+    <section id="signup">
+        <div class="container">
+            <h1>Cadastre sua empresa!</h1>
+            <p>Preencha o campo com um email para entrarmos em contato com você!</p>
+
+            <form action="" class="cad-email">
+                <input type="email" placeholder="Email">
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
+    </section>
+
+
     <section id="learnings">
         <div class="container">
             <h1>Acesse nossos aprendizados</h1>
@@ -332,23 +347,5 @@
 
 </html>
 
-<script>
 
-    (function () {
-        window.addEventListener('scroll', function () {
-            if (window.scrollY > 100) {
-                header.classList.add('header-active');
-                navBar.classList.add('navbar-active');
-                navBar.classList.remove('navbar');
-                logoNavbar.src = "assets/img/logo-type3.1.png";
-            }
-            else {
-                header.classList.remove('header-active');
-                navBar.classList.remove('navbar-active');
-                navBar.classList.add('navbar');
-                logoNavbar.src = "assets/img/logo-type2.png";
-            }
-        });
-    })();
 
-</script>

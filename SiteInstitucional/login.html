@@ -18,15 +18,28 @@
             <input type="text" placeholder="Email">
             <input type="password" name="" id="" placeholder="Senha">
             
-            <select name="" id="">
-                <option value="">Admin</option>
-                <option value="">Gestor</option>
-                <option value="">Colaborador</option>
+            <select name="" id="tipoLogin">
+                <option value="0">Admin</option>
+                <option value="1">Gestor</option>
+                <option value="2">Colaborador</option>
             </select>
 
-            <input type="submit" value="Entrar">
+            <input type="submit" value="Entrar" onclick="return logar(tipoLogin.value)">
         </section>
     </div>
 
 </body>
 </html>
+
+<script>
+
+    function logar(tipo) {
+
+        if(tipo == 0 || tipo == 1)
+        window.location.href = 'perfil.html';
+        else
+        window.location.href = 'dashboard.html';
+
+    }
+
+</script>
