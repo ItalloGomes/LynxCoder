@@ -1,0 +1,16 @@
+br\com\lynxcoder\model\Processo.class
+br\com\lynxcoder\DAO\UsuarioDAO.class
+br\com\lynxcoder\model\Maquina.class
+br\com\lynxcoder\view\LoginScreen$1.class
+br\com\lynxcoder\model\Sprint.class
+br\com\lynxcoder\controller\Conexao.class
+br\com\lynxcoder\model\Usuario.class
+br\com\lynxcoder\DAO\MaquinaDAO.class
+br\com\lynxcoder\view\Dashboard.class
+br\com\lynxcoder\DAO\LeituraDAO.class
+br\com\lynxcoder\model\Squad.class
+br\com\lynxcoder\model\Feedback.class
+br\com\lynxcoder\Main.class
+br\com\lynxcoder\model\Empresa.class
+br\com\lynxcoder\view\LoginScreen.class
+br\com\lynxcoder\model\Leitura.class

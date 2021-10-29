@@ -491,7 +491,7 @@ public class Dashboard extends JFrame implements MouseListener {
         );
         lblOrderBy.setForeground(Color.decode(COLOR_DARK_TEXT));
         lblOrderBy.setFont(new Font(FONT, Font.BOLD, 12));
-        lblOrderBy.setText("Ordenar por: ");
+        lblOrderBy.setText("Top 10 por: ");
 
         rbtOrderByRAM = new JRadioButton();
         rbtOrderByRAM.setBackground(Color.WHITE);
@@ -566,7 +566,7 @@ public class Dashboard extends JFrame implements MouseListener {
                     Double percentUsoVolumes = ((total - totalDisponivel) / total) * 100;
 
                     showInfo(usoRAM, percentUsoVolumes, percentUsoCPU, percentUsoRAM);
-                    insertInDatabase(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
+//                    insertInDatabase(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
 
                 }
             } catch (Exception e) {
@@ -592,17 +592,20 @@ public class Dashboard extends JFrame implements MouseListener {
                         if (Objects.equals(orderBy, "RAM")) {
                             return p2.getUsoMemoria().compareTo(p1.getUsoMemoria());
                         } else {
-                            return p2.getUsoMemoria().compareTo(p1.getUsoMemoria());
+                            return p2.getUsoCpu().compareTo(p1.getUsoCpu());
                         }
                     });
 
                     spnListaProcessos.removeAll();
                     Integer indexY = 0;
-                    for (Processo p: listProcessos) {
-                        spnListaProcessos.add(newLabelNome(p, indexY));
-                        spnListaProcessos.add(newLabelRAM(p, indexY));
-                        spnListaProcessos.add(newLabelCPU(p, indexY));
-                        indexY += 25;
+                    for (int i=0; i <10; i++) {
+                        Processo p = listProcessos.get(i);
+                        if (p != null) {
+                            spnListaProcessos.add(newLabelNome(p, indexY));
+                            spnListaProcessos.add(newLabelRAM(p, indexY));
+                            spnListaProcessos.add(newLabelCPU(p, indexY));
+                            indexY += 25;
+                        }
                     }
 
                 }
