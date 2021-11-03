@@ -1,6 +1,7 @@
 package br.com.lynxcoder.view;
 
 import br.com.lynxcoder.DAO.UsuarioDAO;
+import br.com.lynxcoder.integration.slack.DAO.SlackDAO;
 import br.com.lynxcoder.model.Usuario;
 
 import javax.swing.*;
@@ -8,7 +9,6 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Objects;
 
 public class LoginScreen extends JFrame {
 
@@ -92,12 +92,17 @@ public class LoginScreen extends JFrame {
             public void mouseClicked(MouseEvent e) {
 
                 UsuarioDAO userDAO = new UsuarioDAO();
+                SlackDAO slackDAO = new SlackDAO();
 
                 Usuario user = userDAO.logar(jtfUserName.getText(), new String(jpfPassword.getPassword()));
 
                 if( user != null ){
                     System.out.println("Logando...");
+
                     Dashboard dashboard = new Dashboard(user);
+
+                    slackDAO.welcomeMessage(user);
+
                     dispose();
                 }else{
                     JOptionPane.showMessageDialog(null, "Usuário e/ou senha incorreto(s)!");
