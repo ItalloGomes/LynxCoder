@@ -9,6 +9,7 @@ public class Usuario {
     private String foto;
     private String cargo;
     private String login;
+    private String email;
     private String senha;
     private Boolean isGestor;
     private Usuario supervisor;
@@ -22,12 +23,13 @@ public class Usuario {
         hashCode();
     }
 
-    public Usuario(String nome, String foto, String cargo, String login, String senha,
+    public Usuario(String nome, String foto, String cargo, String login, String email, String senha,
                    Boolean isGestor, Usuario supervisor, Empresa empresa, Squad squad) {
         this.nome = nome;
         this.foto = foto;
         this.cargo = cargo;
         this.login = login;
+        this.email = email;
         this.senha = senha;
         this.isGestor = isGestor;
         this.supervisor = supervisor;
@@ -35,10 +37,10 @@ public class Usuario {
         this.squad = squad;
     }
 
-    public Usuario(Integer id, String nome, String foto, String cargo, String login, String senha,
+    public Usuario(Integer id, String nome, String foto, String cargo, String login, String email, String senha,
                    Boolean isGestor, Usuario supervisor, Empresa empresa, Squad squad) {
 
-        this(nome, foto,cargo, login, senha, isGestor, supervisor, empresa, squad);
+        this(nome, foto,cargo, login, email, senha, isGestor, supervisor, empresa, squad);
         this.id = id;
 
     }
@@ -81,6 +83,14 @@ public class Usuario {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSenha() {
@@ -144,6 +154,7 @@ public class Usuario {
                 ", foto='" + foto + '\'' +
                 ", cargo='" + cargo + '\'' +
                 ", login='" + login + '\'' +
+                ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
                 ", isGestor=" + isGestor +
                 ", supervisor=" + supervisor +

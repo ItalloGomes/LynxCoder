@@ -28,6 +28,7 @@ public class MaquinaDAO {
             while (rs.next()){
                 maq10 = new Maquina(
                         rs.getInt("id_maquina"),
+                        rs.getString("hostname"),
                         rs.getString("tipoCPU"),
                         rs.getString("totalMemoria"),
                         rs.getString("totalDisco"),
