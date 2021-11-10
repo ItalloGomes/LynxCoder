@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Maquina {
 
     private Integer id;
+    private String hostname;
     private String tipoCPU;
     private String totalMemoria;
     private String totalDisco;
@@ -19,8 +20,9 @@ public class Maquina {
         hashCode();
     }
 
-    public Maquina(String tipoCPU, String totalMemoria,
+    public Maquina(String hostname, String tipoCPU, String totalMemoria,
                    String totalDisco, String sistemaOperacional, Usuario usuario) {
+        this.hostname = hostname;
         this.tipoCPU = tipoCPU;
         this.totalMemoria = totalMemoria;
         this.totalDisco = totalDisco;
@@ -28,10 +30,10 @@ public class Maquina {
         this.usuario = usuario;
     }
 
-    public Maquina(Integer id, String tipoCPU, String totalMemoria,
+    public Maquina(Integer id, String hostname, String tipoCPU, String totalMemoria,
                    String totalDisco, String sistemaOperacional, Usuario usuario) {
 
-        this(tipoCPU, totalMemoria, totalDisco, sistemaOperacional, usuario);
+        this(hostname, tipoCPU, totalMemoria, totalDisco, sistemaOperacional, usuario);
         this.id = id;
 
     }
