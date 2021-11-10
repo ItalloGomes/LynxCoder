@@ -82,8 +82,8 @@ public class MaquinaDAO {
 
         if(!hasMaquina(user)){
 
-            String sql = "insert into tb_maquina values (null, ?, ?, ?, ?, ?)";
-            String sqlServer = "insert into tb_maquina values (?, ?, ?, ?, ?)";
+            String sql = "insert into tb_maquina values (null, null, ?, ?, ?, ?, ?)";
+            String sqlServer = "insert into tb_maquina values (null, ?, ?, ?, ?, ?)";
 
             Connection conn = Conexao.getConnection();
 
