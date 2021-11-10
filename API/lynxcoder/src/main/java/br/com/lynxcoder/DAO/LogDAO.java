@@ -5,11 +5,11 @@ import java.io.IOException;
 
 public class LogDAO {
 
-    public void criarLog(String nameFile) {
+    public void criarLog(String logName) {
 
-        nameFile += ".txt";
+        logName += ".txt";
 
-        File diretorio = new File("C:\\java", nameFile);
+        File diretorio = new File("C:\\Users\\guilherme.scheleger\\Desktop\\LynxCoder\\API\\lynxcoder", logName);
 
         if (diretorio.isDirectory()) {
             FileWriter arquivo = null;
