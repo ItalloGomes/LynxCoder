@@ -28,6 +28,7 @@ public class MaquinaDAO {
             while (rs.next()){
                 maq10 = new Maquina(
                         rs.getInt("id_maquina"),
+                        rs.getString("hostname"),
                         rs.getString("tipoCPU"),
                         rs.getString("totalMemoria"),
                         rs.getString("totalDisco"),
@@ -81,8 +82,8 @@ public class MaquinaDAO {
 
         if(!hasMaquina(user)){
 
-            String sql = "insert into tb_maquina values (null, ?, ?, ?, ?, ?)";
-            String sqlServer = "insert into tb_maquina values (?, ?, ?, ?, ?)";
+            String sql = "insert into tb_maquina values (null, null, ?, ?, ?, ?, ?)";
+            String sqlServer = "insert into tb_maquina values (null, ?, ?, ?, ?, ?)";
 
             Connection conn = Conexao.getConnection();
 

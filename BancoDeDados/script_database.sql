@@ -123,6 +123,7 @@ values (
     ,null			-- foto_usuario
     ,"Estagiário"   -- ,cargo
     ,"itallo.gomes" -- ,login
+    ,"itallo.gomes@gmail.com" -- email
     ,"urubu100"     -- ,senha
     ,false			-- ,isGestor
     ,1              -- ,fk_supervisor
@@ -137,6 +138,7 @@ values (
     ,null			-- foto_usuario
     ,"Estagiário"   -- ,cargo
     ,"aleff.stampini" -- ,login
+    ,"aleff.stampini@gmail.com" -- email
     ,"asd123"     -- ,senha
     ,false			-- ,isGestor
     ,1              -- ,fk_supervisor

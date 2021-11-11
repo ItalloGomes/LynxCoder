@@ -9,20 +9,20 @@ public class Feedback {
     private String mensagem;
     private Double aproveitamento;
     private Usuario usuario;
-    private Sprint sprint;
+    private Tarefa tarefa;
 
     public Feedback() {}
 
-    public Feedback(String tipo, String mensagem, Double aproveitamento, Usuario usuario, Sprint sprint) {
+    public Feedback(String tipo, String mensagem, Double aproveitamento, Usuario usuario, Tarefa tarefa) {
         this.tipo = tipo;
         this.mensagem = mensagem;
         this.aproveitamento = aproveitamento;
         this.usuario = usuario;
-        this.sprint = sprint;
+        this.tarefa = tarefa;
     }
 
-    public Feedback(Integer id, String tipo, String mensagem, Double aproveitamento, Usuario usuario, Sprint sprint) {
-        this(tipo, mensagem, aproveitamento, usuario, sprint);
+    public Feedback(Integer id, String tipo, String mensagem, Double aproveitamento, Usuario usuario, Tarefa tarefa) {
+        this(tipo, mensagem, aproveitamento, usuario, tarefa);
         this.id = id;
     }
 
@@ -66,12 +66,12 @@ public class Feedback {
         this.usuario = usuario;
     }
 
-    public Sprint getSprint() {
-        return sprint;
+    public Tarefa getTarefa() {
+        return tarefa;
     }
 
-    public void setSprint(Sprint sprint) {
-        this.sprint = sprint;
+    public void setTarefa(Tarefa tarefa) {
+        this.tarefa = tarefa;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class Feedback {
                 ", mensagem='" + mensagem + '\'' +
                 ", aproveitamento=" + aproveitamento +
                 ", usuario=" + usuario +
-                ", sprint=" + sprint +
+                ", tarefa=" + tarefa +
                 '}';
     }
 }

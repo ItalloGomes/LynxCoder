@@ -1,5 +1,6 @@
 package br.com.lynxcoder.view;
 
+import br.com.lynxcoder.DAO.LogDAO;
 import br.com.lynxcoder.DAO.UsuarioDAO;
 import br.com.lynxcoder.integration.slack.DAO.SlackDAO;
 import br.com.lynxcoder.model.Usuario;
@@ -9,6 +10,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.time.LocalDate;
 
 public class LoginScreen extends JFrame {
 
@@ -93,6 +95,7 @@ public class LoginScreen extends JFrame {
 
                 UsuarioDAO userDAO = new UsuarioDAO();
                 SlackDAO slackDAO = new SlackDAO();
+                LogDAO logDAO = new LogDAO();
 
                 Usuario user = userDAO.logar(jtfUserName.getText(), new String(jpfPassword.getPassword()));
 
@@ -100,6 +103,12 @@ public class LoginScreen extends JFrame {
                     System.out.println("Logando...");
 
                     Dashboard dashboard = new Dashboard(user);
+
+                    LocalDate date = LocalDate.now();  // 2021-11-10
+
+                    String logName = date.toString();
+
+                    logDAO.criarLog(logName);
 
                     slackDAO.welcomeMessage(user);
 
