@@ -2,27 +2,34 @@ package br.com.lynxcoder.DAO;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class LogDAO {
 
     public void criarLog(String logName) {
 
         logName += ".txt";
-
         File diretorio = new File("C:\\Users\\guilherme.scheleger\\Desktop\\LynxCoder\\API\\lynxcoder", logName);
 
-        if (diretorio.isDirectory()) {
-            FileWriter arquivo = null;
+    }
 
-            try {
-                arquivo = new FileWriter("banco.txt", false);
-                arquivo.write("teste log");
+    public void escreverLog(String conteudo) {
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        LocalDate date = LocalDate.now();  // 2021-11-10
+        String logName = date.toString();
+        logName += ".txt";
 
+        try {
+            FileWriter arquivo = new FileWriter(logName, false);
+            arquivo.write(conteudo);
+            arquivo.close();
+            System.out.println("Arquivo criado");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Arqivo não criado");
         }
+
 
     }
 }
