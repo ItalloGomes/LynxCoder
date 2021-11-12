@@ -27,13 +27,13 @@ public class MaquinaDAO {
             Maquina maq10 = null;
             while (rs.next()){
                 maq10 = new Maquina(
-                        rs.getInt("id_maquina"),
-                        rs.getString("hostname"),
-                        rs.getString("tipoCPU"),
-                        rs.getString("totalMemoria"),
-                        rs.getString("totalDisco"),
-                        rs.getString("sistemaOperacional"),
-                        new Usuario(rs.getInt("fk_usuario"))
+                    rs.getInt("id_maquina"),
+                    rs.getString("hostname"),
+                    rs.getString("tipoCPU"),
+                    rs.getString("totalMemoria"),
+                    rs.getString("totalDisco"),
+                    rs.getString("sistemaOperacional"),
+                    new Usuario(rs.getInt("fk_usuario"))
                 );
             }
 

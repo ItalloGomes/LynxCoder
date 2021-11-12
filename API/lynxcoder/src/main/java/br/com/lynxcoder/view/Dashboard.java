@@ -125,18 +125,21 @@ public class Dashboard extends JFrame implements MouseListener {
 
             switch (response) {
                 case 0:
-
                     Maquina maquina = new Maquina();
+
                     maquina.setTipoCPU(looca.getProcessador().getNome());
                     maquina.setTotalMemoria(byteCountConvert(looca.getMemoria().getTotal()));
+
                     long totalDisco = 0;
                     for (Volume v : listVolume) {
                         totalDisco += v.getTotal();
                     }
                     maquina.setTotalDisco(byteCountConvert(totalDisco));
-                    maquina.setSistemaOperacional(looca.getSistema().getFabricante() + " "
-                            + looca.getSistema().getSistemaOperacional() + " "
-                            + looca.getSistema().getArquitetura());
+                    maquina.setSistemaOperacional(
+                        looca.getSistema().getFabricante() + " " +
+                        looca.getSistema().getSistemaOperacional() + " "+
+                        looca.getSistema().getArquitetura()
+                    );
                     maquina.setUsuario(user);
 
                     maqDao.adicionarMaquina(user, maquina);
