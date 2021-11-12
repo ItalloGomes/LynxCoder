@@ -1,8 +1,8 @@
-const { sequelizeConnection, Sequelize } = require("../config/connectDatabase");
+const db = require("../config/connectDatabase");
 
 'use strict';
 
-const Processo = sequelizeConnection.define('Processo', 
+const Processo = db.sequelizeConnection.define('Processo', 
     {
         id: {
             field: 'id_processo',

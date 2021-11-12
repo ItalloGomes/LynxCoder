@@ -1,5 +1,6 @@
 package br.com.lynxcoder.integration.slack.conn;
 
+
 import java.net.http.HttpClient;
 
 public class SlackConnection {
