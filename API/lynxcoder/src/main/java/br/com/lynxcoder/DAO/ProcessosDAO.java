@@ -12,7 +12,11 @@ import java.util.List;
 
 public class ProcessosDAO {
 
+<<<<<<< HEAD
+    public void insertProcessos(Processo processo) {
+=======
     public void insertProcessos(List<Processo> processos) {
+>>>>>>> 71c76560366283c62ea17451b8f08f67a0a24031
 
         String sql = "insert into tb_processo values ( null, ?, ?, ?, ?, ?, ?)";
 
@@ -23,6 +27,12 @@ public class ProcessosDAO {
             for (Processo p: processos) {
                 String now = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
+<<<<<<< HEAD
+            pstm.execute();
+
+            Conexao.closeConnection(conn, pstm);
+
+=======
                 PreparedStatement pstm = conn.prepareStatement(sql);
                 pstm.setString(1, p.getPID());
                 pstm.setString(2, p.getNome());
@@ -34,6 +44,7 @@ public class ProcessosDAO {
 
                 System.out.println("Processo cadastrado!");
             }
+>>>>>>> 71c76560366283c62ea17451b8f08f67a0a24031
 
         } catch (SQLException e) {
             e.printStackTrace();
