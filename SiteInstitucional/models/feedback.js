@@ -1,8 +1,8 @@
-const { sequelizeConnection, Sequelize } = require("../config/connectDatabase");
+const db = require("../config/connectDatabase");
 
 'use strict';
 
-const FeedBack = sequelizeConnection.define('FeedBack', 
+const FeedBack = db.sequelizeConnection.define('FeedBack', 
     {
         id: {
             field: 'id_feedback',
