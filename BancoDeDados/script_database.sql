@@ -62,6 +62,7 @@ create table tb_feedback(
     ,tipo_feedback varchar(45)
     ,mensagem_feedback text
     ,aproveitamento_feedback decimal(4,2)
+    ,dificuldade_feedback decimal(4,2)
     ,fk_usuario int
     ,foreign key(fk_usuario) references tb_usuario(id_usuario)
     ,fk_tarefa int
