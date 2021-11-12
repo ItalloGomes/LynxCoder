@@ -4,6 +4,7 @@ import br.com.lynxcoder.integration.slack.conn.SlackConnection;
 import br.com.lynxcoder.model.Usuario;
 import org.json.JSONObject;
 
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpRequest;
