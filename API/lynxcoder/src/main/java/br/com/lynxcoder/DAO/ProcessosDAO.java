@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class ProcessosDAO {
 
-    public void inserProcessos(Processo processo) {
+    public void insertProcessos(Processo processo) {
 
         String sql = "insert into tb_processo values ( null, ?, ?, ?, ?, ?, ?)";
 
@@ -24,6 +24,10 @@ public class ProcessosDAO {
             //pstm.setDate(4, processo.getDataHorarioInicio());
             //pstm.setDate(5, processo.getDataHorarioFim());
             pstm.setInt(6, processo.getMaquina().getId());
+
+            pstm.execute();
+
+            Conexao.closeConnection(conn, pstm);
 
 
         } catch (SQLException e) {
