@@ -27,12 +27,13 @@ public class MaquinaDAO {
             Maquina maq10 = null;
             while (rs.next()){
                 maq10 = new Maquina(
-                        rs.getInt("id_maquina"),
-                        rs.getString("tipoCPU"),
-                        rs.getString("totalMemoria"),
-                        rs.getString("totalDisco"),
-                        rs.getString("sistemaOperacional"),
-                        new Usuario(rs.getInt("fk_usuario"))
+                    rs.getInt("id_maquina"),
+                    rs.getString("hostname"),
+                    rs.getString("tipoCPU"),
+                    rs.getString("totalMemoria"),
+                    rs.getString("totalDisco"),
+                    rs.getString("sistemaOperacional"),
+                    new Usuario(rs.getInt("fk_usuario"))
                 );
             }
 
@@ -81,8 +82,8 @@ public class MaquinaDAO {
 
         if(!hasMaquina(user)){
 
-            String sql = "insert into tb_maquina values (null, ?, ?, ?, ?, ?)";
-            String sqlServer = "insert into tb_maquina values (?, ?, ?, ?, ?)";
+            String sql = "insert into tb_maquina values (null, null, ?, ?, ?, ?, ?)";
+            String sqlServer = "insert into tb_maquina values (null, ?, ?, ?, ?, ?)";
 
             Connection conn = Conexao.getConnection();
 

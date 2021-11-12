@@ -9,26 +9,24 @@ public class Processo {
     private String PID;
     private String nome;
     private String status;
-    private Date dataHorarioInicio;
-    private Date dataHorarioFim;
+    private Date dataHora;
     private Maquina maquina;
 
     public Processo() {}
 
-    public Processo(String PID, String nome, String status, Date dataHorarioInicio,
-                    Date dataHorarioFim, Maquina maquina) {
+    public Processo(String PID, String nome, String status,
+                    Date dataHora, Maquina maquina) {
         this.PID = PID;
         this.nome = nome;
         this.status = status;
-        this.dataHorarioInicio = dataHorarioInicio;
-        this.dataHorarioFim = dataHorarioFim;
+        this.dataHora = dataHora;
         this.maquina = maquina;
     }
 
-    public Processo(Integer id, String PID, String nome, String status, Date dataHorarioInicio,
-                    Date dataHorarioFim, Maquina maquina) {
+    public Processo(Integer id, String PID, String nome, String status,
+                    Date dataHora, Maquina maquina) {
 
-        this(PID, nome, status, dataHorarioInicio, dataHorarioFim, maquina);
+        this(PID, nome, status, dataHora, maquina);
         this.id = id;
 
     }
@@ -65,20 +63,12 @@ public class Processo {
         this.status = status;
     }
 
-    public Date getDataHorarioInicio() {
-        return dataHorarioInicio;
+    public Date getdataHora() {
+        return dataHora;
     }
 
-    public void setDataHorarioInicio(Date dataHorarioInicio) {
-        this.dataHorarioInicio = dataHorarioInicio;
-    }
-
-    public Date getDataHorarioFim() {
-        return dataHorarioFim;
-    }
-
-    public void setDataHorarioFim(Date dataHorarioFim) {
-        this.dataHorarioFim = dataHorarioFim;
+    public void setdataHora(Date dataHora) {
+        this.dataHora = dataHora;
     }
 
     public Maquina getMaquina() {

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/img/logo-type3.png" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/estiloBase.css">
+    <link rel="stylesheet" href="assets/css/estiloContatos.css">
+    <link rel="stylesheet" href="assets/css/responsiveContatos.css">
+    <title>Lynx Coder | Contatos</title>
+</head>
+
+<body>
+
+    <header id="header">
+        <div class="container">
+            <nav class="navbar" id="navBar">
+                <img id="logoNavbar" src="assets/img/logo-type2.png">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contatos.html" class="li-checked">Contatos</a></li>
+                    <li><a href="#"><button class="btn-try">Cadastre-se!</button></li></a>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="menu-mobile">
+        <nav>
+            <div class="section-nav">
+                <input type="checkbox" id="menu_hamb" class="input-menu">
+
+                <label for="menu_hamb">
+                    <div class="menu">
+                        <span class="hamburguer"></span>
+                    </div>
+                </label>
+
+                <label for="menu_hamb" class="btn-close">x</label>
+
+                <div class="box-menu">
+                    <a href="index.html">Home</a>
+                    <a href="sobre.html">Sobre</a>
+                    <a href="contatos.html" class="li-checked">Contatos</a>
+
+                    <button class="btn-try">Cadastre-se!</button>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <br>
+
+    <section class="section-formulario">
+        <h1>Fale Conosco!</h1>
+
+        <div>
+            <form action="">
+                <input type="text" placeholder="Título" maxlength="50">
+                
+                <textarea id="txta-descricao" cols="30" rows="10" placeholder="Descrição" maxlength="200"></textarea>
+
+                <input type="email" placeholder="E-mail p/ contato" maxlength="50">
+
+                <button>Enviar</button>
+            </form>
+
+            <img src="assets/img/draw-contact.png" alt="Ilustração de contato">
+        </div>
+    </section>
+
+    <section class="section-formulario">
+        <h1>Onde Estamos</h1>
+
+        <div>
+            <iframe class="iframe-google-maps"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4710.414555505158!2d-46.66455773925107!3d-23.558287288217937!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59d2a5270055%3A0x3c7ea4f4c7d51fb6!2sRua%20Haddock%20Lobo%2C%20595%20-%20Cerqueira%20C%C3%A9sar%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2001414-001!5e0!3m2!1spt-BR!2sbr!4v1630536482102!5m2!1spt-BR!2sbr"
+                style="border:0;" allowfullscreen="true" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-info">
+            <div class="container">
+                <div class="align-footer-info">
+                    <div class="collum-footer">
+                        <h2>Home</h2>
+                        <p>Tutorial de uso</p>
+                        <p>Benefícios</p>
+                        <p>Feedbacks dos nossos clientes</p>
+                    </div>
+                    <div class="collum-footer">
+                        <h2>Sobre</h2>
+                        <p>Sobre nós</p>
+                        <p>Tutorial de uso</p>
+                        <p>Nossa Equipe</p>
+
+                    </div>
+                    <div class="collum-footer">
+                        <h2>Contatos</h2>
+                        <p>Missão / Visão / Valores</p>
+                        <p>Nossa Equipe</p>
+                        <p>Redes Sociais</p>
+                    </div>
+                </div>
+
+                <div class="align-links-footer">
+                    <a href=""><img src="assets/img/logo-fbc.webp"></a>
+                    <a href=""><img src="assets/img/logo-insta.webp"></a>
+                    <a href=""><img src="assets/img/logo-linkd.webp"></a>
+                    <a href=""><img src="assets/img/logo-twit.webp"></a>
+                    <a href=""><img src="assets/img/logo-ytb.webp"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-copyright">
+            <div class="container">
+                <p>© 2021 by Lynx Coder, todos direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
+
+<script>
+
+    (function () {
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 100) {
+                header.classList.add('header-active');
+                navBar.classList.add('navbar-active');
+                navBar.classList.remove('navbar');
+                logoNavbar.src = "assets/img/logo-type3.1.png";
+            }
+            else {
+                header.classList.remove('header-active');
+                navBar.classList.remove('navbar-active');
+                navBar.classList.add('navbar');
+                logoNavbar.src = "assets/img/logo-type2.png";
+            }
+        });
+    })();
+
+</script>
