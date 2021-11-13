@@ -12,39 +12,26 @@ import java.util.List;
 
 public class ProcessosDAO {
 
-<<<<<<< HEAD
-    public void insertProcessos(Processo processo) {
-=======
-    public void insertProcessos(List<Processo> processos) {
->>>>>>> 71c76560366283c62ea17451b8f08f67a0a24031
+    public void save(Processo processo) {
 
-        String sql = "insert into tb_processo values ( null, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into tb_processo values ( null, ?, ?, ?, ?)";
+        String sqlServer = "insert into tb_processo values ( ?, ?, ?, ?)";
 
         Connection conn = Conexao.getConnection();
 
         try {
 
-            for (Processo p: processos) {
-                String now = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+            String now = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
-<<<<<<< HEAD
+            PreparedStatement pstm = conn.prepareStatement(sqlServer);
+            pstm.setString(1, processo.getPID());
+            pstm.setString(2, processo.getNome());
+            pstm.setString(3, now);
+            pstm.setInt(4, processo.getMaquina().getId());
+
             pstm.execute();
 
-            Conexao.closeConnection(conn, pstm);
-
-=======
-                PreparedStatement pstm = conn.prepareStatement(sql);
-                pstm.setString(1, p.getPID());
-                pstm.setString(2, p.getNome());
-                pstm.setString(3, p.getStatus());
-                pstm.setString(4, now);
-                pstm.setInt(5, p.getMaquina().getId());
-
-                pstm.execute();
-
-                System.out.println("Processo cadastrado!");
-            }
->>>>>>> 71c76560366283c62ea17451b8f08f67a0a24031
+            System.out.println("Processo cadastrado!");
 
         } catch (SQLException e) {
             e.printStackTrace();

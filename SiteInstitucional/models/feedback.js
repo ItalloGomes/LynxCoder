@@ -10,11 +10,6 @@ const FeedBack = db.sequelizeConnection.define('FeedBack',
             autoIncrement: true,
             type: Sequelize.INTEGER
         },
-        tipoFeedback: {
-            field: 'tipo_feedback',
-            allowNull: false,
-            type: Sequelize.STRING
-        },
         mensagem: {
             field: 'mensagem_feedback',
             allowNull: false,
@@ -22,6 +17,11 @@ const FeedBack = db.sequelizeConnection.define('FeedBack',
         },
         aproveitamento: {
             field: 'aproveitamento_feedback',
+            allowNull: false,
+            type: Sequelize.DECIMAL
+        },
+        facilidade_feedback: {
+            field: 'facilidade_feedback',
             allowNull: false,
             type: Sequelize.DECIMAL
         },
@@ -36,12 +36,7 @@ const FeedBack = db.sequelizeConnection.define('FeedBack',
             allowNull: false,
             type: Sequelize.INTEGER,
             foreignKey: true
-        },
-        facilidade_feedback: {
-            field: 'facilidade_feedback',
-            allowNull: false,
-            type: Sequelize.DECIMAL
-        },
+        }
     }, 
     {
         tableName: 'tb_feedback', 

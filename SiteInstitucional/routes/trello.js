@@ -64,7 +64,7 @@ router.get('/cadastrar_squads/:id_admin/:key/:token', (req, res) => {
                         });
 
                         if (membershipList.length() > 0) {
-                            res.json(membershipList);
+                            res.json(board.id, membershipList);
                         } else {
                             res.status(500).send("Não foram encontrados membros na squad");
                         }

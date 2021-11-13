@@ -29,10 +29,10 @@ public class MaquinaDAO {
                 maq10 = new Maquina(
                     rs.getInt("id_maquina"),
                     rs.getString("hostname"),
-                    rs.getString("tipoCPU"),
-                    rs.getString("totalMemoria"),
-                    rs.getString("totalDisco"),
-                    rs.getString("sistemaOperacional"),
+                    rs.getString("tipo_cpu"),
+                    rs.getString("total_ram"),
+                    rs.getString("total_disco"),
+                    rs.getString("sistema_operacional"),
                     new Usuario(rs.getInt("fk_usuario"))
                 );
             }

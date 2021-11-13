@@ -10,6 +10,11 @@ const Squad = db.sequelizeConnection.define('Squad',
             autoIncrement: true,
             type: Sequelize.INTEGER,
         },
+        id_trello: {
+            field: 'id_trello',
+            allowNull: false,
+            type: Sequelize.STRING
+        },
         nome: {
             field: 'nome_squad',
             allowNull: false,

@@ -2,7 +2,7 @@ package br.com.lynxcoder.view;
 
 import br.com.lynxcoder.DAO.LeituraDAO;
 import br.com.lynxcoder.DAO.MaquinaDAO;
-import br.com.lynxcoder.integration.slack.DAO.SlackDAO;
+import br.com.lynxcoder.DAO.ProcessosDAO;
 import br.com.lynxcoder.model.Leitura;
 import br.com.lynxcoder.model.Maquina;
 import br.com.lynxcoder.model.Usuario;
@@ -22,14 +22,14 @@ import java.util.Objects;
 public class Dashboard extends JFrame implements MouseListener {
 
     Looca looca = new Looca();
-    SlackDAO slack = new SlackDAO();
-
-    private final int threadSleep = 5000;
+    private final int hardwareThreadSleep = 10_000;
+    private final int processThreadSleep = 15_000;
 
     List<Volume> listVolume = looca.getGrupoDeDiscos().getVolumes();
 
     MaquinaDAO maqDao;
-    LeituraDAO leitura;
+    LeituraDAO leituraDao;
+    ProcessosDAO processDao;
 
     Usuario user;
     Maquina maquinaUser;
@@ -55,7 +55,6 @@ public class Dashboard extends JFrame implements MouseListener {
     JPanel pnlNavbar;
 
     JLabel lblNavUsuario;
-    JLabel lblNavCargo;
     JLabel lblNavHardwareIcon;
     JLabel lblNavHardware;
     JLabel lblNavProcessosIcon;
@@ -219,16 +218,6 @@ public class Dashboard extends JFrame implements MouseListener {
         lblNavUsuario.setForeground(Color.decode(COLOR_LIGHT_TEXT));
         lblNavUsuario.setFont(new Font(FONT, Font.BOLD, 20));
         lblNavUsuario.setText(user.getNome());
-
-        lblNavCargo = new JLabel();
-        lblNavCargo.setBounds(
-                0, lblNavUsuario.getY() + lblNavUsuario.getHeight(),
-                pnlNavbar.getWidth(), 25
-        );
-        lblNavCargo.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNavCargo.setForeground(Color.decode(COLOR_LIGHT_TEXT));
-        lblNavCargo.setFont(new Font(FONT, Font.PLAIN, 16));
-        lblNavCargo.setText(user.getCargo());
 
         lblNavHardwareIcon = new JLabel();
         lblNavHardwareIcon.setBounds(
@@ -551,7 +540,7 @@ public class Dashboard extends JFrame implements MouseListener {
         new Thread(() -> {
             try {
                 while (true) {
-                    Thread.sleep(threadSleep);
+                    Thread.sleep(hardwareThreadSleep);
 
                     // RAM
                     Long usoRAM = looca.getMemoria().getEmUso();
@@ -571,14 +560,8 @@ public class Dashboard extends JFrame implements MouseListener {
 
                     Double percentUsoVolumes = ((total - totalDisponivel) / total) * 100;
 
-                    Integer i = 0;
-                    if (percentUsoVolumes > 10 && i.equals(0)) {
-                        slack.welcomeMessage(user);
-                        i++;
-                    }
-
-                    showInfo(usoRAM, percentUsoVolumes, percentUsoCPU, percentUsoRAM);
-//                    insertInDatabase(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
+                    showHardwareInfo(usoRAM, percentUsoVolumes, percentUsoCPU, percentUsoRAM);
+//                    insertHardwareInfo(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
 
                 }
             } catch (Exception e) {
@@ -587,47 +570,7 @@ public class Dashboard extends JFrame implements MouseListener {
         }).start();
     }
 
-    private void initMonitoradorDeProcessos() {
-
-        new Thread(() -> {
-            try {
-                while (true) {
-                    Thread.sleep(threadSleep);
-
-                    lblProcessos.setText(String.format(
-                            "Processos (%d)", looca.getGrupoDeProcessos().getTotalProcessos()
-                    ));
-
-                    List<Processo> listProcessos = looca.getGrupoDeProcessos().getProcessos();
-
-                    listProcessos.sort((p1, p2) -> {
-                        if (Objects.equals(orderBy, "RAM")) {
-                            return p2.getUsoMemoria().compareTo(p1.getUsoMemoria());
-                        } else {
-                            return p2.getUsoCpu().compareTo(p1.getUsoCpu());
-                        }
-                    });
-
-                    spnListaProcessos.removeAll();
-                    Integer indexY = 0;
-                    for (int i=0; i <10; i++) {
-                        Processo p = listProcessos.get(i);
-                        if (p != null) {
-                            spnListaProcessos.add(newLabelNome(p, indexY));
-                            spnListaProcessos.add(newLabelRAM(p, indexY));
-                            spnListaProcessos.add(newLabelCPU(p, indexY));
-                            indexY += 25;
-                        }
-                    }
-
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
-
-    private void showInfo(Long usoRAM, Double percentUsoVolumes, Double percentUsoCPU, Double percentUsoRAM) {
+    private void showHardwareInfo(Long usoRAM, Double percentUsoVolumes, Double percentUsoCPU, Double percentUsoRAM) {
         lblVolumesEmUso.setText("Em uso: ");
         for (Volume v : listVolume) {
             lblVolumesEmUso.setText(String.format(
@@ -648,15 +591,74 @@ public class Dashboard extends JFrame implements MouseListener {
         pgbRAM.setString(percentUsoRAM.intValue() + " %");
     }
 
-    private void insertInDatabase(Double percentUsoRAM, Double percentUsoCPU, Double percentUsoVolumes) {
+    private void insertHardwareInfo(Double percentUsoRAM, Double percentUsoCPU, Double percentUsoVolumes) {
         Leitura dado = new Leitura();
         dado.setPorcentagemUsoMemoria(percentUsoRAM);
         dado.setPorcentagemUsoCPU(percentUsoCPU);
         dado.setPorcentagemUsoDisco(percentUsoVolumes);
         dado.setMaquina(maquinaUser);
 
-        leitura = new LeituraDAO();
-        leitura.save(dado);
+        leituraDao = new LeituraDAO();
+        leituraDao.save(dado);
+    }
+
+    private void initMonitoradorDeProcessos() {
+
+        new Thread(() -> {
+            try {
+                while (true) {
+                    Thread.sleep(processThreadSleep);
+
+                    lblProcessos.setText(String.format(
+                            "Processos (%d)", looca.getGrupoDeProcessos().getTotalProcessos()
+                    ));
+
+                    List<Processo> listProcessos = looca.getGrupoDeProcessos().getProcessos();
+
+                    listProcessos.sort((p1, p2) -> {
+                        if (Objects.equals(orderBy, "RAM")) {
+                            return p2.getUsoMemoria().compareTo(p1.getUsoMemoria());
+                        } else {
+                            return p2.getUsoCpu().compareTo(p1.getUsoCpu());
+                        }
+                    });
+
+                    showProcessInfo(listProcessos);
+//                    insertProcessInfo(listProcessos);
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    private void showProcessInfo(List<Processo> listProcessos) {
+        spnListaProcessos.removeAll();
+        Integer indexY = 0;
+        for (int i=0; i <10; i++) {
+            Processo p = listProcessos.get(i);
+            if (p != null) {
+                spnListaProcessos.add(newLabelNome(p, indexY));
+                spnListaProcessos.add(newLabelRAM(p, indexY));
+                spnListaProcessos.add(newLabelCPU(p, indexY));
+                indexY += 25;
+            }
+        }
+    }
+
+    private void insertProcessInfo(List<Processo> listProcessos) {
+        int count = 0;
+        for (Processo p: listProcessos) {
+            br.com.lynxcoder.model.Processo processo = new br.com.lynxcoder.model.Processo();
+            processo.setPID(p.getPid().toString());
+            processo.setNome(p.getNome());
+            processo.setMaquina(maqDao.findMaquina(user));
+            processDao = new ProcessosDAO();
+            processDao.save(processo);
+            count++;
+            if (count == 5) break;
+        }
     }
 
     public void add() {
@@ -664,7 +666,6 @@ public class Dashboard extends JFrame implements MouseListener {
         add(pnlNavbar);
 
         pnlNavbar.add(lblNavUsuario);
-        pnlNavbar.add(lblNavCargo);
         pnlNavbar.add(lblNavHardwareIcon);
         pnlNavbar.add(lblNavHardware);
         pnlNavbar.add(lblNavProcessosIcon);

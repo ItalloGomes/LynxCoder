@@ -10,6 +10,11 @@ const Usuario = db.sequelizeConnection.define('Usuario',
             autoIncrement: true,
             type: Sequelize.INTEGER,
         },
+        id_trello: {
+            field: 'id_trello',
+            allowNull: false,
+            type: Sequelize.STRING,
+        },
         nome: {
             field: 'nome_usuario',
             allowNull: false,
@@ -20,18 +25,8 @@ const Usuario = db.sequelizeConnection.define('Usuario',
             allowNull: false,
             type: Sequelize.TEXT
         },
-        cargo: {
-            field: 'cargo',
-            allowNull: false,
-            type: Sequelize.STRING
-        },
         login: {
             field: 'login',
-            allowNull: false,
-            type: Sequelize.STRING
-        },
-        email: {
-            field: 'email',
             allowNull: false,
             type: Sequelize.STRING
         },
@@ -40,8 +35,8 @@ const Usuario = db.sequelizeConnection.define('Usuario',
             allowNull: false,
             type: Sequelize.STRING
         },
-        isGestor: {
-            field: 'isGestor',
+        is_gestor: {
+            field: 'is_gestor',
             allowNull: false,
             type: Sequelize.BOOLEAN
         },
