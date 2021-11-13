@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/img/logo-type3.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="assets/css/estiloBase.css">
+    <link rel="stylesheet" href="assets/css/estiloAdmin.css">
+    <link rel="stylesheet" href="assets/css/responsiveDashboard.css">
+
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <title>Manage Access</title>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo-details">
+            <img src="assets/img/logo-type3.1.png" class="icon" alt="">
+            <div class="logo_name">LynxCoder</div>
+            <i class='bx bx-menu' id="btn" ></i>
+        </div>
+
+        <ul class="nav-list">
+            <li>
+                <i class='bx bx-search'></i>
+                <input type="text" placeholder="Search...">
+                <span class="tooltip">Search</span>
+            </li>
+
+            <li>
+                <a href="">
+                    <i class='bx bxs-user-detail'></i>
+                    <span class="links_name">Manage Access</span> 
+                </a>
+                <span class="tooltip">Manage Access</span>
+            </li>
+
+            <li class="profile">
+                <div class="profile-details">                    
+                    <div class="name_job">
+                        <div class="name">Admin</div>
+                        <div class="job">Administrador</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out" ></i>
+            </li>
+        </ul>
+    </div>
+
+    <script src="./assets/js/sidebar.js"></script>
+
+    <div class="base">
+        <div class="container-admin">
+            <div class="cards">
+                <h1>Informações de acesso</h1>
+
+                <div class="cards-align">
+                    <div class="card-item">
+                        <div class="card-item-title">
+                            <h4>Contribuidores</h4>
+                            <i class='bx bxs-user'></i>
+                        </div>
+                        <div class="card-item-content">
+                            <p><b>20</b> colaborador(es)</p>
+                            <p><b>3</b> gestor(es)</p>
+                        </div>
+                    </div>
+        
+                    <div class="card-item">
+                        <div class="card-item-title">
+                            <h4>Sprints</h4>
+                            <i class='bx bxs-network-chart'></i>
+                        </div>
+                        <div class="card-item-content">
+                            <p><b>46</b> sprint(s)</p>
+                            <p><b>3</b> squads(s)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="acess">
+                <h1>Gerenciar Acessos</h1>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
