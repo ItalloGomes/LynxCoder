@@ -1,12 +1,15 @@
 create table tb_squad(
 	id_squad int primary key identity(1,1)
+    ,id_trello text not null
     ,nome_squad varchar(100) not null
     ,descricao_squad text
 );
 
 create table tb_sprint(
 	id_sprint int primary key identity(1,1)
+    ,id_trello text not null
     ,descricao_sprint text
+    ,ativa bit
     ,fk_squad int
     ,foreign key(fk_squad) references tb_squad(id_squad)
 );
@@ -24,13 +27,24 @@ create table tb_empresa(
     ,numero_empresa varchar(10)
 );
 
+create table tb_administrador(
+    id_admin int primary key identity(1,1)
+    ,id_trello text not null
+    ,key_trello text not null
+    ,token_trello text not null
+    ,email_admin varchar(100) not null
+    ,login_admin varchar(100) not null
+    ,senha_admin varchar(45) not null
+    ,fk_empresa int
+    ,foreign key(fk_empresa) references tb_empresa(id_empresa)
+);
+
 create table tb_usuario(
 	id_usuario int primary key identity(1,1)
+    ,id_trello text not null
     ,nome_usuario varchar(50) not null
     ,foto_usuario text
-    ,cargo varchar(50) not null
     ,login varchar(100) not null
-    ,email varchar(100) not null
     ,senha varchar(100) not null
     ,isGestor bit
     ,fk_supervisor int
@@ -43,6 +57,7 @@ create table tb_usuario(
 
 create table tb_tarefa(
 	id_tarefa int primary key identity(1,1)
+    ,id_trello text not null
     ,nome_tarefa varchar(100)
     ,pontos int
     ,totalConcluido decimal(5,2)
@@ -58,10 +73,11 @@ create table tb_feedback(
     ,tipo_feedback varchar(45)
     ,mensagem_feedback text
     ,aproveitamento_feedback decimal(4,2)
+    ,facilidade_feedback decimal(4,2)
     ,fk_usuario int
     ,foreign key(fk_usuario) references tb_usuario(id_usuario)
-    ,fk_tarefa int
-    ,foreign key(fk_tarefa) references tb_tarefa(id_tarefa)
+    ,fk_sprint int
+    ,foreign key(fk_sprint) references tb_sprint(id_sprint)
 );
 
 create table tb_maquina(
@@ -79,7 +95,6 @@ create table tb_processo(
 	id_processo int primary key identity(1,1)
     ,PID_processo varchar(10)
     ,nome_processo varchar(45) not null
-    ,status_processo varchar(45) not null
     ,dataHora datetime
     ,fk_maquina int
     ,foreign key(fk_maquina) references tb_maquina(id_maquina)
@@ -99,10 +114,10 @@ create table tb_leitura(
 
 insert into tb_empresa 
 values (
-	'Alpe'				  -- nome_empresa
+	'Alpper'			  -- nome_empresa
     ,null				  -- logo_empresa
-    ,'05.889.172/0001-81' -- cnpj_empresa
-    ,'(11) 2391 9634'     -- telefone
+    ,'05.889.173/0001-61' -- cnpj_empresa
+    ,'(11) 2391 9632'     -- telefone
     ,'São Paulo'		  -- estado
     ,'São Paulo'		  -- cidade
     ,'04505-000'		  -- cep
@@ -110,42 +125,37 @@ values (
     ,'48'				  -- numero
 );
 
-insert into tb_squad
+insert into tb_empresa 
 values (
-	'securitização'   -- nome_squad
-    ,'Uma squad braba' -- descrição
+	'Evolve'		      -- nome_empresa
+    ,null				  -- logo_empresa
+    ,'12.345.678/0001-71' -- cnpj_empresa
+    ,'(11) 3134 8372'     -- telefone
+    ,'São Paulo'		  -- estado
+    ,'Santo André'		  -- cidade
+    ,'03205-000'		  -- cep
+    ,'Av. Pereira Barreto'-- logradouro
+    ,'280'				  -- numero
 );
 
-insert into tb_squad
+insert into tb_administrador
 values (
-	'subadiquirência'   -- nome_squad
-    ,'Uma squad pra lá de bagdá' -- descrição
+	'618f085ba004cf0d54bc26bd'				                            -- id_trello
+    ,'9bf1d14a6dd035ff37c36040ca6dafde'				                    -- key_trello
+    ,'e927ce9cf5f4a5c1e90eaa6ca4c03dc421dcadaa095d38a389e86eb7a39554e0' -- token_trello
+    ,'admalpper.lynxcoder@gmail.com'                                    -- email_admin
+    ,'lynxcoderadmalpper'		                                        -- login_admin
+    ,'admalpper139231'		                                            -- senha_admin
+    ,'1'		                                                        -- fk_empresa
 );
 
-insert into tb_usuario
-values (
-	'Itallo Gomes' -- ,nome_usuario
-    ,null			-- foto_usuario
-    ,'Estagiário'   -- ,cargo
-    ,'itallo.gomes' -- ,login
-	,'itallo.gomes@gmail.com' -- email
-    ,'urubu100'     -- ,senha
-    ,0			-- ,isGestor
-    ,1              -- ,fk_supervisor
-    ,1              -- ,fk_squad
-    ,1              -- ,fk_empresa
-);
-
-insert into tb_usuario
-values (
-	'Aleff Kelvin' -- ,nome_usuario
-    ,null			-- foto_usuario
-    ,'Estagiário'   -- ,cargo
-    ,'aleff.stampini' -- ,login
-	,'aleff.stampini@gmail.com' --email
-    ,'asd123'     -- ,senha
-    ,0			-- ,isGestor
-    ,1              -- ,fk_supervisor
-    ,2              -- ,fk_squad
-    ,1              -- ,fk_empresa
-);
+-- insert into tb_administrador
+-- values (
+-- 	''				                                                    -- id_trello
+--     ,''                                                                 -- key_trello
+--     ,''                                                                 -- token_trello
+--     ,'admevolve.lynxcoder@gmail.com'                                    -- email_admin
+--     ,'lynxcoderadmevolve'		                                        -- login_admin
+--     ,'admevolve983293'		                                            -- senha_admin
+--     ,'2'                                                                -- fk_empresa
+-- );
