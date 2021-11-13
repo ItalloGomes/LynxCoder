@@ -15,23 +15,23 @@ const Maquina = db.sequelizeConnection.define('Maquina',
             allowNull: false,
             type: Sequelize.STRING
         },
-        tipoCPU: {
-            field: 'tipoCPU',
+        tipo_cpu: {
+            field: 'tipo_cpu',
             allowNull: false,
             type: Sequelize.STRING
         },
-        totalMemoria: {
-            field: 'totalMemoria',
+        total_ram: {
+            field: 'total_ram',
             allowNull: false,
             type: Sequelize.STRING
         },
-        totalDisco: {
-            field: 'totalDisco',
+        total_disco: {
+            field: 'total_disco',
             allowNull: false,
             type: Sequelize.STRING
         },
-        sistemaOperacional: {
-            field: 'sistemaOperacional',
+        sistema_operacional: {
+            field: 'sistema_operacional',
             allowNull: false,
             type: Sequelize.STRING
         },

@@ -2,56 +2,56 @@ const db = require("../config/connectDatabase");
 
 'use strict';
 
-const Tarefa = db.sequelizeConnection.define('Tarefa', 
+const Administrador = db.sequelizeConnection.define('Administrador', 
     {
         id: {
-            field: 'id_tarefa',
+            field: 'id_admin',
             primaryKey: true,
             autoIncrement: true,
             type: Sequelize.INTEGER,
         },
         id_trello: {
-            field: 'id_tarefa',
+            field: 'id_trello',
             allowNull: false,
             type: Sequelize.STRING,
         },
-        nome: {
-            field: 'nome_tarefa',
+        key_trello: {
+            field: 'key_trello',
             allowNull: false,
             type: Sequelize.STRING
         },
-        pontos: {
-            field: 'pontos',
+        token_trello: {
+            field: 'token_trello',
             allowNull: false,
-            type: Sequelize.INTEGER
+            type: Sequelize.STRING
         },
-        total_concluido: {
-            field: 'total_concluido',
+        email_admin: {
+            field: 'email_admin',
             allowNull: false,
-            type: Sequelize.DECIMAL
+            type: Sequelize.STRING
         },
-        prazo: {
-            field: 'prazo',
+        login_admin: {
+            field: 'login_admin',
             allowNull: false,
-            type: Sequelize.DATE
+            type: Sequelize.STRING
         },
-        fk_usuario: {
-            field: 'fk_usuario',
+        senha_admin: {
+            field: 'senha_admin',
             allowNull: false,
-            type: Sequelize.INTEGER
+            type: Sequelize.STRING
         },
-        fk_sprint: {
-            field: 'fk_sprint',
+        fk_empresa: {
+            field: 'fk_empresa',
             allowNull: false,
             type: Sequelize.INTEGER
         }
     }, 
     {
-        tableName: 'tb_tarefa', 
+        tableName: 'tb_administrador', 
         freezeTableName: true, 
         underscored: true,
         timestamps: false,
     }
 );
 
-module.exports = Tarefa;
+module.exports = Administrador;

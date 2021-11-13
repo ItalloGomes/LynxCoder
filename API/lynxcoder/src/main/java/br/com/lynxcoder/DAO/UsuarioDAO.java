@@ -14,14 +14,13 @@ public class UsuarioDAO {
 
     public Usuario logar(String usuario, String senha){
 
-        String sql = "SELECT * FROM tb_usuario WHERE (login = ? or email = ?) and senha = ?";
+        String sql = "SELECT * FROM tb_usuario login = ? and senha = ?";
 
         try (Connection conn = Conexao.getConnection()) {
 
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, usuario);
-            pstm.setString(2, usuario);
-            pstm.setString(3, senha);
+            pstm.setString(2, senha);
 
             ResultSet rs = pstm.executeQuery();
 
@@ -30,13 +29,12 @@ public class UsuarioDAO {
             if(rs.next()) {
                 user = new Usuario();
                 user.setId(rs.getInt("id_usuario"));
+                user.setIdTrello(rs.getString("id_trello"));
                 user.setNome(rs.getString("nome_usuario"));
                 user.setFoto(rs.getString("foto_usuario"));
-                user.setCargo(rs.getString("cargo"));
                 user.setLogin(rs.getString("login"));
-                user.setEmail(rs.getString("email"));
                 user.setSenha(rs.getString("senha"));
-                user.setGestor(rs.getBoolean("isGestor"));
+                user.setGestor(rs.getBoolean("is_gestor"));
                 user.setSupervisor(new Usuario(rs.getInt("fk_supervisor")));
                 user.setSquad(new Squad(rs.getInt("fk_squad")));
                 user.setEmpresa(new Empresa(rs.getInt("fk_empresa")));

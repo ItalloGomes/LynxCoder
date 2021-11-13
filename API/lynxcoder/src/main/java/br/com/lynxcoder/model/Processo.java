@@ -8,25 +8,23 @@ public class Processo {
     private Integer id;
     private String PID;
     private String nome;
-    private String status;
     private Date dataHora;
     private Maquina maquina;
 
     public Processo() {}
 
-    public Processo(String PID, String nome, String status,
+    public Processo(String PID, String nome,
                     Date dataHora, Maquina maquina) {
         this.PID = PID;
         this.nome = nome;
-        this.status = status;
         this.dataHora = dataHora;
         this.maquina = maquina;
     }
 
-    public Processo(Integer id, String PID, String nome, String status,
+    public Processo(Integer id, String PID, String nome,
                     Date dataHora, Maquina maquina) {
 
-        this(PID, nome, status, dataHora, maquina);
+        this(PID, nome, dataHora, maquina);
         this.id = id;
 
     }
@@ -53,14 +51,6 @@ public class Processo {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Date getdataHora() {
@@ -90,5 +80,16 @@ public class Processo {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Processo{" +
+                "id=" + id +
+                ", PID='" + PID + '\'' +
+                ", nome='" + nome + '\'' +
+                ", dataHora=" + dataHora +
+                ", maquina=" + maquina +
+                '}';
     }
 }

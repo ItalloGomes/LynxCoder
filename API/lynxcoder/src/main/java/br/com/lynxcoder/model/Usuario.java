@@ -5,11 +5,10 @@ import java.util.Objects;
 public class Usuario {
 
     private Integer id;
+    private String idTrello;
     private String nome;
     private String foto;
-    private String cargo;
     private String login;
-    private String email;
     private String senha;
     private Boolean isGestor;
     private Usuario supervisor;
@@ -23,26 +22,17 @@ public class Usuario {
         hashCode();
     }
 
-    public Usuario(String nome, String foto, String cargo, String login, String email, String senha,
-                   Boolean isGestor, Usuario supervisor, Empresa empresa, Squad squad) {
+    public Usuario(Integer id, String idTrello, String nome, String foto, String login, String senha, Boolean isGestor, Usuario supervisor, Empresa empresa, Squad squad) {
+        this.id = id;
+        this.idTrello = idTrello;
         this.nome = nome;
         this.foto = foto;
-        this.cargo = cargo;
         this.login = login;
-        this.email = email;
         this.senha = senha;
         this.isGestor = isGestor;
         this.supervisor = supervisor;
         this.empresa = empresa;
         this.squad = squad;
-    }
-
-    public Usuario(Integer id, String nome, String foto, String cargo, String login, String email, String senha,
-                   Boolean isGestor, Usuario supervisor, Empresa empresa, Squad squad) {
-
-        this(nome, foto,cargo, login, email, senha, isGestor, supervisor, empresa, squad);
-        this.id = id;
-
     }
 
     public Integer getId() {
@@ -51,6 +41,14 @@ public class Usuario {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getIdTrello() {
+        return idTrello;
+    }
+
+    public void setIdTrello(String idTrello) {
+        this.idTrello = idTrello;
     }
 
     public String getNome() {
@@ -69,28 +67,12 @@ public class Usuario {
         this.foto = foto;
     }
 
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
     public String getLogin() {
         return login;
     }
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getSenha() {
@@ -138,23 +120,22 @@ public class Usuario {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(id, usuario.id);
+        return Objects.equals(id, usuario.id) && Objects.equals(idTrello, usuario.idTrello) && Objects.equals(nome, usuario.nome) && Objects.equals(foto, usuario.foto) && Objects.equals(login, usuario.login) && Objects.equals(senha, usuario.senha) && Objects.equals(isGestor, usuario.isGestor) && Objects.equals(supervisor, usuario.supervisor) && Objects.equals(empresa, usuario.empresa) && Objects.equals(squad, usuario.squad);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, idTrello, nome, foto, login, senha, isGestor, supervisor, empresa, squad);
     }
 
     @Override
     public String toString() {
         return "Usuario{" +
                 "id=" + id +
+                ", idTrello='" + idTrello + '\'' +
                 ", nome='" + nome + '\'' +
                 ", foto='" + foto + '\'' +
-                ", cargo='" + cargo + '\'' +
                 ", login='" + login + '\'' +
-                ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
                 ", isGestor=" + isGestor +
                 ", supervisor=" + supervisor +

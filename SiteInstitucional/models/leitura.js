@@ -10,23 +10,23 @@ const Leitura = db.sequelizeConnection.define('Leitura',
             autoIncrement: true,
             type: Sequelize.INTEGER,
         },
-        porcentagemUsoCPU: {
-            field: 'porcentagemUsoCPU',
+        porcentagem_uso_cpu: {
+            field: 'porcentagem_uso_cpu',
             allowNull: false,
             type: Sequelize.DECIMAL
         },
-        porcentagemUsoMemoria: {
-            field: 'porcentagemUsoMemoria',
+        porcentagem_uso_ram: {
+            field: 'porcentagem_uso_ram',
             allowNull: false,
             type: Sequelize.DECIMAL
         },
-        porcentagemUsoDisco: {
-            field: 'porcentagemUsoDisco',
+        porcentagem_uso_disco: {
+            field: 'porcentagem_uso_disco',
             allowNull: false,
             type: Sequelize.DECIMAL
         },
-        dataHora: {
-            field: 'dataHora',
+        data_hora: {
+            field: 'data_hora',
             allowNull: false,
             type: Sequelize.DATE
         },

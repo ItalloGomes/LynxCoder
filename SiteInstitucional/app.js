@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 // Routes consts
 const indexRouter = require('./routes/index'); 
 const loginRouter = require('./routes/login');
+const trelloRouter = require('./routes/trello');
 
 // Preset de engine
 app.set('view engine', 'html');
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 // Rotas "Mãe"
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
+app.use('/trello', trelloRouter);
 
 
 
