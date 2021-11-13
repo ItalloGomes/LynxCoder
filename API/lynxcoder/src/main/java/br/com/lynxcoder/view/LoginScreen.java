@@ -94,7 +94,7 @@ public class LoginScreen extends JFrame {
             public void mouseClicked(MouseEvent e) {
 
                 UsuarioDAO userDAO = new UsuarioDAO();
-//                SlackDAO slackDAO = new SlackDAO();
+                SlackDAO slackDAO = new SlackDAO();
                 LogDAO logDAO = new LogDAO();
 
                 Usuario user = userDAO.logar(jtfUserName.getText(), new String(jpfPassword.getPassword()));
@@ -110,7 +110,7 @@ public class LoginScreen extends JFrame {
 
                     logDAO.criarLog(logName);
 
-//                    slackDAO.welcomeMessage(user);
+                    slackDAO.welcomeMessage(user);
 
                     dispose();
                 }else{

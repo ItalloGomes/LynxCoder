@@ -2,6 +2,7 @@ package br.com.lynxcoder.view;
 
 import br.com.lynxcoder.DAO.LeituraDAO;
 import br.com.lynxcoder.DAO.MaquinaDAO;
+import br.com.lynxcoder.integration.slack.DAO.SlackDAO;
 import br.com.lynxcoder.model.Leitura;
 import br.com.lynxcoder.model.Maquina;
 import br.com.lynxcoder.model.Usuario;
@@ -21,6 +22,8 @@ import java.util.Objects;
 public class Dashboard extends JFrame implements MouseListener {
 
     Looca looca = new Looca();
+    SlackDAO slack = new SlackDAO();
+
     private final int threadSleep = 5000;
 
     List<Volume> listVolume = looca.getGrupoDeDiscos().getVolumes();
@@ -567,6 +570,12 @@ public class Dashboard extends JFrame implements MouseListener {
                     }
 
                     Double percentUsoVolumes = ((total - totalDisponivel) / total) * 100;
+
+                    Integer i = 0;
+                    if (percentUsoVolumes > 10 && i.equals(0)) {
+                        slack.welcomeMessage(user);
+                        i++;
+                    }
 
                     showInfo(usoRAM, percentUsoVolumes, percentUsoCPU, percentUsoRAM);
 //                    insertInDatabase(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
