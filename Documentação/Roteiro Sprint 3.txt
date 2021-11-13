@@ -1,0 +1,30 @@
+----------------------------------------
+Processo de Cadastro
+1) Representante da empresa envia e-mail p/ contato e dados da empresa
+2) Caso os dados sejam válidos, cadastra a empresa no banco, e cria um usuário Admin para esta empresa, com a key e o token do trello, e o e-mail informado pelo usuário.
+3) Pede para que o usuário adicione este Admin em todos os boards que deseja ter na aplicação.
+4) Representante informa quando terminar este processo, e então: Buscamos todos os usuários de cada Board, e pedimos para o Admin selecionar quem são os gestores.
+5) Cadastramos as Boards do Admin como Squads. Cadastramos cada membro da Board como um Usuário daquela Squad (Só uma squad por usuário!!). Utilizamos uma senha automática para o usuário (hashcode aleatório).
+
+Processo de Sprint
+1) O Gestor da Squad indica que a sprint foi fechada, criamos um feedback no banco para cada membro da squad dessa sprint (com os campos nulos, exceto fkUsuario e fkSprint). Exibimos em forma de lista de feedbacks pendentes para o usuário preencher.
+2) Ao sinal do Gestor da Squad, buscamos a nova Sprint (de acordo com o número informado), e cadastramos ela e suas respectivas tarefas atribuidas aos devidos membros (tudo pelo id).
+
+----------------------------------------
+Telas e campos:
+1) Campo de email e dados da empresa - Já tem
+2) Tela com lista de usuários, para selecionar gestores (cadastrar no banco ao confirmar)
+3) Tela para gestor fechar sprint/ abrir uma nova
+4) Tela ou modal pro usuário escrever o feedback dele
+
+--------------------------------------
+Tarefas:
+1) Validações no cadastro da empresa, mensagenzinha user-friendly.
+2) PDF tutorial de como prosseguir depois de receber o usuário Admin (cadastrar o Admin em todas boards do trello que ele deseja que sejam monitorados, e pedir para ele avisar quando terminar, informe quem é o gestor das squads a partir da lista que receberá no site).
+3) Fazer serviço que busca as boards (squads), lista os usuários delas para o representante e pede para que ele informe quem é o gestor de cada uma. Ao terminar, cadastra todos os usuários no banco (com senhas geradas).
+4) Fazer a tela que exibe a lista de usuários (descrita acima).
+5) Fazer a tela onde o gestor consegue fechar e criar as sprints. Ao fechar uma sprint cria um feedback vazio no banco para cada pessoa da squad, e os exibe em alguma tela do perfil do colaborador.
+6) Fazer a tela/modal em que o colaborador digita os dados do feedback.
+7) Ao fechar a sprint, buscar no Trello a nova sprint (de acordo com o nome informado pelo gestor no momento do fechamento), e cadastrá-la no banco junto de suas tarefas (atriubuidas aos colaboradores pelo id)
+8) Revisar dados da dashboard, adicionar/remover informações, telas, listas etc.
+9) Atualizar banco local e azure, atualizar models no java e na web. - Daniel
