@@ -5,7 +5,17 @@ body {
 .ocult{
     opacity: 0;
     pointer-events: none;
-    transition: .5s ease-in-out;
+    transition: .2s ease-in-out;
+}
+
+.hr {
+    border-bottom: 1px solid #b5b3cf;
+    height: 1px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    text-align: center;
 }
 
 .base {
@@ -310,9 +320,28 @@ _________________________________ */
 
 .modal-add-contb input:first-of-type { margin-top: 25px; }
 
-.modal-add-contb input[type ="email"] {
+.modal-add-contb input[type ="email"],
+.modal-add-contb input[type ="text"],
+.modal-add-contb input[type ="password"] {
     border: 1px solid #b5b3cf;
     background: #f7f6ff;
+}
+
+.modal-add-contb .select-role {
+    margin-top: 10px;
+    width: 100%;
+    padding: 5px 10px;
+    font-size: 13px;
+    color: #3f3f3f;
+    border: 1px solid #b5b3cf;
+    background: #f7f6ff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .5s ease-in-out;
+}
+
+.modal-add-contb .select-role:hover {
+    background: #f8f7fc;
 }
 
 .modal-add-contb input[type ="submit"] {
