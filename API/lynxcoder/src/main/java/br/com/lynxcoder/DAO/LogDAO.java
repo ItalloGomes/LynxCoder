@@ -4,7 +4,9 @@ import com.github.britooo.looca.api.core.Looca;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LogDAO {
 
@@ -17,11 +19,12 @@ public class LogDAO {
 
     public void escreverLog(Double conteudo) {
 
-        LocalDate date = LocalDate.now();  // 2021-11-10
+        Date data = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String dataFormatada = dateFormat.format(data);
         Looca looca = new Looca();
         conteudo = looca.getProcessador().getUso();
-        conteudo.toString();
-        String logName = date.toString();
+        String logName = dataFormatada;
         logName += ".txt";
 
         try {
