@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="assets/css/estiloAdmin.css">
     <link rel="stylesheet" href="assets/css/responsiveDashboard.css">
 
+    <script src="assets/js/admin.js"></script>
+
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <title>Manage Access</title>
 </head>
@@ -111,6 +113,69 @@
                             <td>52</td>
                             <td>1/8</td>
                         </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Pedro Guilherme</td>
+                            <td>72</td>
+                            <td>6/6</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Pedro Guilherme</td>
+                            <td>72</td>
+                            <td>6/6</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Pedro Guilherme</td>
+                            <td>72</td>
+                            <td>6/6</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Pedro Guilherme</td>
+                            <td>72</td>
+                            <td>6/6</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Pedro Guilherme</td>
+                            <td>72</td>
+                            <td>6/6</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Pedro Guilherme</td>
+                            <td>72</td>
+                            <td>6/6</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Pedro Guilherme</td>
+                            <td>72</td>
+                            <td>6/6</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Pedro Guilherme</td>
+                            <td>72</td>
+                            <td>6/6</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>Pedro Guilherme</td>
+                            <td>72</td>
+                            <td>6/6</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -120,7 +185,19 @@
         </div>
 
         <div class="container-bar">
-            <button>Adicionar Contribuidor</button>
+            <button onclick="openForm()">Adicionar Contribuidor</button>
+        </div>
+    </div>
+
+    <div class="modals ocult" id="boxModal">
+        <div class="modal-add-contb">
+            <i class='bx bx-x' onclick="closedForm()"></i>
+
+            <i class='bx bxs-user-plus'></i>
+            <h1>Adicionar Contribuidor</h1>
+            <input type="email" placeholder="E-mail">
+            <br>
+            <input type="submit" value="Enviar">
         </div>
     </div>
 
