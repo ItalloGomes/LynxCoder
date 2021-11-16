@@ -10,7 +10,10 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class LoginScreen extends JFrame {
 
@@ -104,11 +107,11 @@ public class LoginScreen extends JFrame {
 
                     Dashboard dashboard = new Dashboard(user);
 
-                    LocalDate date = LocalDate.now();  // 2021-11-10
+                    Date data = new Date();
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+                    String dataFormatada = dateFormat.format(data);
 
-                    String logName = date.toString();
-
-                    logDAO.criarLog(logName);
+                    logDAO.criarLog(dataFormatada);
 
                     slackDAO.welcomeMessage(user);
 

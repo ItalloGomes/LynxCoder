@@ -10,11 +10,21 @@ import java.util.Date;
 
 public class LogDAO {
 
-    public void criarLog(String logName) {
+    File arquivo;
 
-        logName += ".txt";
-        File diretorio = new File("C:\\Users\\guilherme.scheleger\\Desktop\\LynxCoder\\API\\lynxcoder", logName);
+    public void criarLog(String nomeArquivo) {
 
+        nomeArquivo += ".txt";
+        System.out.println(nomeArquivo);
+        arquivo = new File("C:\\bandtec\\LynxCoder\\API\\lynxcoder", nomeArquivo);
+        try {
+            if (arquivo.createNewFile()) {
+                System.out.println("Arquivo criado");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erro ao criar arquivo");
+        }
     }
 
     public void escreverLog(Double conteudo) {
@@ -22,20 +32,16 @@ public class LogDAO {
         Date data = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String dataFormatada = dateFormat.format(data);
-        Looca looca = new Looca();
-        conteudo = looca.getProcessador().getUso();
-        String logName = dataFormatada;
-        logName += ".txt";
 
         try {
-            FileWriter arquivo = new FileWriter(logName, false);
-            arquivo.write(String.valueOf(conteudo));
-            arquivo.close();
-            System.out.println("Arquivo criado");
+            FileWriter escritor = new FileWriter(arquivo, false);
+            escritor.write(dataFormatada + conteudo);
+            escritor.close();
+            System.out.println("Registro criado: " + dataFormatada);
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Arqivo não criado");
+            System.out.println("Registro não criado: " + dataFormatada);
         }
 
 
