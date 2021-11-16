@@ -14,7 +14,7 @@ public class UsuarioDAO {
 
     public Usuario logar(String usuario, String senha){
 
-        String sql = "SELECT * FROM tb_usuario login = ? and senha = ?";
+        String sql = "SELECT * FROM tb_usuario WHERE login = ? and senha = ?";
 
         try (Connection conn = Conexao.getConnection()) {
 
