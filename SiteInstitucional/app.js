@@ -6,7 +6,14 @@ const bodyParser = require('body-parser');
 
 // Routes consts
 const indexRouter = require('./routes/index'); 
-const loginRouter = require('./routes/login');
+const loginRouter = require('./routes/logins');
+const dasboardColaboradorRouter = require('./routes/dashboardColaborador');
+const empresaRouter = require('./routes/empresas');
+const feedbackRouter = require('./routes/feedbacks');
+const sprintRouter = require('./routes/sprints');
+const squadRouter = require('./routes/squads');
+const tarefaRouter = require('./routes/tarefas');
+const usuarioRouter = require('./routes/usuarios');
 const trelloRouter = require('./routes/trello');
 
 // Preset de engine
@@ -21,6 +28,13 @@ app.use(bodyParser.json());
 // Rotas "Mãe"
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
+app.use('/dashboardColaborador', dasboardColaboradorRouter);
+app.use('/empresas', empresaRouter);
+app.use('/feedbacks', feedbackRouter);
+app.use('/sprints', sprintRouter);
+app.use('/squads', squadRouter);
+app.use('/tarefas', tarefaRouter);
+app.use('/usuarios', usuarioRouter);
 app.use('/trello', trelloRouter);
 
 

@@ -20,7 +20,7 @@ const FeedBack = db.sequelizeConnection.define('FeedBack',
             allowNull: false,
             type: Sequelize.DECIMAL
         },
-        facilidade_feedback: {
+        facilidade: {
             field: 'facilidade_feedback',
             allowNull: false,
             type: Sequelize.DECIMAL

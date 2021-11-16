@@ -15,16 +15,18 @@
         <section class="main">
             <img src="assets/img/logo-type3.1.png" alt="">
 
-            <input type="text" name="email" placeholder="Email">
-            <input type="password" name="senha" id="" placeholder="Senha">
-            
-            <select name="tipoUsuario" id="tipoLogin">
-                <option value="0">Admin</option>
-                <option value="1">Gestor</option>
-                <option value="2">Colaborador</option>
-            </select>
+            <form id="form_login" method="post" onsubmit="return logar()">
+                <input type="text" name="login" placeholder="Username">
+                <input type="password" name="senha" id="" placeholder="Senha">
+                
+                <select name="tipoUsuario" id="tipoLogin">
+                    <option value="0">Admin</option>
+                    <option value="1">Gestor</option>
+                    <option value="2">Colaborador</option>
+                </select>
 
-            <input type="submit" value="Entrar" onclick="return logar(tipoLogin.value)">
+                <input type="submit" id="btn_login" value="Entrar">
+            </form>
         </section>
     </div>
 
@@ -33,13 +35,52 @@
 
 <script>
 
-    function logar(tipo) {
+    function logar() {
 
-        if(tipo == 0 || tipo == 1)
-        window.location.href = 'equipe.html';
-        else
-        window.location.href = 'perfil.html';
+        aguardar();
+
+        let form = new URLSearchParams(new FormData(form_login));
+
+        fetch('/login/logar', {
+            method: "POST",
+            body: form
+        }).then( response => {
+            if (response.ok){
+
+                response.json().then( usuario => {
+
+                    sessionStorage.setItem(usuario);
+
+                    fetch('/dashboardColaborador');
+
+
+                });
+
+            } else {
+
+                console.log('Erro de login!');
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    
+                    falhaCL.style.display = "block";
+                    
+                    limpaFormularioLogin();
+                });
+
+            }
+
+            finalizar_aguardar();
+        });
 
     }
 
+
+    function aguardar() {
+        btn_login.disabled = true;
+    }
+
+    function finalizar_aguardar() {
+        btn_login.disabled = false;
+    }
 </script>
