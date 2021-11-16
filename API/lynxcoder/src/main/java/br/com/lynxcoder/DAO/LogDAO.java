@@ -1,8 +1,12 @@
 package br.com.lynxcoder.DAO;
+import com.github.britooo.looca.api.core.Looca;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LogDAO {
 
@@ -13,15 +17,19 @@ public class LogDAO {
 
     }
 
-    public void escreverLog(String conteudo) {
+    public void escreverLog(Double conteudo) {
 
-        LocalDate date = LocalDate.now();  // 2021-11-10
-        String logName = date.toString();
+        Date data = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String dataFormatada = dateFormat.format(data);
+        Looca looca = new Looca();
+        conteudo = looca.getProcessador().getUso();
+        String logName = dataFormatada;
         logName += ".txt";
 
         try {
             FileWriter arquivo = new FileWriter(logName, false);
-            arquivo.write(conteudo);
+            arquivo.write(String.valueOf(conteudo));
             arquivo.close();
             System.out.println("Arquivo criado");
 
