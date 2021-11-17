@@ -4,9 +4,9 @@ const Squad = require("../models/Squad");
 router.post('/addSquad', (req, res) => {
 
     Squad.create({
-        id_trello: req.body.idTrello,
-        nome: req.body.nomeSquad,
-        descricao: req.body.descricao
+        id_trello: req.body.id,
+        nome: req.body.name,
+        descricao: req.body.desc
     }).then(resultado => {
         
         console.log(`Registro criado: ${resultado}`)

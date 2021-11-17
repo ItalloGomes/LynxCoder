@@ -5,15 +5,15 @@ const Usuario = require("../models/Usuario");
 router.post('/addUsuario', (req, res) => {
 
     Usuario.create({
-        id_trello: req.body.idTrello,
-        nome: req.body.nomeUsuario,
-        foto: req.body.fotoUsuario,
+        id_trello: req.body.id_trello,
+        nome: req.body.nome,
+        foto: req.body.foto,
         login: req.body.login,
         senha: req.body.senha,
-        is_gestor: req.body.isGestor,
-        fk_supervisor: req.body.idSupervisor,
-		fk_squad: req.body.idSquad,
-		fk_empresa: req.body.idEmpresa,
+        is_gestor: req.body.is_gestor,
+        fk_supervisor: req.body.fk_supervisor,
+		fk_squad: req.body.fk_squad,
+		fk_empresa: req.body.fk_empresa
     }).then(resultado => {
         
         console.log(`Registro criado: ${resultado}`)

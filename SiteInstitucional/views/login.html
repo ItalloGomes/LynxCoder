@@ -47,20 +47,18 @@
         }).then( response => {
             if (response.ok){
 
-                response.json().then( usuario => {
+                response.json().then(usuario => {
 
-                    sessionStorage.setItem(usuario);
+                    sessionStorage.setItem("user", usuario);
 
                     fetch('/dashboardColaborador');
-
-
                 });
 
             } else {
 
                 console.log('Erro de login!');
 
-                resposta.text().then(texto => {
+                response.text().then(texto => {
                     console.error(texto);
                     
                     falhaCL.style.display = "block";
