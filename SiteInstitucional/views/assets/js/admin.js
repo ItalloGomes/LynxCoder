@@ -8,6 +8,24 @@ function openForm () {
     boxModal.classList.remove('ocult');
 }
 
+window.onload = function() {
+    if (empresa_tem_usuarios()) {
+        
+    }
+};
+
+function empresa_tem_usuarios() {
+    fetch('/usuarios/empresa_tem_usuarios', {
+        method: "GET"
+    }).then( response => {
+        if (response.length > 0){
+            return true;
+        } else {
+            return false;
+        }
+    });
+}
+
 function cadastrar_squads() {
     fetch('/trello/cadastrar_squads', {
         method: "POST"
@@ -36,7 +54,7 @@ function cadastrar_squads() {
     });
 }
 
-function add_info_squad(squad) {
+function add_squad(squad) {
     fetch(`trello/listar_usuarios_squad/${squad}`, {
         method: "GET"
     }).then(response => {

@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { add } = require("lodash");
 const router = Router();
 const db = require('../config/connectDatabase');
 var id_admin = sessionStorage.getItem("user").id_admin;
@@ -60,9 +61,9 @@ router.get('/listar_usuarios_squad/:squad', (req, res) => {
     let id_squad;
 
     let sql = `select id_squad from tb_squad where id_trello = ${squad.id}`;
-	console.log(sql);
+    console.log(sql);
 
-	sequelize.query(sql, { type: sequelize.QueryTypes.SELECT })
+    sequelize.query(sql, { type: sequelize.QueryTypes.SELECT })
         .then(resultado => {
             id_squad = resultado[0].id_squad;
         }).catch(erro => {
@@ -99,9 +100,9 @@ router.get('/listar_usuarios_squad/:squad', (req, res) => {
                 });
             } else {
                 console.log("Erro ao recuperar membros da squad!");
-                    resultado.text().then(texto => {
-                        console.error(texto);
-                        res.status(500).send(texto);
+                resultado.text().then(texto => {
+                    console.error(texto);
+                    res.status(500).send(texto);
                 });
             }
 
@@ -109,6 +110,43 @@ router.get('/listar_usuarios_squad/:squad', (req, res) => {
     });
 
     res.json(members);
+
+});
+
+router.get('/iniciar_sprint/:squad', (req, res) => {
+
+    console.log("Iniciando sprint...");
+
+    let squad = req.params.squad;
+    
+    var url = new URL(`https://trello.com/1/boards/${squad.id_trello}/lists`),
+        params = { key: key, token: token }
+    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+
+    fetch(url, {
+        method: "GET"
+    }).then(function (resultado) {
+
+        if (resultado.ok) {
+
+            resultado.json().then(lists => {
+
+               lists.forEach(list => {
+                   if (list.name.includes("Sprint")) {
+
+                   }
+               });
+
+            });
+        } else {
+            console.log("Erro ao iniciar sprint!");
+            resultado.text().then(texto => {
+                console.error(texto);
+                res.status(500).send(texto);
+            });
+        }
+
+    });
 
 });
 
