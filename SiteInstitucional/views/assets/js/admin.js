@@ -17,7 +17,7 @@ window.onload = function() {
 function empresa_tem_usuarios() {
     fetch('/usuarios/empresa_tem_usuarios', {
         method: "GET"
-    }).then( response => {
+    }).then(response => {
         if (response.length > 0){
             return true;
         } else {
