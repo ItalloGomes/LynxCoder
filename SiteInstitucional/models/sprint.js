@@ -8,27 +8,27 @@ const Sprint = db.sequelizeConnection.define('Sprint',
             field: 'id_sprint',
             primaryKey: true,
             autoIncrement: true,
-            type: Sequelize.INTEGER,
+            type: db.Sequelize.INTEGER,
         },
         id_trello: {
             field: 'id_trello',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         descricao: {
             field: 'descricao_sprint',
             allowNull: false,
-            type: Sequelize.TEXT
+            type: db.Sequelize.TEXT
         },
         ativa: {
             field: 'ativa',
             allowNull: false,
-            type: Sequelize.BOOLEAN
+            type: db.Sequelize.BOOLEAN
         },
         fk_squad: {
             field: 'fk_squad',
             allowNull: false,
-            type: Sequelize.INTEGER,
+            type: db.Sequelize.INTEGER,
             foreignKey: true
         }
     }, 

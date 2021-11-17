@@ -8,52 +8,52 @@ const Empresa = db.sequelizeConnection.define('Empresa',
             field: 'id_empresa',
             primaryKey: true,
             autoIncrement: true,
-            type: Sequelize.INTEGER,
+            type: db.Sequelize.INTEGER,
         },
         nome: {
             field: 'nome_empresa',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         logo: {
             field: 'logo_empresa',
             allowNull: false,
-            type: Sequelize.TEXT
+            type: db.Sequelize.TEXT
         },
         cnpj: {
             field: 'CNPJ_empresa',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         telefone: {
             field: 'telefone_empresa',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         estado: {
             field: 'estado_empresa',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         cidade: {
             field: 'cidade_empresa',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         cep: {
             field: 'CEP_empresa',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         logradouro: {
             field: 'logradouro_empresa',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         numero: {
             field: 'numero_empresa',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         }
     }, 
     {

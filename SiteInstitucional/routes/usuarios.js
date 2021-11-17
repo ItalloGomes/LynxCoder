@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const db = require('../config/connectDatabase');
 const Usuario = require("../models/Usuario");
-var fk_empresa = sessionStorage.getItem("user").fk_empresa;
+// var fk_empresa = sessionStorage.getItem("user").fk_empresa;
 
 router.post('/addUsuario', (req, res) => {
 
@@ -134,3 +134,5 @@ router.get('/UsuariosGestores', function(req, res, next) {
 		res.status(500).send(erro.message);
   	});
 });
+
+module.exports = router;

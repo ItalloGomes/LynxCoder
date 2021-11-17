@@ -8,42 +8,42 @@ const Tarefa = db.sequelizeConnection.define('Tarefa',
             field: 'id_tarefa',
             primaryKey: true,
             autoIncrement: true,
-            type: Sequelize.INTEGER,
+            type: db.Sequelize.INTEGER,
         },
         id_trello: {
             field: 'id_tarefa',
             allowNull: false,
-            type: Sequelize.STRING,
+            type: db.Sequelize.STRING,
         },
         nome: {
             field: 'nome_tarefa',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         pontos: {
             field: 'pontos',
             allowNull: false,
-            type: Sequelize.INTEGER
+            type: db.Sequelize.INTEGER
         },
         total_concluido: {
             field: 'total_concluido',
             allowNull: false,
-            type: Sequelize.DECIMAL
+            type: db.Sequelize.DECIMAL
         },
         prazo: {
             field: 'prazo',
             allowNull: false,
-            type: Sequelize.DATE
+            type: db.Sequelize.DATE
         },
         fk_usuario: {
             field: 'fk_usuario',
             allowNull: false,
-            type: Sequelize.INTEGER
+            type: db.Sequelize.INTEGER
         },
         fk_sprint: {
             field: 'fk_sprint',
             allowNull: false,
-            type: Sequelize.INTEGER
+            type: db.Sequelize.INTEGER
         }
     }, 
     {
