@@ -8,52 +8,52 @@ const Usuario = db.sequelizeConnection.define('Usuario',
             field: 'id_usuario',
             primaryKey: true,
             autoIncrement: true,
-            type: Sequelize.INTEGER,
+            type: db.Sequelize.INTEGER,
         },
         id_trello: {
             field: 'id_trello',
             allowNull: false,
-            type: Sequelize.STRING,
+            type: db.Sequelize.STRING,
         },
         nome: {
             field: 'nome_usuario',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         foto: {
             field: 'foto_usuario',
             allowNull: false,
-            type: Sequelize.TEXT
+            type: db.Sequelize.TEXT
         },
         login: {
             field: 'login',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         senha: {
             field: 'senha',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         is_gestor: {
             field: 'is_gestor',
             allowNull: false,
-            type: Sequelize.BOOLEAN
+            type: db.Sequelize.BOOLEAN
         },
         fk_supervisor: {
             field: 'fk_supervisor',
             allowNull: false,
-            type: Sequelize.INTEGER
+            type: db.Sequelize.INTEGER
         },
         fk_squad: {
             field: 'fk_squad',
             allowNull: false,
-            type: Sequelize.INTEGER
+            type: db.Sequelize.INTEGER
         },
         fk_empresa: {
             field: 'fk_empresa',
             allowNull: false,
-            type: Sequelize.INTEGER
+            type: db.Sequelize.INTEGER
         }
     }, 
     {

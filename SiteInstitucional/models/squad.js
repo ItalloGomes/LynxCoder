@@ -8,22 +8,22 @@ const Squad = db.sequelizeConnection.define('Squad',
             field: 'id_squad',
             primaryKey: true,
             autoIncrement: true,
-            type: Sequelize.INTEGER,
+            type: db.Sequelize.INTEGER,
         },
         id_trello: {
             field: 'id_trello',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         nome: {
             field: 'nome_squad',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         descricao: {
             field: 'descricao_squad',
             allowNull: false,
-            type: Sequelize.TEXT
+            type: db.Sequelize.TEXT
         },
     }, 
     {

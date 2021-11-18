@@ -1,11 +1,9 @@
 const { Router } = require("express");
-const { add } = require("lodash");
 const router = Router();
-const db = require('../config/connectDatabase');
-var id_admin = sessionStorage.getItem("user").id_admin;
-var fk_empresa = sessionStorage.getItem("user").fk_empresa;
-var key = sessionStorage.getItem("key").key_trello;
-var token = sessionStorage.getItem("token").token_trello;
+// var id_admin = sessionStorage.getItem("user").id_admin;
+// var fk_empresa = sessionStorage.getItem("user").fk_empresa;
+// var key = sessionStorage.getItem("key").key_trello;
+// var token = sessionStorage.getItem("token").token_trello;
 
 router.get('/', (req, res) => {
     res.render('trello', { title: 'Express' });

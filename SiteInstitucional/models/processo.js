@@ -8,27 +8,27 @@ const Processo = db.sequelizeConnection.define('Processo',
             field: 'id_processo',
             primaryKey: true,
             autoIncrement: true,
-            type: Sequelize.INTEGER,
+            type: db.Sequelize.INTEGER,
         },
         pid: {
             field: 'PID_processo',
             allowNull: false,
-            type: Sequelize.INTEGER
+            type: db.Sequelize.INTEGER
         },
         nome: {
             field: 'nome_processo',
             allowNull: false,
-            type: Sequelize.STRING
+            type: db.Sequelize.STRING
         },
         dataHora: {
             field: 'dataHora',
             allowNull: false,
-            type: Sequelize.DATE
+            type: db.Sequelize.DATE
         },
         fk_maquina: {
             field: 'fk_maquina',
             allowNull: false,
-            type: Sequelize.INTEGER,
+            type: db.Sequelize.INTEGER,
             foreignKey: true
         }
     }, 
