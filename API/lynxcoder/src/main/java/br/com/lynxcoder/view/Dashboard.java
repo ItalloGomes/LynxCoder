@@ -1,6 +1,7 @@
 package br.com.lynxcoder.view;
 
 import br.com.lynxcoder.DAO.LeituraDAO;
+import br.com.lynxcoder.DAO.LogDAO;
 import br.com.lynxcoder.DAO.MaquinaDAO;
 import br.com.lynxcoder.DAO.ProcessosDAO;
 import br.com.lynxcoder.model.Leitura;
@@ -14,6 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.List;
@@ -32,6 +34,7 @@ public class Dashboard extends JFrame implements MouseListener {
     ProcessosDAO processDao;
 
     Usuario user;
+    LogDAO logDAO;
     Maquina maquinaUser;
 
     private final String COLOR_BACKGROUND = "#e7e5f0";
@@ -107,9 +110,10 @@ public class Dashboard extends JFrame implements MouseListener {
 
     JScrollPane spnListaProcessos;
 
-    public Dashboard(Usuario user) {
+    public Dashboard(Usuario user, LogDAO logDAO) {
 
         this.user = user;
+        this.logDAO = logDAO;
 
         initDashboard();
         initIcons();
@@ -537,6 +541,7 @@ public class Dashboard extends JFrame implements MouseListener {
 
     private void initMonitoradorDeHardware() {
 
+        boolean primeiraVez = true;
         new Thread(() -> {
             try {
                 while (true) {
@@ -561,10 +566,10 @@ public class Dashboard extends JFrame implements MouseListener {
                     Double percentUsoVolumes = ((total - totalDisponivel) / total) * 100;
 
                     showHardwareInfo(usoRAM, percentUsoVolumes, percentUsoCPU, percentUsoRAM);
-//                    insertHardwareInfo(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
-
+               //     insertHardwareInfo(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
                 }
             } catch (Exception e) {
+                logDAO.escreverLog(e.toString());
                 e.printStackTrace();
             }
         }).start();
@@ -592,14 +597,25 @@ public class Dashboard extends JFrame implements MouseListener {
     }
 
     private void insertHardwareInfo(Double percentUsoRAM, Double percentUsoCPU, Double percentUsoVolumes) {
-        Leitura dado = new Leitura();
-        dado.setPorcentagemUsoMemoria(percentUsoRAM);
-        dado.setPorcentagemUsoCPU(percentUsoCPU);
-        dado.setPorcentagemUsoDisco(percentUsoVolumes);
-        dado.setMaquina(maquinaUser);
 
-        leituraDao = new LeituraDAO();
-        leituraDao.save(dado);
+
+        Leitura dado = null;
+        try {
+            dado.setPorcentagemUsoMemoria(percentUsoRAM);
+            dado.setPorcentagemUsoCPU(percentUsoCPU);
+            dado.setPorcentagemUsoDisco(percentUsoVolumes);
+            dado.setMaquina(maquinaUser);
+
+
+            leituraDao = new LeituraDAO();
+            leituraDao.save(dado);
+
+            dado = new Leitura();
+        } catch (Exception e) {
+            logDAO.escreverLog(e.toString());
+            e.printStackTrace();
+        }
+
     }
 
     private void initMonitoradorDeProcessos() {

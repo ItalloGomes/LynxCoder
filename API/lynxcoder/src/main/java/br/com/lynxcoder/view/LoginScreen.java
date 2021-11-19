@@ -105,14 +105,14 @@ public class LoginScreen extends JFrame {
                 if( user != null ){
                     System.out.println("Logando...");
 
-                    Dashboard dashboard = new Dashboard(user);
-
                     Date data = new Date();
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
                     String dataFormatada = dateFormat.format(data);
 
                     logDAO.criarLog(dataFormatada);
+                    logDAO.escreverLog( " Logou com sucesso");
 
+                    Dashboard dashboard = new Dashboard(user, logDAO);
                     slackDAO.welcomeMessage(user);
 
                     dispose();
