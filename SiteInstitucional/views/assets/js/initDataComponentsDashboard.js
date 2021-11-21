@@ -7,6 +7,13 @@ class InitAppDataUser{
         this.user = user;
         this.initComponents();
 
+        /*
+            Para usar as sessiosStorages não precisa levar essa classe, ela só
+            defini quando o usuário entra no sistema dps é só puxar
+
+            const <receptaculo> = JSON.parse(sessionStorage.getItem('<objetoQueQuiser>'));
+        */
+
         this.supervisor = JSON.parse(sessionStorage.getItem('userSuper'));
         this.squad = JSON.parse(sessionStorage.getItem('userSquad'));
         this.empresa = JSON.parse(sessionStorage.getItem('userEmpresa'));
