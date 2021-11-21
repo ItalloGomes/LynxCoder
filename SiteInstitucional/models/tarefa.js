@@ -11,7 +11,7 @@ const Tarefa = db.sequelizeConnection.define('Tarefa',
             type: db.Sequelize.INTEGER,
         },
         id_trello: {
-            field: 'id_tarefa',
+            field: 'id_trello',
             allowNull: false,
             type: db.Sequelize.STRING,
         },

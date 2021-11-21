@@ -1,6 +1,3 @@
-let id_admin = '618f085ba004cf0d54bc26bd';
-let key = '9bf1d14a6dd035ff37c36040ca6dafde';
-let token = 'e927ce9cf5f4a5c1e90eaa6ca4c03dc421dcadaa095d38a389e86eb7a39554e0';
 let squads_trello = [];
 let squads_banco = [];
 let squads_dif = [];
@@ -16,15 +13,7 @@ let callbackUsuariosTrello = false;
 let callbackusuariosBanco = false;
 let callbackCadastroSquads = false;
 
-function closedForm() {
-    boxModal.classList.add('ocult');
-}
-
-function openForm() {
-    boxModal.classList.remove('ocult');
-}
-
-window.onload = function () {
+function init() {
     sincronizar_squads();
 };
 
@@ -82,7 +71,7 @@ function buscar_squads_trello() {
 
 function buscar_squads_banco() {
     callbackSquadsBanco = false;
-    fk_empresa = 1;
+    fk_empresa = fk_empresa;
 
     fetch(`squads/${fk_empresa}`, {
         method: "GET"
@@ -128,8 +117,7 @@ function sincronizar_usuarios() {
 }
 
 function buscar_usuarios_trello() {
-    let fk_empresa = 1;
-    let fk_squad = 9;
+    let fk_squad = 1;
 
     squads_trello.forEach(squadTrello => {
         callbackUsuariosTrello = false;
@@ -173,7 +161,7 @@ function buscar_usuarios_trello() {
 
 function buscar_usuarios_banco() {
     callbackusuariosBanco = false;
-    fk_empresa = 1;
+    fk_empresa = fk_empresa;
 
     fetch(`usuarios/usuariosEmpresa/${fk_empresa}`, {
         method: "GET"
@@ -198,9 +186,9 @@ function alertar_atualizacao() {
 
 function cadastrar_squads() {
     console.log(squads_dif);
-    fk_empresa = 1;
+    fk_empresa = fk_empresa;
 
-    squads_trello.forEach(squadTrello => {
+    squads_dif.forEach(squadTrello => {
         callbackCadastroSquads = false;
         var data = JSON.stringify({
             id_trello: squadTrello.id,

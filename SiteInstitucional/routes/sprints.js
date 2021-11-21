@@ -4,10 +4,10 @@ const Sprint = require("../models/Sprint");
 router.post('/addSprint', (req, res) => {
 
     Sprint.create({
-        id_trello: req.body.idTrello,
+        id_trello: req.body.id_trello,
         descricao: req.body.descricao,
         ativa: req.body.ativa,
-        fk_squad: req.body.idSquad
+        fk_squad: req.body.fk_squad
     }).then(resultado => {
 
         console.log(`Registro criado: ${resultado}`)
@@ -21,21 +21,24 @@ router.post('/addSprint', (req, res) => {
 
 });
 
-router.get('/status_sprint', (req, res) => {
+router.get('/isSprintAtiva/:fk_squad', (req, res) => {
 
-    console.log("Verificando status da sprint...");
+    Sprint.findAndCountAll({
+        where: {
+            fk_squad: req.params.fk_squad
+        },
+        order: [
+            ['id', 'DESC']
+        ],
+        limit: 1
+    }).then(resultado => {
+        console.log(resultado.rows);
+        res.json(resultado.rows);
+    }).catch(erro => {
+        console.error(erro);
+        res.status(500).send(erro.message);
+    });
 
-    var fk_squad = sessionStorage.getItem("user").fk_squad;
-    let sql = `select ativa from tb_sprint where fk_squad = ${fk_squad} order by id desc`;
-    console.log(sql);
-
-    sequelize.query(sql, { type: sequelize.QueryTypes.SELECT })
-        .then(resultado => {
-            res.json(resultado);
-        }).catch(erro => {
-            console.error(erro);
-            res.status(500).send(erro.message);
-        });
 });
 
 router.delete('/removeSprint:idSprint', (req, res) => {
@@ -54,6 +57,21 @@ router.delete('/removeSprint:idSprint', (req, res) => {
         console.error(erro);
         res.status(500).send(erro.message);
     });
+
+});
+
+router.post('/fecharSprint/:id_sprint', (req, res) => {
+
+    Sprint.update(
+        {ativa: 0},
+        {where: { id: req.params.id_sprint }}
+        ).then(resultado => {
+            console.log(resultado.rows);
+            res.json(resultado.rows);
+        }).catch(erro => {
+            console.error(erro);
+            res.status(500).send(erro.message);
+        });
 
 });
 

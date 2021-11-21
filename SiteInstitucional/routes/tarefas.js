@@ -5,13 +5,13 @@ const Tarefa = require("../models/Tarefa");
 router.post('/addTarefa', (req, res) => {
 
     Tarefa.create({
-        id_trello: req.body.idTrello,
-        nome: req.body.nomeTarefa,
+        id_trello: req.body.id_trello,
+        nome: req.body.nome,
         pontos: req.body.pontos,
-        total_concluido: req.body.totalConcluido,
+        total_concluido: req.body.total_concluido,
         prazo: req.body.prazo,
-        fk_usuario: req.body.idUsuario,
-        fk_sprint: req.body.idSprint
+        fk_usuario: req.body.fk_usuario,
+        fk_sprint: req.body.fk_sprint
     }).then(resultado => {
         
         console.log(`Registro criado: ${resultado}`)
