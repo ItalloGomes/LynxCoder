@@ -2,6 +2,7 @@ const router = require("express").Router();
 const db = require('../config/connectDatabase');
 const Squad = require("../models/Squad");
 const Usuario = require("../models/Usuario");
+const Administrador = require("../models/Administrador");
 
 router.post('/addUsuario', (req, res) => {
 
@@ -81,12 +82,50 @@ router.get('/usuariosEmpresa/:idEmpresa', function(req, res, next) {
   	});
 });
 
+router.get('/usuarioIdTrello/:id_trello', function(req, res, next) {
+	console.log('Usuário com Id trello');
+	
+    Usuario.findAndCountAll({ 
+        where: {
+            id_trello: req.params.id_trello
+        }
+    }).then(resultado => {
+		
+        console.log(`${resultado.count} registros`);
+
+		res.json(resultado.rows);
+
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+  	});
+});
+
 router.get('/usuariosSquad/:idSquad', function(req, res, next) {
 	console.log('Todos os usuários de uma squad');
 	
     Usuario.findAndCountAll({ 
         where: {
             fk_squad: req.params.idSquad
+        }
+    }).then(resultado => {
+		
+        console.log(`${resultado.count} registros`);
+
+		res.json(resultado.rows);
+
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+  	});
+});
+
+router.get('/adminEmpresa/:fk_empresa', function(req, res, next) {
+	console.log('Recuperando admin da empresa');
+	
+    Administrador.findAndCountAll({ 
+        where: {
+            fk_empresa: req.params.fk_empresa
         }
     }).then(resultado => {
 		

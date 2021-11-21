@@ -8,8 +8,8 @@ router.post('/addFeedback', (req, res) => {
         mensagem: req.body.mensagem,
         aproveitamento: req.body.aproveitamento,
         facilidade: req.body.facilidade,
-        fk_usuario: req.body.idUsuario,
-        fk_sprint: req.body.idSprint
+        fk_usuario: req.body.fk_usuario,
+        fk_sprint: req.body.fk_sprint
     }).then(resultado => {
         
         console.log(`Registro criado: ${resultado}`)

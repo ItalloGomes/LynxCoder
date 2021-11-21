@@ -11,7 +11,7 @@ const Tarefa = db.sequelizeConnection.define('Tarefa',
             type: db.Sequelize.INTEGER,
         },
         id_trello: {
-            field: 'id_tarefa',
+            field: 'id_trello',
             allowNull: false,
             type: db.Sequelize.STRING,
         },
@@ -33,7 +33,7 @@ const Tarefa = db.sequelizeConnection.define('Tarefa',
         prazo: {
             field: 'prazo',
             allowNull: false,
-            type: db.Sequelize.DATE
+            type: db.Sequelize.STRING
         },
         fk_usuario: {
             field: 'fk_usuario',

@@ -92,7 +92,7 @@ router.get('/', function(req, res, next) {
 router.get('/getSquadById/:id', function(req, res, next) {
 	
     Squad.findByPk(req.params.id).then( resultado => {
-        console.log("Squad Usuario: "+resultado.nome);
+        console.log("Squad: "+resultado.nome);
         res.send(resultado);
     }).catch(erro => {
         console.error(erro);
