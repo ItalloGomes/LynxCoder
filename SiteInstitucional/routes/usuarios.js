@@ -2,7 +2,6 @@ const router = require("express").Router();
 const db = require('../config/connectDatabase');
 const Squad = require("../models/Squad");
 const Usuario = require("../models/Usuario");
-// var fk_empresa = sessionStorage.getItem("user").fk_empresa;
 
 router.post('/addUsuario', (req, res) => {
 
@@ -27,22 +26,6 @@ router.post('/addUsuario', (req, res) => {
         res.status(500).send(erro.message);
     });
 
-});
-
-router.get('/empresa_tem_usuarios', (req, res) => {
-
-    console.log("Verificando se empresa tem usuários...");
-
-    let sql = `select * from tb_usuario where fk_empresa = ${fk_empresa}`;
-    console.log(sql);
-
-    sequelize.query(sql, { type: sequelize.QueryTypes.SELECT })
-        .then(resultado => {
-            res.json(resultado);
-        }).catch(erro => {
-            console.error(erro);
-            res.status(500).send(erro.message);
-        });
 });
 
 router.delete('/removeUsuario/:idUsuario', (req, res) => {

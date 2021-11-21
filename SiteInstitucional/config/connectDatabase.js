@@ -1,16 +1,16 @@
 const Sequelize = require('sequelize');
 
 //Conexão Sequelize sql server
-const sequelizeConnection = new Sequelize('dbLynxCoder', 'lynxcoder', '#Gfgrupo3', {
-    host: 'srvlynxcoder.database.windows.net',
-    dialect: 'mssql'
-});
+// const sequelizeConnection = new Sequelize('dbLynxCoder', 'lynxcoder', '#Gfgrupo3', {
+//     host: 'srvlynxcoder.database.windows.net',
+//     dialect: 'mssql'
+// });
 
 //Conexão Sequelize MySql
-// const sequelizeConnection = new Sequelize('dbLynxCoder', 'root', 'asd123', {
-//     host: 'localhost',
-//     dialect: 'mysql'
-// });
+const sequelizeConnection = new Sequelize('dbLynxCoder', 'admLynxCoder', 'lynxcoder', {
+    host: 'localhost',
+    dialect: 'mysql'
+});
 
 sequelizeConnection.authenticate().then( function() {
     console.log(`Database conectado com sucesso!`);
