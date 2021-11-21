@@ -160,13 +160,11 @@
 
     // INFORMAÇÕES ADICIONAIS
 
-    let txtDescGestor = supervisorUser !== null ? `${supervisorUser.nome_usuario}` : ``; 
-    let txtDescSquad = squadUser !== null ? `${squadUser.nome}` : ``; 
-    let txtDescEmpresa = empresaUser !== null ? `${empresaUser.nome}` : ``; 
+    let txtDescGestor = supervisorUser !== null ? `${supervisorUser.nome_usuario}` : ``;
     
-    document.getElementById("nome_gestor").innerText = txtDescGestor;
-    document.getElementById("squad_usuario").innerText = txtDescSquad;
-    document.getElementById("empresa_usuario").innerText = txtDescEmpresa;
+    document.getElementById("nome_gestor").innerHTML = txtDescGestor;
+    document.getElementById("squad_usuario").innerHTML = `${squadUser.nome}`;
+    document.getElementById("empresa_usuario").innerHTML = `${empresaUser.nome}`;
 
 })();
 

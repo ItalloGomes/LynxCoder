@@ -35,5 +35,5 @@ function session_validate() {
 }
 
 function close_session() {
-    fetch(`/login/sair/${userSession.login}`, {cache:'no-store'}); 
+    fetch(`/login/sair/${userSession.login}`, {cache:'no-store'});
 }

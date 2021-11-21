@@ -1,3 +1,5 @@
+# Config Banco de dados
+config/
 
 # Diretorios de dependencias
 node_modules/

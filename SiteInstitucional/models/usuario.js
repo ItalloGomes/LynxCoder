@@ -38,7 +38,7 @@ const Usuario = db.sequelizeConnection.define('Usuario',
         is_gestor: {
             field: 'is_gestor',
             allowNull: false,
-            type: db.Sequelize.TINYINT(1)
+            type: db.Sequelize.INTEGER
         },
         fk_supervisor: {
             field: 'fk_supervisor',
