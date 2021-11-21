@@ -104,4 +104,16 @@ router.get('/', function(req, res, next) {
   	});
 });
 
+router.get('/getSquadById/:id', function(req, res, next) {
+	
+    Squad.findByPk(req.params.id).then( resultado => {
+        console.log("Squad Usuario: "+resultado.nome);
+        res.send(resultado);
+    }).catch(erro => {
+        console.error(erro);
+        res.status(500).send(erro.message);
+    });
+
+});
+
 module.exports = router;
