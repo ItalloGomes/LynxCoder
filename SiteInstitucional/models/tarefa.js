@@ -33,7 +33,7 @@ const Tarefa = db.sequelizeConnection.define('Tarefa',
         prazo: {
             field: 'prazo',
             allowNull: false,
-            type: db.Sequelize.DATE
+            type: db.Sequelize.STRING
         },
         fk_usuario: {
             field: 'fk_usuario',

@@ -152,7 +152,7 @@ function buscar_usuarios_trello() {
                                         nome: member.fullName,
                                         foto: member.avatarUrl,
                                         login: member.username,
-                                        senha: member.username + (Math.random() * (1_000_000 - 100_000) + 100_000),
+                                        senha: member.username + (Math.random() * (900_000 - 100_000) + 100_000),
                                         is_gestor: membership.memberType == "admin" ? 1 : 0,
                                         fk_supervisor: null,
                                         fk_squad: fk_squad,
