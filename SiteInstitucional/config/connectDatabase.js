@@ -13,9 +13,9 @@ const sequelizeConnection = new Sequelize('dbLynxCoder', 'lynxcoder', '#Gfgrupo3
 // });
 
 sequelizeConnection.authenticate().then( function() {
-    console.log("Conectado com sucesso!");
+    console.log(`Database conectado com sucesso!`);
 }).catch( erro => {
-    console.log("Falha ao conectar: "+erro);
+    console.log("Falha ao conectar ao Database: "+erro);
 });
 
 module.exports = {sequelizeConnection, Sequelize};

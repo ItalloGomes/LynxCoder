@@ -1,6 +1,7 @@
 {
     "name": "LynxCoder-2021-server",
     "version": "1.0.0",
+    "main": "login.js",
     "scripts": {
         "start": "node ./app"
     },

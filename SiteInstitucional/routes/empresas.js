@@ -60,4 +60,16 @@ router.get('/', function(req, res, next) {
   	});
 });
 
+router.get('/getEmpresaById/:id', function(req, res, next) {
+	
+    Empresa.findByPk(req.params.id).then( resultado => {
+        console.log("Empresa Usuario: "+ resultado.nome);
+        res.send(resultado);
+    }).catch(erro => {
+        console.error(erro);
+        res.status(500).send(erro.message);
+    });
+
+});
+
 module.exports = router;
