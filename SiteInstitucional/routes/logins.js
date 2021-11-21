@@ -22,10 +22,10 @@ router.post('/logar', (req, res) => {
             sql = `select * from tb_administrador where login_admin='${user.login}' and senha_admin='${user.senha}'`;
             break;
         case '1':
-            sql = `select * from tb_usuario where login='${user.login}' and senha='${user.senha}' and is_gestor='true'`;
+            sql = `select * from tb_usuario where login='${user.login}' and senha='${user.senha}' and is_gestor='1'`;
             break;
         case '2':
-            sql = `select * from tb_usuario where login='${user.login}' and senha='${user.senha}' and is_gestor='false'`;
+            sql = `select * from tb_usuario where login='${user.login}' and senha='${user.senha}' and is_gestor='0'`;
             break;
         default:
             break;

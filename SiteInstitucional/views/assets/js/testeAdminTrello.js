@@ -71,7 +71,6 @@ function buscar_squads_trello() {
 
 function buscar_squads_banco() {
     callbackSquadsBanco = false;
-    fk_empresa = fk_empresa;
 
     fetch(`squads/${fk_empresa}`, {
         method: "GET"
@@ -82,7 +81,7 @@ function buscar_squads_banco() {
                 callbackSquadsBanco = true;
             });
         } else {
-            console.log("Erro ao cadastrar boards da empresa");
+            console.log("Erro ao buscar squads do banco");
         }
     });
 }
@@ -117,45 +116,63 @@ function sincronizar_usuarios() {
 }
 
 function buscar_usuarios_trello() {
-    let fk_squad = 1;
-
     squads_trello.forEach(squadTrello => {
+        let callbackFkSquad = false;
         callbackUsuariosTrello = false;
 
-        squadTrello.memberships.forEach(membership => {
-            fetch(`https://trello.com/1/members/${membership.idMember}?key=${key}&token=${token}`, {
-                method: "GET"
-            }).then(function (resultado) {
+        let fk_squad;
+        fetch(`squads/squadComIdTrello/${squadTrello.id}`, {
+            method: "GET"
+        }).then(function (resultado) {
+            if (resultado.ok) {
+                resultado.json().then(squads => {
+                    fk_squad = squads[0].id
+                    callbackFkSquad = true;
+                });
+            } else {
+                console.log("Erro ao buscar fk_squad com id_trello");
+            }
+        });
 
-                if (resultado.ok) {
+        let getCallbackInterval = setInterval(function () {
+            if (callbackFkSquad) {
+                clearInterval(getCallbackInterval);
+                squadTrello.memberships.forEach(membership => {
+                    fetch(`https://trello.com/1/members/${membership.idMember}?key=${key}&token=${token}`, {
+                        method: "GET"
+                    }).then(function (resultado) {
 
-                    resultado.json().then(member => {
+                        if (resultado.ok) {
 
-                        if (member.id != id_admin) {
-                            usuarios_trello.push({
-                                id_trello: member.id,
-                                nome: member.fullName,
-                                foto: member.avatarUrl,
-                                login: member.username,
-                                senha: member.username + (Math.random() * (1_000_000 - 100_000) + 100_000),
-                                is_gestor: membership.memberType == "admin" ? 1 : 0,
-                                fk_supervisor: null,
-                                fk_squad: fk_squad,
-                                fk_empresa: fk_empresa
+                            resultado.json().then(member => {
+
+                                if (member.id != id_admin) {
+                                    usuarios_trello.push({
+                                        id_trello: member.id,
+                                        nome: member.fullName,
+                                        foto: member.avatarUrl,
+                                        login: member.username,
+                                        senha: member.username + (Math.random() * (1_000_000 - 100_000) + 100_000),
+                                        is_gestor: membership.memberType == "admin" ? 1 : 0,
+                                        fk_supervisor: null,
+                                        fk_squad: fk_squad,
+                                        fk_empresa: fk_empresa
+                                    });
+                                }
+                                callbackUsuariosTrello = true;
+                            });
+                        } else {
+                            console.log("Erro ao recuperar usuários do trello!");
+                            resultado.text().then(texto => {
+                                console.error(texto);
+                                res.status(500).send(texto);
                             });
                         }
-                        callbackUsuariosTrello = true;
-                    });
-                } else {
-                    console.log("Erro ao recuperar usuários do trello!");
-                    resultado.text().then(texto => {
-                        console.error(texto);
-                        res.status(500).send(texto);
-                    });
-                }
 
-            });
-        });
+                    });
+                });
+            }
+        }, 1000);
     });
 }
 

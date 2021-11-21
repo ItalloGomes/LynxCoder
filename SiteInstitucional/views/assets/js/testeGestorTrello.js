@@ -6,13 +6,12 @@ let sprint_ativa;
 let id_sprint;
 
 function init() {
-    // get_gestor();
-    get_squad();
+    get_gestor();
     is_sprint_ativa();
 };
 
 function is_sprint_ativa() {
-    fetch(`sprints/isSprintAtiva/${1/*gestor.fk_squad*/}`, {
+    fetch(`sprints/isSprintAtiva/${gestor.fk_squad}`, {
         method: "GET"
     }).then(function (resultado) {
         if (resultado.ok) {
@@ -37,18 +36,20 @@ function is_sprint_ativa() {
 }
 
 function get_gestor() {
-    gestor = sessionStorage.getItem("user");
+    gestor = JSON.parse(sessionStorage.getItem("userData"));
+    get_squad();
 }
 
 function get_squad() {
-    fetch(`squads/squadPorId/${1/*gestor.fk_squad*/}`, {
+    fetch(`squads/getSquadById/${gestor.fk_squad}`, {
         method: "GET"
     }).then(function (resultado) {
         if (resultado.ok) {
-            resultado.json().then(squads => {
-                if (squads.length > 0) {
-                    squad = squads[0];
-                    buscar_usuarios_squad();
+            resultado.json().then(squadGestor => {
+                if (squadGestor != null) {
+                    squad = squadGestor;
+                    get_usuarios_squad();
+                    console.log("Squad recuperada!")
                 }
             });
         } else {
@@ -110,7 +111,7 @@ function fechar_sprint() {
     });
 }
 
-function buscar_usuarios_squad() {
+function get_usuarios_squad() {
     fetch(`usuarios/usuariosSquad/${squad.id}`, {
         method: "GET"
     }).then(function (resultado) {

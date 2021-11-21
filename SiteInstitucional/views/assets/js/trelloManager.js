@@ -5,8 +5,7 @@ var fk_empresa;
 
 window.onload = function () {
     console.log("Buscando dados do admin da empresa")
-    fk_empresa = 1;
-    // fk_empresa = sessionStorage.getItem("user").fk_empresa;
+    fk_empresa = JSON.parse(sessionStorage.getItem("userData")).fk_empresa;
 
     fetch(`usuarios/adminEmpresa/${fk_empresa}`, {
         method: "GET"
