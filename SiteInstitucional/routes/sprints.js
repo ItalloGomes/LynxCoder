@@ -21,7 +21,7 @@ router.post('/addSprint', (req, res) => {
 
 });
 
-router.get('/isSprintAtiva/:fk_squad', (req, res) => {
+router.get('/sprintsSquad/:fk_squad', (req, res) => {
 
     Sprint.findAndCountAll({
         where: {
@@ -30,7 +30,7 @@ router.get('/isSprintAtiva/:fk_squad', (req, res) => {
         order: [
             ['id', 'DESC']
         ],
-        limit: 1
+        limit: 5
     }).then(resultado => {
         console.log(resultado.rows);
         res.json(resultado.rows);

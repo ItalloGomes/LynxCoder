@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,16 +10,17 @@
     <link rel="stylesheet" href="assets/css/estiloLoginDashboard.css">
     <title>Lynx Coder | Login</title>
 </head>
+
 <body>
 
-    <div class="base_main">  
+    <div class="base_main">
         <section class="main">
             <img src="assets/img/logo-type3.1.png" alt="">
 
             <form id="form_login" method="post" onsubmit="return logar()">
                 <input type="text" name="login" placeholder="Username">
                 <input type="password" name="senha" placeholder="Senha">
-                
+
                 <select name="tipoUsuario" id="tipoLogin">
                     <option value="0">Admin</option>
                     <option value="1">Gestor</option>
@@ -31,6 +33,7 @@
     </div>
 
 </body>
+
 </html>
 
 <script>
@@ -44,17 +47,29 @@
         fetch('/login/logar', {
             method: "POST",
             body: form
-        }).then( response => {
-                    
+        }).then(response => {
+
             if (response.ok) {
 
-                response.json().then( usuario => {
+                response.json().then(usuario => {
 
                     let texto = JSON.stringify(usuario);
                     sessionStorage.setItem('userData', texto);
 
-                    window.location.href = 'http://localhost:8081/testeAdminTrello.html';
-                    
+                    switch (Number(tipoLogin.value)) {
+                        case 0:
+                            window.location.href = 'http://localhost:8081/admin.html'
+                            break;
+                        case 1:
+                            window.location.href = 'http://localhost:8081/sprint.html'
+                            break;
+                        case 2:
+                            window.location.href = 'http://localhost:8081/perfil.html'
+                            break;
+                        default:
+                            break;
+                    }
+
                 });
 
             } else {
@@ -62,7 +77,7 @@
                     console.log("Erro login: " + resposta);
                 });
             }
-                
+
             finalizar_aguardar();
         });
 

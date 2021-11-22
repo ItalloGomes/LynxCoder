@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="assets/css/responsiveDashboard.css">
 
     <script src="assets/js/admin.js"></script>
+    <script src="assets/js/trelloManager.js"></script>
 
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <title>Manage Access</title>
@@ -56,7 +57,7 @@
     <div class="base">
         <div class="container-admin">
             <div class="cards">
-                <h1>Informações de acesso</h1>
+                <h1>Informações gerais</h1>
 
                 <div class="cards-align">
                     <div class="card-item">
@@ -65,26 +66,26 @@
                             <i class='bx bxs-user'></i>
                         </div>
                         <div class="card-item-content">
-                            <p><b>20</b> colaborador(es)</p>
-                            <p><b>3</b> gestor(es)</p>
+                            <p><b id="b_colaboradores">x</b> colaborador(es)</p>
+                            <p><b id="b_gestores">x</b> gestor(es)</p>
                         </div>
                     </div>
         
                     <div class="card-item">
                         <div class="card-item-title">
-                            <h4>Sprints</h4>
+                            <h4>Empresa</h4>
                             <i class='bx bxs-network-chart'></i>
                         </div>
                         <div class="card-item-content">
-                            <p><b>46</b> sprint(s)</p>
-                            <p><b>3</b> squads(s)</p>
+                            <p><b id="b_sprints">x</b> sprint(s)</p>
+                            <p><b id="b_squads">x</b> squads(s)</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="acess">
-                <h1>Gerenciar Acessos</h1>
+                <h1>Acessos</h1>
                 <table class="content-table-admin">
                     <thead>
                         <div class="table-head">
@@ -92,74 +93,12 @@
                             <input type="submit" value="Pesquisar">
                         </div>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Nome Squad</td>
-                            <td>Mateus Breno</td>
-                            <td>
-                                <select class="select-role">
-                                    <option value="colaborador">Role: <span>Colaborador</span></option>
-                                    <option value="gerente">Role: Gerente</option>
-                                </select>
-                            </td>
-                            <td><img src="assets/img/bin.png"></td>
-                        </tr>
-        
-                        <tr>
-                            <td>Nome Squad</td>
-                            <td>Pedro Guilherme</td>
-                            <td>
-                                <select class="select-role">
-                                    <option value="colaborador">Role: <span>Colaborador</span></option>
-                                    <option value="gerente">Role: Gerente</option>
-                                </select>
-                            </td>
-                            <td><img src="assets/img/bin.png"></td>
-                        </tr>
-        
-                        <tr>
-                            <td>Nome Squad</td>
-                            <td>Jeniffer Sales</td>
-                            <td>
-                                <select class="select-role">
-                                    <option value="colaborador">Role: <span>Colaborador</span></option>
-                                    <option value="gerente">Role: Gerente</option>
-                                </select>
-                            </td>
-                            <td><img src="assets/img/bin.png"></td>
-                        </tr>
-                    </tbody>
+                    <tbody id="table-body-userlist"></tbody>
                 </table>
             </div>
 
             <button>Salvar</button>
             <button>Ver mais</button>
-        </div>
-
-        <div class="container-bar">
-            <button onclick="openForm()">Adicionar Contribuidor</button>
-        </div>
-    </div>
-
-    <div class="modals ocult" id="boxModal">
-        <div class="modal-add-contb">
-            <i class='bx bx-x' onclick="closedForm()"></i>
-
-            <i class='bx bxs-user-plus'></i>
-            <h1>Adicionar Contribuidor</h1>
-            <input type="text" placeholder="Nome">
-            <br>
-            <input type="email" placeholder="E-mail">
-            <br>
-            <input type="password" placeholder="Nova Senha">
-            <br>
-            <select class="select-role">
-                <option value="">Squad 1</option>
-                <option value="">Squad 2</option>
-                <option value="">Squad 3</option>
-            </select>
-            <div class="hr"></div>
-            <input type="submit" value="Enviar">
         </div>
     </div>
 
