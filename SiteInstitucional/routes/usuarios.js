@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const db = require('../config/connectDatabase');
-const Squad = require("../models/Squad");
 const Usuario = require("../models/Usuario");
 const Administrador = require("../models/Administrador");
 
@@ -164,6 +163,29 @@ router.get('/getUsuarioById/:id', function (req, res, next) {
 
     Usuario.findByPk(req.params.id).then( resultado => {
         console.log("Usuario: "+resultado.nome);
+        res.json(resultado);
+    }).catch(erro => {
+        console.error(erro);
+        res.status(500).send(erro.message);
+    });
+    
+});
+
+router.put('/updateUsuario', function (req, res, next) {
+
+    if(req.body == null) return;
+
+    Usuario.update(
+        { 
+            nome: req.body.nomeUsuario,
+            foto: req.body.fotoUsuario,
+            senha: req.body.senhaUsuario, 
+        },
+        { 
+            where: { id: req.body.idUsuario } 
+        }
+    ).then( resultado => {
+        console.log("Usuario: "+resultado.nome+" atualizado!");
         res.json(resultado);
     }).catch(erro => {
         console.error(erro);

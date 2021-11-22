@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 // Routes consts
 const indexRouter = require('./routes/index'); 
 const loginRouter = require('./routes/logins');
-const dasboardColaboradorRouter = require('./routes/dashboardColaborador');
+const dasboardRouter = require('./routes/dashboard');
 const empresaRouter = require('./routes/empresas');
 const feedbackRouter = require('./routes/feedbacks');
 const sprintRouter = require('./routes/sprints');
@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 // Rotas "Mãe"
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
-app.use('/dashboardColaborador', dasboardColaboradorRouter);
+app.use('/dashboard', dasboardRouter);
 app.use('/empresas', empresaRouter);
 app.use('/feedbacks', feedbackRouter);
 app.use('/sprints', sprintRouter);

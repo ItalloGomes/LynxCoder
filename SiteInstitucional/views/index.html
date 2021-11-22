@@ -37,7 +37,7 @@
 </html>
 
 <script>
-
+    
     function logar() {
 
         aguardar();
@@ -56,20 +56,15 @@
                     let texto = JSON.stringify(usuario);
                     sessionStorage.setItem('userData', texto);
 
-                    switch (Number(tipoLogin.value)) {
-                        case 0:
-                            window.location.href = 'http://localhost:8081/admin.html'
-                            break;
-                        case 1:
-                            window.location.href = 'http://localhost:8081/sprint.html'
-                            break;
-                        case 2:
-                            window.location.href = 'http://localhost:8081/perfil.html'
-                            break;
-                        default:
-                            break;
-                    }
+                    if( usuario.is_gestor || !usuario.is_gestor 
+                                          && usuario.is_gestor != undefined) {
 
+                        window.location.href = 'http://localhost:8081/dashboard';
+                    
+                    } else {
+                        window.location.href = 'http://localhost:8081/admin.html';
+                    }
+    
                 });
 
             } else {

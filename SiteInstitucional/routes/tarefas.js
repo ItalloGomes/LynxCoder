@@ -44,7 +44,11 @@ router.delete('/removeTarefa/:idTarefa', (req, res) => {
 
 });
 
+<<<<<<< HEAD
 router.get('/:userId/:sprintId', (req, res) => {
+=======
+router.get('/allUser/:userId', (req, res) => {
+>>>>>>> 416003d9de89011bf3a412184e18b285eebf2c39
 
     console.log("Listando todas tarefas do usuario em uma determinada sprint");
 
@@ -53,8 +57,12 @@ router.get('/:userId/:sprintId', (req, res) => {
         sprintId: req.params.sprintId
     }
 
+<<<<<<< HEAD
     sql = `select * from tb_tarefa where fk_usuario='${params.userId}' 
                                         and fk_sprint='${params.sprintId}'`;
+=======
+    sql = `select * from tb_tarefa where fk_usuario='${userId}'`;
+>>>>>>> 416003d9de89011bf3a412184e18b285eebf2c39
     
     db.sequelizeConnection.query(sql, {
         model: Tarefa
@@ -71,11 +79,25 @@ router.get('/:userId/:sprintId', (req, res) => {
     
 });
 
+<<<<<<< HEAD
 router.get('/:sprintId', (req, res) => {
+=======
+router.get('/allOfSprint/:userId/:sprintId', (req, res) => {
+>>>>>>> 416003d9de89011bf3a412184e18b285eebf2c39
 
     console.log("Listando todas tarefas de uma determinada sprint");
 
+<<<<<<< HEAD
     sql = `select * from tb_tarefa where fk_sprint='${req.params.sprintId} order by fk_usuario'`;
+=======
+    const params = {
+        userId: req.params.userId,
+        sprintId: req.params.sprintId
+    }
+
+    sql = `select * from tb_tarefa where fk_usuario='${params.userId}' 
+                                        and fk_sprint='${params.sprintId}'`;
+>>>>>>> 416003d9de89011bf3a412184e18b285eebf2c39
     
     db.sequelizeConnection.query(sql, {
         model: Tarefa
@@ -92,6 +114,7 @@ router.get('/:sprintId', (req, res) => {
     
 });
 
+<<<<<<< HEAD
 router.post('/atualizarProgresso/:concluido/:idTarefa', (req, res) => {
 
     console.log("Atualizando progresso da tarefa");
@@ -108,6 +131,60 @@ router.post('/atualizarProgresso/:concluido/:idTarefa', (req, res) => {
         });
     
 });
+=======
+router.get('/pendentes/:userId', (req, res) => {
+
+    console.log("Tarefas pendentes");
+
+    const params = {
+        userId: req.params.userId
+    }
+    
+    sql = `select * from tb_tarefa 
+    where fk_usuario='${params.userId}' and total_concluido < 100.00`;
+    
+    db.sequelizeConnection.query(sql, {
+        model: Tarefa
+    }).then(resultado => {
+		
+        console.log(`${resultado}`);
+
+		res.json(resultado);
+
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+  	});
+    
+});
+
+router.get('/concluidas/:userId', (req, res) => {
+
+    console.log("Tarefas concluidas");
+
+    const params = {
+        userId: req.params.userId
+    }
+
+    sql = `select * from tb_tarefa 
+    where fk_usuario='${params.userId}' and total_concluido = 100.00`;
+    
+    db.sequelizeConnection.query(sql, {
+        model: Tarefa
+    }).then(resultado => {
+		
+        console.log(`${resultado}`);
+
+		res.json(resultado);
+
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+  	});
+    
+});
+
+>>>>>>> 416003d9de89011bf3a412184e18b285eebf2c39
 
 
 module.exports = router;
