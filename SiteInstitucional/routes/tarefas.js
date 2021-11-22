@@ -44,13 +44,13 @@ router.delete('/removeTarefa/:idTarefa', (req, res) => {
 
 });
 
-router.get('/:userId', (req, res) => {
+router.get('/allUser/:userId', (req, res) => {
 
     console.log("Listando todas tarefas do usuario");
 
     let userId = req.params.userId;
 
-    sql = `select * from tb_tarefas where fk_usuario='${userId}'`;
+    sql = `select * from tb_tarefa where fk_usuario='${userId}'`;
     
     db.sequelizeConnection.query(sql, {
         model: Tarefa
@@ -67,7 +67,7 @@ router.get('/:userId', (req, res) => {
     
 });
 
-router.get('/:userId/:sprintId', (req, res) => {
+router.get('/allOfSprint/:userId/:sprintId', (req, res) => {
 
     console.log("Listando todas tarefas do usuario em uma determinada sprint");
 
@@ -76,7 +76,7 @@ router.get('/:userId/:sprintId', (req, res) => {
         sprintId: req.params.sprintId
     }
 
-    sql = `select * from tb_tarefas where fk_usuario='${params.userId}' 
+    sql = `select * from tb_tarefa where fk_usuario='${params.userId}' 
                                         and fk_sprint='${params.sprintId}'`;
     
     db.sequelizeConnection.query(sql, {
@@ -88,6 +88,58 @@ router.get('/:userId/:sprintId', (req, res) => {
         res.json(resultado);
         
     }).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+  	});
+    
+});
+
+router.get('/pendentes/:userId', (req, res) => {
+
+    console.log("Tarefas pendentes");
+
+    const params = {
+        userId: req.params.userId
+    }
+    
+    sql = `select * from tb_tarefa 
+    where fk_usuario='${params.userId}' and total_concluido < 100.00`;
+    
+    db.sequelizeConnection.query(sql, {
+        model: Tarefa
+    }).then(resultado => {
+		
+        console.log(`${resultado}`);
+
+		res.json(resultado);
+
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+  	});
+    
+});
+
+router.get('/concluidas/:userId', (req, res) => {
+
+    console.log("Tarefas concluidas");
+
+    const params = {
+        userId: req.params.userId
+    }
+
+    sql = `select * from tb_tarefa 
+    where fk_usuario='${params.userId}' and total_concluido = 100.00`;
+    
+    db.sequelizeConnection.query(sql, {
+        model: Tarefa
+    }).then(resultado => {
+		
+        console.log(`${resultado}`);
+
+		res.json(resultado);
+
+	}).catch(erro => {
 		console.error(erro);
 		res.status(500).send(erro.message);
   	});

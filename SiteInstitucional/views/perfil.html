@@ -33,7 +33,7 @@
             </li>
 
             <li>
-                <a href="perfil.html">
+                <a href="#">
                     <i class='bx bxs-user-circle'></i>
                     <span class="links_name">Perfil</span>
                 </a>
@@ -93,17 +93,17 @@
                 <div class="conquistas">
                     <div class="conquistas_item">
                         <h1>Tarefas Concluidas</h1>
-                        <h1>5</h1>
+                        <h1 id="tarefas_c_usuario"></h1>
                     </div>
 
                     <div class="conquistas_item">
                         <h1>Aproveitamento</h1>
-                        <h1>50%</h1>
+                        <h1 id="aproveitamento_usuario"></h1>
                     </div>
 
                     <div class="conquistas_item">
                         <h1>Tarefas Pendentes</h1>
-                        <h1>5</h1>
+                        <h1 id="tarefas_p_usuario"></h1>
                     </div>
                 </div>
             </div>
@@ -125,6 +125,9 @@
 </body>
 
 <script>
+
+    var pendentes = 0;
+    var concluidas = 0;
 
 (function () {
 
@@ -151,9 +154,11 @@
         document.getElementById('foto_perfil_usuario_log_out').src = "https://www.pinpng.com/pngs/m/226-2269397_gnar-bot-is-a-hd-png-download.png";
     }
 
+    let nameSplit = user.nome_usuario.split(' ');
+
     // NOME E TIPO USUÁRIO
     document.getElementById('nome_usuario').innerHTML = user.nome_usuario;
-    document.getElementById('nome_usuario_log_out').innerHTML = user.nome_usuario;
+    document.getElementById('nome_usuario_log_out').innerHTML = `${nameSplit[0]} ${nameSplit[nameSplit.length-1]}`;
     
     document.getElementById('tipo_usuario').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
     document.getElementById('tipo_usuario_log_out').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
@@ -166,9 +171,57 @@
     document.getElementById("squad_usuario").innerHTML = `${squadUser.nome}`;
     document.getElementById("empresa_usuario").innerHTML = `${empresaUser.nome}`;
 
+    // TAREFAS
+    getTarefasPendentes(user.id_usuario);
+    getTarefasConcluidas(user.id_usuario);
+
+    let aproveitamento = concluidas > 0 ? (concluidas*100) / (concluidas+pendentes) : 0;
+
+    document.getElementById("aproveitamento_usuario").innerHTML = `${aproveitamento}%`;
+
 })();
 
+function getTarefasPendentes(idUser) {
+    fetch(`/tarefas/pendentes/${idUser}`, {
+        method: "GET"
+    }).then( response => {
+                    
+        if (response.ok) {
+            response.json().then( tarefas => {
 
+                document.getElementById("tarefas_p_usuario").innerHTML = `${tarefas.length}`;
+                pendentes = tarefas.length;
+
+            });
+        } else {
+            response.text().then(function (resposta) {
+                console.log("Erro: " + resposta);
+            });
+        }
+                
+    });
+}
+
+function getTarefasConcluidas(idUser) {
+    fetch(`/tarefas/concluidas/${idUser}`, {
+        method: "GET"
+    }).then( response => {
+                    
+        if (response.ok) {
+            response.json().then( tarefas => {
+
+                document.getElementById("tarefas_c_usuario").innerHTML = `${tarefas.length}`;
+                concluidas = tarefas.length;
+
+            });
+        } else {
+            response.text().then(function (resposta) {
+                console.log("Erro: " + resposta);
+            });
+        }
+                
+    });
+}
 
 </script>
 
