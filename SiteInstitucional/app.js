@@ -37,8 +37,6 @@ app.use('/tarefas', tarefaRouter);
 app.use('/usuarios', usuarioRouter);
 app.use('/trello', trelloRouter);
 
-
-
 app.listen( porta, function() {
     console.log(`Servidor rodando em: http://localhost:${porta}`);
 });

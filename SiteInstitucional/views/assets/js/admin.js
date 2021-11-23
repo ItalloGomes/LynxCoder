@@ -1,5 +1,15 @@
 var all_squads = [];
 
+window.onload = function() {
+    const element = document.getElementById('modalAddSquads');
+
+    if (empresa_tem_usuarios()) {
+        setTimeout(function() {
+            element.classList.remove('ocult');    
+        }, 2000);
+    }   
+};
+
 function closedForm () {
     boxModal.classList.add('ocult');
 }
@@ -8,21 +18,11 @@ function openForm () {
     boxModal.classList.remove('ocult');
 }
 
-window.onload = function() {
-    if (empresa_tem_usuarios()) {
-        
-    }
-};
-
 function empresa_tem_usuarios() {
     fetch('/usuarios/empresa_tem_usuarios', {
         method: "GET"
     }).then( response => {
-        if (response.length > 0){
-            return true;
-        } else {
-            return false;
-        }
+        return response.length > 0 ? true : false;
     });
 }
 

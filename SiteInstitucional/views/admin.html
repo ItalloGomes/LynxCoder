@@ -19,6 +19,10 @@
 
 <body>
 
+    <div id="modalAddSquads" class="ocult" style="position: absolute; top: 100px; right: 100px; background-color: red">
+        aaa
+    </div>
+
     <div class="sidebar">
         <div class="logo-details">
             <img src="assets/img/logo-type3.1.png" class="icon" alt="">
@@ -137,7 +141,8 @@
         </div>
 
         <div class="container-bar">
-            <button onclick="openForm()">Adicionar Contribuidor</button>
+            <button onclick="openForm()">Novo Contribuidor</button>
+            <button>Importar Contribuidores do Trello</button>
         </div>
     </div>
 
@@ -147,19 +152,21 @@
 
             <i class='bx bxs-user-plus'></i>
             <h1>Adicionar Contribuidor</h1>
-            <input type="text" placeholder="Nome">
-            <br>
-            <input type="email" placeholder="E-mail">
-            <br>
-            <input type="password" placeholder="Nova Senha">
-            <br>
-            <select class="select-role">
-                <option value="">Squad 1</option>
-                <option value="">Squad 2</option>
-                <option value="">Squad 3</option>
-            </select>
-            <div class="hr"></div>
-            <input type="submit" value="Enviar">
+            <form onsubmit="return " method="post">
+                <input type="text" placeholder="Nome" name="nome" required>
+                <br>
+                <input type="email" placeholder="E-mail" name="email" required>
+                <br>
+                <input type="password" placeholder="Nova Senha" name="senha" required>
+                <br>
+                <select class="select-role">
+                    <option value="1">Squad 1</option>
+                    <option value="2">Squad 2</option>
+                    <option value="3">Squad 3</option>
+                </select>
+                <div class="hr"></div>
+                <input type="submit" value="Enviar">
+            </form>
         </div>
     </div>
 
