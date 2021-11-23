@@ -39,8 +39,9 @@ public class LogDAO {
         public void escreverLog(String conteudo){
 
             try {
-                FileWriter escritor = new FileWriter(arquivo, false);
-                escritor.write(dataFormatada + conteudo);
+                FileWriter escritor = new FileWriter(arquivo, true);
+                escritor.write(dataFormatada + conteudo + "\n");
+
                 escritor.close();
                 System.out.println("Registro criado: " + dataFormatada);
 

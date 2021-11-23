@@ -100,6 +100,7 @@ public class LoginScreen extends JFrame {
                 SlackDAO slackDAO = new SlackDAO();
                 LogDAO logDAO = new LogDAO();
 
+
                 Usuario user = userDAO.logar(jtfUserName.getText(), new String(jpfPassword.getPassword()));
 
                 if( user != null ){
@@ -111,8 +112,8 @@ public class LoginScreen extends JFrame {
 
                     logDAO.criarLog(dataFormatada);
                     logDAO.escreverLog( " Logou com sucesso");
-
                     Dashboard dashboard = new Dashboard(user, logDAO);
+                    logDAO.escreverLog("Usuário: " + user.getNome());
                     slackDAO.welcomeMessage(user);
 
                     dispose();
@@ -120,6 +121,7 @@ public class LoginScreen extends JFrame {
                     JOptionPane.showMessageDialog(null, "Usuário e/ou senha incorreto(s)!");
                     jtfUserName.setText("");
                     jpfPassword.setText("");
+                    logDAO.escreverLog( " Erro ao logar");
                 }
 
             }

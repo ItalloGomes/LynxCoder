@@ -11,7 +11,10 @@ import java.util.Calendar;
 
 public class LeituraDAO {
 
+
     public void save(Leitura leitura){
+
+        LogDAO logDao = new LogDAO();
 
         String sql = "insert into tb_leitura values ( null, ?, ?, ?, ?, ?)";
         String sqlServer = "insert into tb_leitura values ( ?, ?, ?, ?, ?)";
@@ -30,7 +33,7 @@ public class LeituraDAO {
             pstm.setInt(5, leitura.getMaquina().getId());
 
             pstm.execute();
-
+            logDao.escreverLog("Leitura cadastrada!");
             System.out.println("Leitura cadastrada!");
 
         } catch (SQLException e) {

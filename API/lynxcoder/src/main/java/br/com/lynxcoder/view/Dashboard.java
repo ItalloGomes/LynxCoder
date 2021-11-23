@@ -148,7 +148,7 @@ public class Dashboard extends JFrame implements MouseListener {
                     );
                     maquina.setUsuario(user);
 
-                    maqDao.adicionarMaquina(user, maquina);
+                    maqDao.adicionarMaquina(user, maquina, logDAO);
 
                     this.maquinaUser = maqDao.findMaquina(user);
 
@@ -566,7 +566,7 @@ public class Dashboard extends JFrame implements MouseListener {
                     Double percentUsoVolumes = ((total - totalDisponivel) / total) * 100;
 
                     showHardwareInfo(usoRAM, percentUsoVolumes, percentUsoCPU, percentUsoRAM);
-               //     insertHardwareInfo(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
+               //     insertHardwareInfo(percentUsoRAM, percentUsoCPU, percentUsoVolumes)
                 }
             } catch (Exception e) {
                 logDAO.escreverLog(e.toString());
@@ -606,7 +606,7 @@ public class Dashboard extends JFrame implements MouseListener {
             dado.setPorcentagemUsoDisco(percentUsoVolumes);
             dado.setMaquina(maquinaUser);
 
-
+            logDAO.escreverLog( " Dados inseridos no banco com sucesso!");
             leituraDao = new LeituraDAO();
             leituraDao.save(dado);
 
