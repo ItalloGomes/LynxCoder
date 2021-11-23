@@ -57,7 +57,7 @@ function get_sprints() {
                     no_sprint.style.display = `flex`;
                     sprint_header.innerHTML = `<h1>Sprint Atual</h1>
                         <button onclick="iniciar_sprint()">+</button>`
-                            squad_canvas.innerHTML += `Ainda não temos dados de sprints da sua squad!`
+                    squad_canvas.innerHTML += `Ainda não temos dados de sprints da sua squad!`
                 } else {
                     sprintAtual = sprints[0];
                     ultimasSprints = sprints;
@@ -73,7 +73,9 @@ function get_sprints() {
                         <button onclick="iniciar_sprint()">+</button>`
                     }
                     atualizar_progresso_tarefas();
-                    buscar_feedbacks(sprintAtual.ativa == 1 ? sprints[1] : sprints[0]);
+                    if (sprints.length > 1 || sprints[0].ativa == 0) {
+                        buscar_feedbacks(sprintAtual.ativa == 1 ? sprints[1] : sprints[0]);
+                    }
                 }
             });
         } else {
@@ -89,7 +91,7 @@ function atualizar_progresso_tarefas() {
         if (resultado.ok) {
             resultado.json().then(tarefasTrello => {
 
-                fetch(`tarefas/${sprintAtual.id}`, {
+                fetch(`tarefas/allOfSprint/${sprintAtual.id}`, {
                     method: "GET"
                 }).then(function (resultado) {
                     if (resultado.ok) {
@@ -243,7 +245,7 @@ function gerar_chart_squad() {
     let datasets = [];
     let count = 0;
     ultimasSprints.forEach(sprint => {
-        fetch(`tarefas/${sprint.id}`, {
+        fetch(`tarefas/allOfSprint/${sprint.id}`, {
             method: "GET"
         }).then(function (resultado) {
             if (resultado.ok) {

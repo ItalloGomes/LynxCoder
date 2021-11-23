@@ -264,15 +264,9 @@ function exibir_informacoes_acesso() {
         `<tr>
             <td>${element.squad.name}</td>
             <td>${element.usuario.nome}</td>
-            <td>
-                <select id="select-role-${element.usuario.id_trello}" class="select-role">
-                    <option value="0">Role: Colaborador</option>
-                    <option value="1">Role: Gerente</option>
-                </select>
-            </td>
+            <td>${element.usuario.is_gestor == 1 ? "Gestor" : "Colaborador"}</td>
         </tr>`
         
-        document.getElementById(`select-role-${element.usuario.id_trello}`).value = element.usuario.is_gestor;
         if (element.usuario.is_gestor == 1) {
             gestores++;
         } 
@@ -289,7 +283,6 @@ function exibir_informacoes_acesso() {
         if (resultado.ok) {
             resultado.json().then(sprints => {
                 b_sprints.innerHTML = sprints.length;
-                closeLoading();
             });
         } else {
             console.log("Erro ao recuperar quantidade de sprints");
