@@ -56,3 +56,5 @@ router.get('/leiturasMaquina/:fk_maquina', function(req, res, next) {
 		res.status(500).send(erro.message);
   	});
 });
+
+module.exports = router;
