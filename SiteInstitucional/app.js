@@ -15,6 +15,8 @@ const squadRouter = require('./routes/squads');
 const tarefaRouter = require('./routes/tarefas');
 const usuarioRouter = require('./routes/usuarios');
 const trelloRouter = require('./routes/trello');
+const maquinasRouter = require('./routes/maquinas');
+
 
 // Preset de engine
 app.set('view engine', 'html');
@@ -36,6 +38,7 @@ app.use('/squads', squadRouter);
 app.use('/tarefas', tarefaRouter);
 app.use('/usuarios', usuarioRouter);
 app.use('/trello', trelloRouter);
+app.use('/maquinas', maquinasRouter);
 
 
 

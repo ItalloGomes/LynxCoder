@@ -149,7 +149,15 @@
 
 (function () {
 
+    var cpu_canvas = document.getElementById('cpuCanvas');
+    var disco_canvas = document.getElementById('discoCanvas');
+    var memory_canvas = document.getElementById('memoriaCanvas');
+    var test_bar = document.getElementById('testBar');
+    var test_line = document.getElementById('testLine');
+
     check_authentication();
+
+    initChart();
 
     const user = JSON.parse(sessionStorage.getItem('userData'));
 
@@ -171,6 +179,64 @@
 
 })();
 
+function getMaquinaUsuario(idUser) {
+    fetch(`/maquinas/maquinaUsuario/${idUser}`, {
+        method: "GET"
+    }).then(resultado => {
+        if( resultado.ok ){
+
+            resultado.json().then( maquina => {
+
+                getLeiturasMaquina(maquina.id_maquina)
+
+            });
+
+        } else {
+
+            console.log("erro ao recuperar maquina");
+
+        }
+    })
+}
+
+function getLeiturasMaquina(idMaquina) {
+    setInterval(() => {
+
+        fetch(`/maquinas/leiturasMaquina/${idMaquina}`, {
+            method: "GET"
+        }).then( resultado => {
+
+            if( resultado.ok ) {
+
+            resultado.json().then( leituraMaquina => {
+
+                graficoCpu.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_cpu;
+                graficoCpu.data.datasets[1].data[0] = (100-leituraMaquina.porcentagem_uso_cpu);
+
+                graficoDisco.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_disco;
+                graficoDisco.data.datasets[1].data[0] = (100-leituraMaquina.porcentagem_uso_disco);
+                
+                graficoMemoria.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_ram;
+                graficoMemoria.data.datasets[1].data[0] = (100-leituraMaquina.porcentagem_uso_ram);
+
+                graficoCpu.update();
+                graficoDisco.update();
+                graficoMemoria.update();
+
+
+            });
+
+            } else {
+
+                console.log("erro ao recuperar leituras de maquina");
+            
+            }
+
+        });
+
+    }, 3000);
+}
+
 function getTarefasPendentes(idUser) {
     fetch(`/tarefas/pendentes/${idUser}`, {
         method: "GET"
@@ -179,32 +245,55 @@ function getTarefasPendentes(idUser) {
         if (response.ok) {
             response.json().then( tarefas => {
                 var count = 1;
-                tarefas.forEach(element => {
+                
+                if(tarefas.length > 0) {
+                    tarefas.forEach(element => {
+    
+                        let container = document.getElementById('atividadesPends');
+    
+                        let div = document.createElement('div');
+                        div.className = 'card_atvd';
+    
+                        let h2 = document.createElement('h2');
+    
+                        let b = document.createElement('b');
+                        b.textContent = `Nº${count}`;
+    
+                        let txt = document.createTextNode(` - ${element.nome_tarefa}`);
+    
+                        h2.appendChild(b);
+                        h2.appendChild(txt);
+    
+                        let p = document.createElement('p');
+                        p.textContent = `${element.total_concluido}%`;
+    
+                        div.appendChild(h2);
+                        div.appendChild(p);
+    
+                        container.appendChild(div);
+    
+                    });
+                } else {
 
                     let container = document.getElementById('atividadesPends');
 
                     let div = document.createElement('div');
-                    div.className = 'card_atvd';
-
-                    let h2 = document.createElement('h2');
 
                     let b = document.createElement('b');
-                    b.textContent = `Nº${count}`;
 
-                    let txt = document.createTextNode(` - ${element.nome_tarefa}`);
+                    let txt = document.createTextNode(`Sem Tarefas pendentes`);
 
-                    h2.appendChild(b);
-                    h2.appendChild(txt);
+                    b.appendChild(txt);
 
-                    let p = document.createElement('p');
-                    p.textContent = `${element.total_concluido}%`;
+                    let center = document.createElement('center');
 
-                    div.appendChild(h2);
-                    div.appendChild(p);
+                    center.appendChild(b);
+
+                    div.appendChild(center);
 
                     container.appendChild(div);
-
-                });
+                
+                }
 
             });
         } else {
@@ -216,12 +305,7 @@ function getTarefasPendentes(idUser) {
     });
 }
 
-
-    var cpu_canvas = document.getElementById('cpuCanvas');
-    var disco_canvas = document.getElementById('discoCanvas');
-    var memory_canvas = document.getElementById('memoriaCanvas');
-    var test_bar = document.getElementById('testBar');
-    var test_line = document.getElementById('testLine');
+function initChart() {
 
     var graficoCpu = new Chart(
         cpu_canvas, {
@@ -389,6 +473,9 @@ function getTarefasPendentes(idUser) {
             }
         }
     });
+
+}
+    
 </script>
 
 
