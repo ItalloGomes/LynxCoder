@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const db = require('../config/connectDatabase');
 const Usuario = require("../models/Usuario");
-// var fk_empresa = sessionStorage.getItem("user").fk_empresa;
+const Administrador = require("../models/Administrador");
 
 router.post('/addUsuario', (req, res) => {
 
@@ -26,22 +26,6 @@ router.post('/addUsuario', (req, res) => {
         res.status(500).send(erro.message);
     });
 
-});
-
-router.get('/empresa_tem_usuarios', (req, res) => {
-
-    console.log("Verificando se empresa tem usuários...");
-
-    let sql = `select * from tb_usuario where fk_empresa = ${fk_empresa}`;
-    console.log(sql);
-
-    sequelize.query(sql, { type: sequelize.QueryTypes.SELECT })
-        .then(resultado => {
-            res.json(resultado);
-        }).catch(erro => {
-            console.error(erro);
-            res.status(500).send(erro.message);
-        });
 });
 
 router.delete('/removeUsuario/:idUsuario', (req, res) => {
@@ -97,12 +81,50 @@ router.get('/usuariosEmpresa/:idEmpresa', function(req, res, next) {
   	});
 });
 
+router.get('/usuarioIdTrello/:id_trello', function(req, res, next) {
+	console.log('Usuário com Id trello');
+	
+    Usuario.findAndCountAll({ 
+        where: {
+            id_trello: req.params.id_trello
+        }
+    }).then(resultado => {
+		
+        console.log(`${resultado.count} registros`);
+
+		res.json(resultado.rows);
+
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+  	});
+});
+
 router.get('/usuariosSquad/:idSquad', function(req, res, next) {
 	console.log('Todos os usuários de uma squad');
 	
     Usuario.findAndCountAll({ 
         where: {
             fk_squad: req.params.idSquad
+        }
+    }).then(resultado => {
+		
+        console.log(`${resultado.count} registros`);
+
+		res.json(resultado.rows);
+
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+  	});
+});
+
+router.get('/adminEmpresa/:fk_empresa', function(req, res, next) {
+	console.log('Recuperando admin da empresa');
+	
+    Administrador.findAndCountAll({ 
+        where: {
+            fk_empresa: req.params.fk_empresa
         }
     }).then(resultado => {
 		
@@ -133,6 +155,43 @@ router.get('/UsuariosGestores', function(req, res, next) {
 		console.error(erro);
 		res.status(500).send(erro.message);
   	});
+});
+
+router.get('/getUsuarioById/:id', function (req, res, next) {
+
+    if(req.params.id == null) return;
+
+    Usuario.findByPk(req.params.id).then( resultado => {
+        console.log("Usuario: "+resultado.nome);
+        res.json(resultado);
+    }).catch(erro => {
+        console.error(erro);
+        res.status(500).send(erro.message);
+    });
+    
+});
+
+router.put('/updateUsuario', function (req, res, next) {
+
+    if(req.body == null) return;
+
+    Usuario.update(
+        { 
+            nome: req.body.nomeUsuario,
+            foto: req.body.fotoUsuario,
+            senha: req.body.senhaUsuario, 
+        },
+        { 
+            where: { id: req.body.idUsuario } 
+        }
+    ).then( resultado => {
+        console.log("Usuario: "+resultado.nome+" atualizado!");
+        res.json(resultado);
+    }).catch(erro => {
+        console.error(erro);
+        res.status(500).send(erro.message);
+    });
+    
 });
 
 module.exports = router;

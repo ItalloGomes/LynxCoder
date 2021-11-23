@@ -12,17 +12,17 @@ const FeedBack = db.sequelizeConnection.define('FeedBack',
         },
         mensagem: {
             field: 'mensagem_feedback',
-            allowNull: false,
+            allowNull: true,
             type: db.Sequelize.TEXT
         },
         aproveitamento: {
             field: 'aproveitamento_feedback',
-            allowNull: false,
+            allowNull: true,
             type: db.Sequelize.DECIMAL
         },
         facilidade: {
             field: 'facilidade_feedback',
-            allowNull: false,
+            allowNull: true,
             type: db.Sequelize.DECIMAL
         },
         fk_usuario: {
@@ -31,8 +31,8 @@ const FeedBack = db.sequelizeConnection.define('FeedBack',
             type: db.Sequelize.INTEGER,
             foreignKey: true
         },
-        fk_tarefa: {
-            field: 'fk_tarefa',
+        fk_sprint: {
+            field: 'fk_sprint',
             allowNull: false,
             type: db.Sequelize.INTEGER,
             foreignKey: true

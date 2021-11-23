@@ -291,7 +291,7 @@ _________________________________ */
     transition: .5s ease-in-out;
 }
 
-.modal-add-contb {
+.modal-loading {
     background: #e0dfeb;
     box-shadow: 0 0 10px #2e04e72a;
     border-radius: 4px;
@@ -300,72 +300,12 @@ _________________________________ */
     position: relative;
 }
 
-.modal-add-contb i:first-of-type {
-    font-size: 25px;
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    cursor: pointer;
-    transition: .2s ease-in-out;
-}
-
-.modal-add-contb i:first-of-type:hover {
-    color: #fff;
-}
-
-.modal-add-contb i {
-    font-size: 50px;
-    color: #544bb6;
-}
-
-.modal-add-contb h1 {
+.modal-loading h1 {
     font-size: 20px;
     font-weight: 500;
     color: #544bb6;
 }
 
-.modal-add-contb input {
-    width: 400px;
-    padding: 5px 10px;
-    margin-top: 10px;
-    border-radius: 4px;
-}
-
-.modal-add-contb input:first-of-type { margin-top: 25px; }
-
-.modal-add-contb input[type ="email"],
-.modal-add-contb input[type ="text"],
-.modal-add-contb input[type ="password"] {
-    border: 1px solid #b5b3cf;
-    background: #f7f6ff;
-}
-
-.modal-add-contb .select-role {
-    margin-top: 10px;
-    width: 100%;
-    padding: 5px 10px;
-    font-size: 13px;
-    color: #3f3f3f;
-    border: 1px solid #b5b3cf;
-    background: #f7f6ff;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: .5s ease-in-out;
-}
-
-.modal-add-contb .select-role:hover {
-    background: #f8f7fc;
-}
-
-.modal-add-contb input[type ="submit"] {
-    background: #5534e7;
-    color: #d2cff1;
-    border: 1px solid #5534e7;
-    cursor: pointer;
-    transition: .5s ease-in-out;
-}
-
-.modal-add-contb input[type ="submit"]:hover {
-    background: #7152fa;
-    border: 1px solid #7152fa;
+.modal-loading img {
+    width: 200px;
 }

@@ -22,7 +22,7 @@ const Usuario = db.sequelizeConnection.define('Usuario',
         },
         foto: {
             field: 'foto_usuario',
-            allowNull: false,
+            allowNull: true,
             type: db.Sequelize.TEXT
         },
         login: {
@@ -38,11 +38,11 @@ const Usuario = db.sequelizeConnection.define('Usuario',
         is_gestor: {
             field: 'is_gestor',
             allowNull: false,
-            type: db.Sequelize.BOOLEAN
+            type: db.Sequelize.INTEGER
         },
         fk_supervisor: {
             field: 'fk_supervisor',
-            allowNull: false,
+            allowNull: true,
             type: db.Sequelize.INTEGER
         },
         fk_squad: {

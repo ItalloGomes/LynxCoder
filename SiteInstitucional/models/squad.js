@@ -25,6 +25,12 @@ const Squad = db.sequelizeConnection.define('Squad',
             allowNull: false,
             type: db.Sequelize.TEXT
         },
+        fk_empresa: {
+            field: 'fk_empresa',
+            allowNull: false,
+            type: db.Sequelize.INTEGER,
+            foreignKey: true
+        }
     }, 
     {
         tableName: 'tb_squad', 

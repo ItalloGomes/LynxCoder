@@ -7,15 +7,15 @@ const sequelizeConnection = new Sequelize('dbLynxCoder', 'lynxcoder', '#Gfgrupo3
 });
 
 //Conexão Sequelize MySql
-// const sequelizeConnection = new Sequelize('dbLynxCoder', 'root', 'asd123', {
+// const sequelizeConnection = new Sequelize('dbLynxCoder', 'admLynxCoder', 'lynxcoder', {
 //     host: 'localhost',
 //     dialect: 'mysql'
 // });
 
 sequelizeConnection.authenticate().then( function() {
-    console.log("Conectado com sucesso!");
+    console.log(`Database conectado com sucesso!`);
 }).catch( erro => {
-    console.log("Falha ao conectar: "+erro);
+    console.log("Falha ao conectar ao Database: "+erro);
 });
 
 module.exports = {sequelizeConnection, Sequelize};
