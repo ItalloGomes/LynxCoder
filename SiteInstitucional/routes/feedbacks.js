@@ -42,13 +42,35 @@ router.delete('/removeFeedback/:idFeedback', (req, res) => {
 
 });
 
-router.get('/:userId', (req, res) => {
+// router.get('/:userId', (req, res) => {
+
+//     console.log("Listando todos feedbacks do usuario");
+
+//     let userId = req.params.userId;
+
+//     sql = `select * from tb_feedback where fk_usuario='${userId}'`;
+    
+//     db.sequelizeConnection.query(sql, {
+//         model: FeedBack
+//     }).then(resultado => {
+
+//         console.log(`Feedbacks encontrados: ${resultado.length}`);
+
+//         res.json(resultado);
+        
+//     }).catch(erro => {
+// 		console.error(erro);
+// 		res.status(500).send(erro.message);
+//   	});
+    
+// });
+
+router.get('/:sprintId', (req, res) => {
 
     console.log("Listando todos feedbacks do usuario");
 
-    let userId = req.params.userId;
-
-    sql = `select * from tb_feedback where fk_usuario='${userId}'`;
+    sql = `select * from tb_feedback join tb_usuario on fk_usuario = id_usuario 
+    where fk_sprint='${req.params.sprintId}'`;
     
     db.sequelizeConnection.query(sql, {
         model: FeedBack

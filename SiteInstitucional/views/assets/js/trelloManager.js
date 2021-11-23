@@ -4,6 +4,7 @@ var id_admin;
 var fk_empresa;
 
 window.onload = function () {
+    check_authentication();
     console.log("Buscando dados do admin da empresa")
     fk_empresa = JSON.parse(sessionStorage.getItem("userData")).fk_empresa;
 

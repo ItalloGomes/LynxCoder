@@ -46,9 +46,12 @@ router.delete('/removeTarefa/:idTarefa', (req, res) => {
 
 router.get('/allUser/:userId', (req, res) => {
 
-    console.log("Listando todas tarefas do usuario");
+    console.log("Listando todas tarefas do usuario em uma determinada sprint");
 
-    let userId = req.params.userId;
+    const params = {
+        userId: req.params.userId,
+        sprintId: req.params.sprintId
+    }
 
     sql = `select * from tb_tarefa where fk_usuario='${userId}'`;
     
@@ -69,7 +72,7 @@ router.get('/allUser/:userId', (req, res) => {
 
 router.get('/allOfSprint/:userId/:sprintId', (req, res) => {
 
-    console.log("Listando todas tarefas do usuario em uma determinada sprint");
+    console.log("Listando todas tarefas de uma determinada sprint");
 
     const params = {
         userId: req.params.userId,
@@ -94,6 +97,47 @@ router.get('/allOfSprint/:userId/:sprintId', (req, res) => {
     
 });
 
+router.get('/allOfSprint/:sprintId', (req, res) => {
+
+    console.log("Listando todas tarefas de uma determinada sprint");
+
+    const params = {
+        sprintId: req.params.sprintId
+    }
+
+    sql = `select * from tb_tarefa where fk_sprint='${params.sprintId}'`;
+    
+    db.sequelizeConnection.query(sql, {
+        model: Tarefa
+    }).then(resultado => {
+
+        console.log(`Tarefas encontradas: ${resultado.length}`);
+
+        res.json(resultado);
+        
+    }).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+  	});
+    
+});
+
+router.post('/atualizarProgresso/:concluido/:idTarefa', (req, res) => {
+
+    console.log("Atualizando progresso da tarefa");
+
+    Tarefa.update(
+        {total_concluido: req.params.concluido},
+        {where: {id: req.params.idTarefa}}
+        ).then(resultado => {
+            console.log(resultado.rows);
+            res.json(resultado.rows);
+        }).catch(erro => {
+            console.error(erro);
+            res.status(500).send(erro.message);
+        });
+    
+});
 router.get('/pendentes/:userId', (req, res) => {
 
     console.log("Tarefas pendentes");

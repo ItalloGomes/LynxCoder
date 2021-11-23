@@ -12,6 +12,8 @@ import java.sql.SQLException;
 
 public class MaquinaDAO {
 
+    LogDAO logDAO;
+
     public Maquina findMaquina(Usuario user){
 
         String sql = "select * from tb_maquina where fk_usuario = ?";
@@ -78,7 +80,7 @@ public class MaquinaDAO {
 
     }
 
-    public void adicionarMaquina(Usuario user, Maquina maquina){
+    public void adicionarMaquina(Usuario user, Maquina maquina, LogDAO logDAO){
 
         if(!hasMaquina(user)){
 
@@ -97,8 +99,9 @@ public class MaquinaDAO {
                 pstm.setInt(5, user.getId());
 
                 pstm.execute();
-
+                logDAO.escreverLog("Máquina cadastrada");
                 System.out.println("Máquina Cadastrada");
+
 
                 Conexao.closeConnection(conn, pstm);
 

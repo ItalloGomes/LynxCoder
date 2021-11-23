@@ -828,5 +828,25 @@ _________________________________ */
     color: #fff;
 }
 
+.sprint_header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
 
+.sprint_header button {
+    background: #5642af;
+    border-radius: 4px;
+    padding: 0px 10px;
+    text-align: center;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: .5s ease-in-out;
+}
 
+.sprint_header button:hover {
+    background: #6e57d4;
+    color: #fff;
+}
