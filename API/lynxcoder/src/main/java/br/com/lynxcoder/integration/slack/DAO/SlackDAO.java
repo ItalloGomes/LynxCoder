@@ -9,6 +9,8 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import static br.com.lynxcoder.view.Dashboard.byteCountConvert;
+
 public class SlackDAO {
 
     private final SlackConnection slackConn = new SlackConnection();
@@ -18,6 +20,37 @@ public class SlackDAO {
         JSONObject json = new JSONObject();
 
         json.put("text", "Bem vindo(a) "+user.getNome()+"!! :palmas:");
+
+        HttpRequest request = HttpRequest.newBuilder(URI.create(slackConn.getURL()))
+        .header("accept", "application/json")
+        .POST(HttpRequest.BodyPublishers.ofString(json.toString()))
+        .build();
+
+        HttpResponse<String> response = null;
+
+        try {
+            response = slackConn.getClient().send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(String.format("Status: %s", response.statusCode()));
+        System.out.println(String.format("Response: %s", response.body()));
+
+    }
+
+    public void showSlackData(Double percentUsoVolumes, Double percentUsoCpu, Double percentUsoRAM) {
+
+//        xoxb-2650354190342-2659657313140-SSqCiW1iqUEtrdtkXpzNB74J
+        
+        JSONObject json = new JSONObject();
+
+
+        json.put(
+            "text", "\nPorcentagem de uso [VOLUMES]: "+percentUsoVolumes.intValue()+"%\n"+
+            "Porcentagem de uso [CPU]: "+percentUsoCpu.intValue()+"%\n"+
+            "Porcentagem de uso [RAM]: "+percentUsoRAM.intValue()+"%\n\n"
+        );
 
         HttpRequest request = HttpRequest.newBuilder(URI.create(slackConn.getURL()))
                 .header("accept", "application/json")
@@ -32,8 +65,32 @@ public class SlackDAO {
             e.printStackTrace();
         }
 
-        System.out.println(String.format("Status: %s", response.statusCode()));
-        System.out.println(String.format("Response: %s", response.body()));
+    }
+
+    public void responseSlackData(Double percentUsoVolumes, Double percentUsoCpu, Double percentUsoRAM) {
+
+        JSONObject json = new JSONObject();
+
+        json.put(
+            "text", "\nPorcentagem de uso [VOLUMES]: "+percentUsoVolumes.intValue()+"%\n"+
+            "Porcentagem de uso [CPU]: "+percentUsoCpu.intValue()+"%\n"+
+            "Porcentagem de uso [RAM]: "+percentUsoRAM.intValue()+"%\n\n"
+        );
+
+        System.out.println(json.getJSONArray("text"));
+
+        HttpRequest request = HttpRequest.newBuilder(URI.create(slackConn.getURL()))
+                .header("accept", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json.toString()))
+                .build();
+
+        HttpResponse<String> response = null;
+
+        try {
+            response = slackConn.getClient().send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
