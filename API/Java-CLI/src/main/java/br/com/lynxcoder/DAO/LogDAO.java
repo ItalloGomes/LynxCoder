@@ -1,9 +1,12 @@
 package br.com.lynxcoder.DAO;
+import br.com.lynxcoder.Main;
 import com.github.britooo.looca.api.core.Looca;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,9 +24,12 @@ public class LogDAO {
 
         nomeArquivo += ".txt";
 
-
         try {
-            arquivo = new File("C:\\bandtec\\LynxCoder\\API\\lynxcoder", nomeArquivo);
+            String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
+
+            System.out.println(decodedPath);
+            arquivo = new File(decodedPath, nomeArquivo);
 
             if (arquivo.createNewFile()) {
                 System.out.println("Arquivo criado");
