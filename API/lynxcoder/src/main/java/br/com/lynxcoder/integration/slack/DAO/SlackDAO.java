@@ -67,30 +67,8 @@ public class SlackDAO {
 
     }
 
-    public void responseSlackData(Double percentUsoVolumes, Double percentUsoCpu, Double percentUsoRAM) {
+    public void responseSlackData() {
 
-        JSONObject json = new JSONObject();
-
-        json.put(
-            "text", "\nPorcentagem de uso [VOLUMES]: "+percentUsoVolumes.intValue()+"%\n"+
-            "Porcentagem de uso [CPU]: "+percentUsoCpu.intValue()+"%\n"+
-            "Porcentagem de uso [RAM]: "+percentUsoRAM.intValue()+"%\n\n"
-        );
-
-        System.out.println(json.getJSONArray("text"));
-
-        HttpRequest request = HttpRequest.newBuilder(URI.create(slackConn.getURL()))
-                .header("accept", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(json.toString()))
-                .build();
-
-        HttpResponse<String> response = null;
-
-        try {
-            response = slackConn.getClient().send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
 
     }
 
