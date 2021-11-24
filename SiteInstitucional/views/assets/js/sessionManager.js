@@ -1,12 +1,12 @@
 var userSession = JSON.parse(sessionStorage.getItem('userData'));
 
 function redirect_login() {
-    window.location.href = 'http://localhost:8081/';
+    window.location.href = 'http://localhost:8081/index.html';
 }
 
 function check_authentication() {
 
-    if (userSession == null || userSession.login == undefined)  {
+    if (userSession.login == undefined)  {
         redirect_login();
     } else {
         session_validate();
