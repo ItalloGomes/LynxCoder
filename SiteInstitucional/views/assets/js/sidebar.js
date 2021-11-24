@@ -1,9 +1,5 @@
 let sidebar = document.querySelector(".sidebar");
-// let filter = document.querySelector(".filter");
-
 let closeBtn = document.querySelector("#btn");
-// let closeBtnFilter = document.querySelector("#btnFilter");
-
 let searchBtn = document.querySelector(".bx-search");
 
 closeBtn.addEventListener("click", ()=> {
@@ -12,13 +8,6 @@ closeBtn.addEventListener("click", ()=> {
     menuBtnChange();
     
 });
-
-// closeBtnFilter.addEventListener("click", () => {
-
-//     filter.classList.toggle("open");
-//     filterBtnChange(); 
-
-// });
 
 searchBtn.addEventListener("click", ()=> { 
 
@@ -36,13 +25,3 @@ function menuBtnChange() {
     }
 
 }
-
-// function filterBtnChange() {
-
-//     if(filter.classList.contains("open")) {
-//         closeBtnFilter.classList.replace("bxs-left-arrow", "bx-filter");
-//     } else {
-//         closeBtnFilter.classList.replace("bx-filter", "bxs-left-arrow");
-//     }
-
-// }
