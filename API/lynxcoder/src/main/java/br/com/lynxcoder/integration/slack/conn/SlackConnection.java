@@ -6,7 +6,7 @@ import java.net.http.HttpClient;
 public class SlackConnection {
 
     private HttpClient client = HttpClient.newHttpClient();
-    private String URL = "https://hooks.slack.com/services/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";
+    private String URL = "https://hooks.slack.com/services/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";
 
     public HttpClient getClient() {
         return client;
