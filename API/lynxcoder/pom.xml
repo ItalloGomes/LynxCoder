@@ -30,6 +30,12 @@
             <artifactId>json</artifactId>
             <version>20201115</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.slack.api</groupId>
+            <artifactId>slack-api-client</artifactId>
+            <version>1.14.0</version>
+        </dependency>
     </dependencies>
 
 </project>
