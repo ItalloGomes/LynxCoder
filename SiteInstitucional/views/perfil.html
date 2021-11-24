@@ -72,6 +72,35 @@
         </ul>
     </div>
 
+    <div class="box-loading ocult" id="loading">
+        <span class="circle circle-1"></span>
+        <span class="circle circle-2"></span>
+        <span class="circle circle-3"></span>
+        <span class="circle circle-4"></span>
+        <span class="circle circle-5"></span>
+        <span class="circle circle-6"></span>
+    </div>
+
+    <div class="box-edit-perfil ocult" id="boxModal">
+        <form class="edit-perfil">
+            <i class='bx bx-x' onclick="closedForm()"></i>
+
+            <h1>Editar Perfil!</h1>
+            <div class="hr" style="width: 100%;"></div>
+            
+            <input name="nomeUsuario" class="inputAll" type="text" placeholder="Novo Nome">
+            <br>
+            <input name="senhaUsuario" class="inputAll" type="password" placeholder="Nova Senha">
+            <br>
+            <input name="fotoUsuario" class="inputAll" type="text" placeholder="URL da Foto">
+
+            <div class="hr"></div>
+
+            <input class="inputAll" type="submit" value="Enviar Informações">
+
+        </form>
+    </div>
+
     <section class="home-section">
         <div class="align_perfil">
             <div class="perfil">
@@ -122,16 +151,14 @@
         </div>
     </section>
 
-    
-
     <script src="./assets/js/sidebar.js"></script>
 
 </body>
 
 <script>
 
-    var pendentes = 0;
-    var concluidas = 0;
+var pendentes = 0;
+var concluidas = 0;
 
 (function () {
 
