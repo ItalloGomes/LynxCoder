@@ -143,4 +143,260 @@
 
 </body>
 
+<script>
+
+    var maquinaUsuario;
+    
+    var cpu_canvas = document.getElementById('cpuCanvas');
+    var disco_canvas = document.getElementById('discoCanvas');
+    var memory_canvas = document.getElementById('memoriaCanvas');
+    var test_bar = document.getElementById('testBar');
+    var test_line = document.getElementById('testLine');
+
+    function init(){
+
+        check_authentication();
+
+        const userSession = JSON.parse(sessionStorage.getItem('userData'));
+
+        initComponents(userSession);
+
+    }
+
+
+    var graficoCpu = new Chart(
+        cpu_canvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Usado', 'Livre'],
+                datasets: [{
+                    data: [0, 100],
+                    backgroundColor: ['#43318f', '#d2befa'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                elements: {
+                    center: {
+                        text: '0%',
+                        color: '#43318f',
+                        sidePadding: 50,
+                        minFontSize: 18,
+                    }
+                },
+                cutoutPercentage: 85,
+                legend: {
+                    display: false,
+                },
+            }
+        }
+    );
+
+    var graficoDisco = new Chart(
+        disco_canvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Usado', 'Livre'],
+                datasets: [{
+                    data: [0, 100],
+                    backgroundColor: ['#43318f', '#d2befa'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                elements: {
+                    center: {
+                        text: '0%',
+                        color: '#43318f',
+                        sidePadding: 50,
+                        minFontSize: 18,
+                    }
+                },
+                cutoutPercentage: 85,
+                legend: {
+                    display: false,
+                },
+            }
+        }
+    );
+
+    var graficoMemoria = new Chart(
+        memory_canvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Usado', 'Livre'],
+                datasets: [{
+                    data: [0, 100],
+                    backgroundColor: ['#43318f', '#d2befa'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                elements: {
+                    center: {
+                        text: '0%',
+                        color: '#43318f',
+                        sidePadding: 50,
+                        minFontSize: 18,
+                    }
+                },
+                cutoutPercentage: 85,
+                legend: {
+                    display: false,
+                },
+            }
+        }
+    );
+
+    var graficoLine = new Chart(test_line, {
+        type: 'line',
+        data: {
+            labels: ['ATVD1', 'ATVD2', 'ATVD3', 'ATVD4'],
+            datasets: [ {
+                data: [100, 0, 70, 70],
+                backgroundColor: ['#322f5036', '#322f5036', '#322f5036', '#322f5036'],
+                borderColor: ['#605ca1', '#605ca1', '#605ca1', '#605ca1'],
+                borderWidth: 3
+            }]
+        },
+        options: {
+            title: {
+                display: false
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+    var graficoBar = new Chart(test_bar, {
+        type: 'bar',
+        data: {
+            labels: ['ATVD1', 'ATVD2', 'ATVD3', 'ATVD4'],
+            datasets: [ {
+                data: [100, 0, 50, 80],
+                backgroundColor: ['#52cc6852', '#322f5036', '#322f5036', '#322f5036'],
+                borderColor: ['#52cc68', '#605ca1', '#605ca1', '#605ca1'],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            title: {
+                display: false
+            },
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    barThickness : 50
+                }]
+            }
+        }
+    });
+
+    Chart.defaults.global.defaultFontColor = "#303030";
+    Chart.pluginService.register({
+        beforeDraw: function (chart) {
+            if (chart.config.options.elements.center) {
+            var ctx = chart.chart.ctx;
+
+            var centerConfig = chart.config.options.elements.center;
+            var fontStyle = centerConfig.fontStyle || 'Arial';
+            var txt = centerConfig.text;
+            var color = centerConfig.color || '#000';
+            var sidePadding = centerConfig.sidePadding || 20;
+            var sidePaddingCalculated = (sidePadding/100) * (chart.innerRadius * 2)
+
+            ctx.font = "30px " + fontStyle;
+
+            var stringWidth = ctx.measureText(txt).width;
+            var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+            var widthRatio = elementWidth / stringWidth;
+            var newFontSize = Math.floor(30 * widthRatio);
+            var elementHeight = (chart.innerRadius * 2);
+
+            var fontSizeToUse = Math.min(newFontSize, elementHeight);
+
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+            var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+            ctx.font = fontSizeToUse+"px " + fontStyle;
+            ctx.fillStyle = color;
+
+            ctx.fillText(txt, centerX, centerY);
+            }
+        }
+    });
+
+    function getMaquinaUsuario(idUser) {
+    fetch(`/maquinas/${idUser}`, {
+        method: "GET"
+    }).then( resultado => {
+            if( resultado.ok ){
+
+                resultado.json().then( maquina => {
+
+                    console.log(maquina)
+    
+                    maquinaUsuario = maquina.id;
+
+                    getLeiturasMaquina();
+                
+                });
+
+            } else {
+
+                console.log("erro ao recuperar maquina");
+
+            }
+        })
+    }
+
+    function getLeiturasMaquina() {
+    setInterval(() => {
+
+        fetch(`/maquinas/leiturasMaquina/${maquinaUsuario}`, {
+            method: "GET"
+        }).then( resultado => {
+
+            if( resultado.ok ) {
+
+            resultado.json().then( leituraMaquina => {
+
+                graficoCpu.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_cpu}%`;
+                graficoCpu.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_cpu;
+                graficoCpu.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_cpu);
+
+                graficoDisco.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_disco}%`;
+                graficoDisco.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_disco;
+                graficoDisco.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_disco);
+                
+                graficoMemoria.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_ram}%`;
+                graficoMemoria.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_ram;
+                graficoMemoria.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_ram);
+
+                graficoCpu.update();
+                graficoDisco.update();
+                graficoMemoria.update();
+
+            });
+
+            } else {
+
+                console.log("erro ao recuperar leituras de maquina");
+            
+            }
+
+        });
+
+    }, 3000);
+}
+
+    init();
+
+</script>
+
 </html>
