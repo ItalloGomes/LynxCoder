@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="assets/css/estiloBase.css">
     <link rel="stylesheet" href="assets/css/responsiveDashboard.css">
     
-    <script src="assets/js/initDataComponentsDashboard.js"></script>
+    <script src="assets/js/initDataComponentsPerfil.js"></script>
     <script src="assets/js/sessionManager.js"></script>
 
     <script src="assets/js/perfil.js"></script>
@@ -130,10 +130,7 @@
 
 <script>
 
-    var pendentes = 0;
-    var concluidas = 0;
-
-(function () {
+(async function () {
 
     check_authentication();
 
@@ -142,12 +139,18 @@
     const squadUser = JSON.parse(sessionStorage.getItem('userSquad'));
     const empresaUser = JSON.parse(sessionStorage.getItem('userEmpresa'));
 
+    // TAREFAS-CONCLUIDAS
+    await this.getTarefasConcluidas(user.id_usuario);
+
     // FK_SUPERVISOR ----------------------------------------------------
     if(user.fk_supervisor == null || user.fk_supervisor == 'null') {
         document.getElementById('p_gestor').style.display = 'none';
     }else{
         supervisorUser = getDataSupervisor(user.fk_supervisor);
     }
+
+    // TAREFAS-PENDENTES
+    await this.getTarefasPendentes(user.id_usuario);
 
     // INIT COMPONENTES ------------------------------------------------------------------
     if(user.foto_usuario != null){
@@ -175,26 +178,24 @@
     document.getElementById("squad_usuario").innerHTML = `${squadUser.nome}`;
     document.getElementById("empresa_usuario").innerHTML = `${empresaUser.nome}`;
 
-    // TAREFAS
-    getTarefasPendentes(user.id_usuario);
-    getTarefasConcluidas(user.id_usuario);
+    concls = document.getElementById("tarefas_c_usuario").textContent;
+    pends = document.getElementById("tarefas_p_usuario").textContent;
 
-    let aproveitamento = concluidas > 0 ? (concluidas*100) / (concluidas+pendentes) : 0;
+    let aproveitamento = concls > 0 ? (concls*100) / (concls+pends) : 0;
 
     document.getElementById("aproveitamento_usuario").innerHTML = `${aproveitamento}%`;
 
 })();
 
-function getTarefasPendentes(idUser) {
-    fetch(`/tarefas/pendentes/${idUser}`, {
+async function getTarefasPendentes(idUser) {
+    await fetch(`/tarefas/pendentes/${idUser}`, {
         method: "GET"
     }).then( response => {
                     
         if (response.ok) {
-            response.json().then( tarefas => {
+            response.json().then((tarefas) => {
 
                 document.getElementById("tarefas_p_usuario").innerHTML = `${tarefas.length}`;
-                pendentes = tarefas.length;
 
             });
         } else {
@@ -206,17 +207,16 @@ function getTarefasPendentes(idUser) {
     });
 }
 
-function getTarefasConcluidas(idUser) {
-    fetch(`/tarefas/concluidas/${idUser}`, {
+async function getTarefasConcluidas(idUser) {
+    await fetch(`/tarefas/concluidas/${idUser}`, {
         method: "GET"
     }).then( response => {
                     
         if (response.ok) {
-            response.json().then( tarefas => {
-
+            response.json().then((tarefas) => {
+                
                 document.getElementById("tarefas_c_usuario").innerHTML = `${tarefas.length}`;
-                concluidas = tarefas.length;
-
+         
             });
         } else {
             response.text().then(function (resposta) {

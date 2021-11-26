@@ -1,7 +1,5 @@
 const router = require("express").Router();
-const db = require('../config/connectDatabase');
-const Usuario = require("../models/Usuario");
-const Maquina = require("../models/Administrador");
+const Maquina = require("../models/maquina");
 const Leitura = require("../models/leitura");
 
 router.get('/', function(req, res, next) {
@@ -19,14 +17,18 @@ router.get('/', function(req, res, next) {
   	});
 });
 
-router.get('/maquinaUsuario/:idUser', function(req, res, next) {
+router.get('/:idUser', function(req, res, next) {
 	console.log('Maquina usuário: '+req.params.idUser);
+
+	console.log("entrou");
 	
     Maquina.findOne({
         where: {
             fk_usuario: req.params.idUser
         }
     }).then(resultado => {
+
+		console.log("recuperou maquina: "+resultado.length);
 
 		res.json(resultado);
 
