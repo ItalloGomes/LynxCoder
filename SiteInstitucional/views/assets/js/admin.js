@@ -6,8 +6,20 @@ let usuarios_banco = [];
 let usuarios_dif = [];
 let lista_tudo = [];
 
-function closedForm() {
-    boxModal.classList.add('ocult');
+function open_trello_modal() {
+    boxTrelloModal.classList.remove('ocult');
+}
+
+function close_trello_modal() {
+    boxTrelloModal.classList.add('ocult');
+}
+
+function open_loading() {
+    loading.classList.remove('ocult');
+}
+
+function close_loading() {
+    loading.classList.add('ocult');
 }
 
 let callbackSquadsTrello = false;
@@ -43,9 +55,14 @@ function sincronizar_squads() {
                 }
             }
             if (squads_dif.length > 0) {
-                cadastrar_squads();
+                spanTrelloMsg.innerHTML = `${squads_dif.length} 
+                nova(s) squad(s)`
+                btnCadastrarSquads.style.display = 'inline';
+                btnCadastrarUsuarios.style.display = 'none';
+                open_trello_modal();
+                close_loading();
                 let insertCallbackInterval = setInterval(function () {
-                    if (countCadastroSquads = squads_dif.length) {
+                    if (countCadastroSquads == squads_dif.length) {
                         clearInterval(insertCallbackInterval);
                         sincronizar_usuarios();
                     }
@@ -112,9 +129,16 @@ function sincronizar_usuarios() {
                 }
             }
             if (usuarios_dif.length > 0) {
-                cadastrar_usuarios();
+                spanTrelloMsg.innerHTML = `${usuarios_dif.length} 
+                novo(s) usuário(s)`
+                btnCadastrarSquads.style.display = 'none';
+                btnCadastrarUsuarios.style.display = 'inline';
+                open_trello_modal();
+                close_loading();
+
+            } else {
+                exibir_informacoes_acesso();
             }
-            exibir_informacoes_acesso();
         }
     }, 1000);
 }
@@ -200,6 +224,8 @@ function buscar_usuarios_banco() {
 }
 
 function cadastrar_squads() {
+    close_trello_modal();
+    open_loading();
     console.log(squads_dif);
     countCadastroSquads = 0;
 
@@ -228,6 +254,9 @@ function cadastrar_squads() {
 }
 
 function cadastrar_usuarios() {
+    close_trello_modal();
+    open_loading();
+    exibir_informacoes_acesso();
     console.log(usuarios_dif);
 
     usuarios_dif.forEach(member => {
@@ -284,6 +313,7 @@ function exibir_informacoes_acesso() {
         if (resultado.ok) {
             resultado.json().then(sprints => {
                 b_sprints.innerHTML = sprints.length;
+                close_loading();
             });
         } else {
             console.log("Erro ao recuperar quantidade de sprints");
