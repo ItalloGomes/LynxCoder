@@ -2,7 +2,7 @@ package br.com.lynxcoder.model;
 
 import java.util.Objects;
 
-public class Empresa {
+public class  Empresa {
 
     private Integer id;
     private String nome;

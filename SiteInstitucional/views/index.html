@@ -8,10 +8,28 @@
     <link rel="shortcut icon" href="assets/img/logo-type3.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/estiloBase.css">
     <link rel="stylesheet" href="assets/css/estiloLoginDashboard.css">
+
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <title>Lynx Coder | Login</title>
 </head>
 
 <body>
+
+    <div class="alert ocult" id="boxAlert">
+        <i class='bx bxs-comment-error'></i>
+
+        <h3 id="titleAlert">Teste</h3>
+        <p id="descAlert">ddashduahdusahfhjsrhfjhsjshjfsjhssjsfsjshjdhjsahajdhsajdsadhajsdhsajhdu</p>
+    </div>
+
+    <div class="box-loading ocult" id="loading">
+        <span class="circle circle-1"></span>
+        <span class="circle circle-2"></span>
+        <span class="circle circle-3"></span>
+        <span class="circle circle-4"></span>
+        <span class="circle circle-5"></span>
+        <span class="circle circle-6"></span>
+    </div>
 
     <div class="base_main">
         <section class="main">
@@ -39,6 +57,8 @@
 <script>
     
     function logar() {
+    
+        loading.classList.remove('ocult');
 
         aguardar();
 
@@ -48,6 +68,8 @@
             method: "POST",
             body: form
         }).then(response => {
+
+            loading.classList.add('ocult');
 
             if (response.ok) {
 
@@ -59,7 +81,7 @@
                     if( usuario.is_gestor || !usuario.is_gestor 
                                           && usuario.is_gestor != undefined) {
 
-                        window.location.href = 'http://localhost:8081/dashboard';
+                        window.location.href = 'http://localhost:8081/dashboard.html';
                     
                     } else {
                         window.location.href = 'http://localhost:8081/admin.html';
@@ -68,6 +90,17 @@
                 });
 
             } else {
+
+                boxAlert.classList.remove('ocult');
+                boxAlert.classList.add('alert-active');
+                titleAlert.innerHTML = "Alerta!";
+                descAlert.innerHTML = "Login e/ou senha inválidos, tente novamente!";
+
+                setTimeout(() => {
+                    boxAlert.classList.add('ocult');
+                    boxAlert.classList.remove('alert-active');
+                }, 5000);
+
                 response.text().then(function (resposta) {
                     console.log("Erro login: " + resposta);
                 });

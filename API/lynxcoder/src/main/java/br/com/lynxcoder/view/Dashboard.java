@@ -4,6 +4,7 @@ import br.com.lynxcoder.DAO.LeituraDAO;
 import br.com.lynxcoder.DAO.LogDAO;
 import br.com.lynxcoder.DAO.MaquinaDAO;
 import br.com.lynxcoder.DAO.ProcessosDAO;
+import br.com.lynxcoder.integration.slack.DAO.SlackDAO;
 import br.com.lynxcoder.model.Leitura;
 import br.com.lynxcoder.model.Maquina;
 import br.com.lynxcoder.model.Usuario;
@@ -24,6 +25,7 @@ import java.util.Objects;
 public class Dashboard extends JFrame implements MouseListener {
 
     Looca looca = new Looca();
+    SlackDAO slackDAO = new SlackDAO();
     private final int hardwareThreadSleep = 10_000;
     private final int processThreadSleep = 15_000;
 
@@ -565,8 +567,10 @@ public class Dashboard extends JFrame implements MouseListener {
 
                     Double percentUsoVolumes = ((total - totalDisponivel) / total) * 100;
 
+                    slackDAO.showSlackData(percentUsoVolumes, percentUsoCPU, percentUsoRAM);
                     showHardwareInfo(usoRAM, percentUsoVolumes, percentUsoCPU, percentUsoRAM);
                //     insertHardwareInfo(percentUsoRAM, percentUsoCPU, percentUsoVolumes)
+
                 }
             } catch (Exception e) {
                 logDAO.escreverLog(e.toString());
@@ -597,7 +601,6 @@ public class Dashboard extends JFrame implements MouseListener {
     }
 
     private void insertHardwareInfo(Double percentUsoRAM, Double percentUsoCPU, Double percentUsoVolumes) {
-
 
         Leitura dado = null;
         try {

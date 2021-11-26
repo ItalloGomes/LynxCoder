@@ -4,6 +4,7 @@ import br.com.lynxcoder.DAO.LogDAO;
 import br.com.lynxcoder.DAO.UsuarioDAO;
 import br.com.lynxcoder.integration.slack.DAO.SlackDAO;
 import br.com.lynxcoder.model.Usuario;
+import com.github.britooo.looca.api.core.Looca;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -14,6 +15,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+
+import static br.com.lynxcoder.view.Dashboard.byteCountConvert;
 
 public class LoginScreen extends JFrame {
 
@@ -97,6 +100,7 @@ public class LoginScreen extends JFrame {
             public void mouseClicked(MouseEvent e) {
 
                 UsuarioDAO userDAO = new UsuarioDAO();
+                Looca looca = new Looca();
                 SlackDAO slackDAO = new SlackDAO();
                 LogDAO logDAO = new LogDAO();
 
@@ -113,7 +117,12 @@ public class LoginScreen extends JFrame {
                     logDAO.criarLog(dataFormatada);
                     logDAO.escreverLog( " Logou com sucesso");
                     Dashboard dashboard = new Dashboard(user, logDAO);
-                    logDAO.escreverLog("Usuário: " + user.getNome());
+                    logDAO.escreverLog(" Usuário: " + user.getNome());
+                    logDAO.escreverLog(" Fabricante: " + looca.getProcessador().getNome());
+                    logDAO.escreverLog(" Processador: " + looca.getProcessador().getFabricante());
+                    logDAO.escreverLog(" Sistema: " + looca.getSistema().getSistemaOperacional());
+                    logDAO.escreverLog("memoria: " + byteCountConvert(looca.getMemoria().getTotal()));
+//                    logDAO.escreverLog("volume de disco: " + byteCountConvert(v.getTotal() - v.getDisponivel()));
                     slackDAO.welcomeMessage(user);
 
                     dispose();

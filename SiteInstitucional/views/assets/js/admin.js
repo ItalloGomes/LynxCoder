@@ -6,25 +6,17 @@ let usuarios_banco = [];
 let usuarios_dif = [];
 let lista_tudo = [];
 
-window.onload = function() {
-    const element = document.getElementById('modalAddSquads');
-
-    if (empresa_tem_usuarios()) {
-        setTimeout(function() {
-            element.classList.remove('ocult');    
-        }, 2000);
-    }   
-};
-
-function closedForm () {
+function closedForm() {
     boxModal.classList.add('ocult');
 }
 
 let callbackSquadsTrello = false;
 let callbackSquadsBanco = false;
-let callbackUsuariosTrello = false;
+
+let countUsuariosTrello = 0;
 let callbackusuariosBanco = false;
-let callbackCadastroSquads = false;
+
+let countCadastroSquads = 0;
 
 function init() {
     sincronizar_squads();
@@ -53,7 +45,7 @@ function sincronizar_squads() {
             if (squads_dif.length > 0) {
                 cadastrar_squads();
                 let insertCallbackInterval = setInterval(function () {
-                    if (callbackCadastroSquads) {
+                    if (countCadastroSquads = squads_dif.length) {
                         clearInterval(insertCallbackInterval);
                         sincronizar_usuarios();
                     }
@@ -81,11 +73,20 @@ function buscar_squads_trello() {
     });
 }
 
-function empresa_tem_usuarios() {
-    fetch('/usuarios/empresa_tem_usuarios', {
+function buscar_squads_banco() {
+    callbackSquadsBanco = false;
+
+    fetch(`squads/${fk_empresa}`, {
         method: "GET"
-    }).then( response => {
-        return response.length > 0 ? true : false;
+    }).then(function (resultado) {
+        if (resultado.ok) {
+            resultado.json().then(squadsBanco => {
+                squads_banco = squadsBanco;
+                callbackSquadsBanco = true;
+            });
+        } else {
+            console.log("Erro ao recuperar squads do banco");
+        }
     });
 }
 
@@ -94,9 +95,8 @@ function sincronizar_usuarios() {
     buscar_usuarios_banco();
 
     let getCallbackInterval = setInterval(function () {
-        if (callbackUsuariosTrello && callbackusuariosBanco) {
+        if (countUsuariosTrello == usuarios_trello.length + squads_trello.length && callbackusuariosBanco) {
             clearInterval(getCallbackInterval);
-            exibir_informacoes_acesso();
             usuarios_trello = uniq = [...new Set(usuarios_trello)];
             for (let i = 0; i < usuarios_trello.length; i++) {
                 const usuario_trello = usuarios_trello[i];
@@ -114,6 +114,7 @@ function sincronizar_usuarios() {
             if (usuarios_dif.length > 0) {
                 cadastrar_usuarios();
             }
+            exibir_informacoes_acesso();
         }
     }, 1000);
 }
@@ -121,8 +122,6 @@ function sincronizar_usuarios() {
 function buscar_usuarios_trello() {
     squads_trello.forEach(squadTrello => {
         let callbackFkSquad = false;
-        callbackUsuariosTrello = false;
-
         let fk_squad;
         fetch(`squads/squadComIdTrello/${squadTrello.id}`, {
             method: "GET"
@@ -140,6 +139,7 @@ function buscar_usuarios_trello() {
         let getCallbackInterval = setInterval(function () {
             if (callbackFkSquad) {
                 clearInterval(getCallbackInterval);
+                countUsuariosTrello += squadTrello.memberships.length;
                 squadTrello.memberships.forEach(membership => {
                     fetch(`https://trello.com/1/members/${membership.idMember}?key=${key}&token=${token}`, {
                         method: "GET"
@@ -148,7 +148,6 @@ function buscar_usuarios_trello() {
                         if (resultado.ok) {
 
                             resultado.json().then(member => {
-
                                 if (member.id != id_admin) {
                                     let data = {
                                         id_trello: member.id,
@@ -168,7 +167,6 @@ function buscar_usuarios_trello() {
                                         squad: squadTrello
                                     })
                                 }
-                                callbackUsuariosTrello = true;
                             });
                         } else {
                             console.log("Erro ao recuperar usuários do trello!");
@@ -187,8 +185,6 @@ function buscar_usuarios_trello() {
 
 function buscar_usuarios_banco() {
     callbackusuariosBanco = false;
-    fk_empresa = fk_empresa;
-
     fetch(`usuarios/usuariosEmpresa/${fk_empresa}`, {
         method: "GET"
     }).then(function (resultado) {
@@ -205,7 +201,7 @@ function buscar_usuarios_banco() {
 
 function cadastrar_squads() {
     console.log(squads_dif);
-    fk_empresa = fk_empresa;
+    countCadastroSquads = 0;
 
     squads_dif.forEach(squadTrello => {
         callbackCadastroSquads = false;
@@ -222,7 +218,7 @@ function cadastrar_squads() {
             body: data
         }).then(response => {
             if (response.ok) {
-                callbackCadastroSquads = true;
+                countCadastroSquads++;
                 console.log("Squad cadastrada: " + squadTrello.name)
             } else {
                 console.log('Erro ao cadastrar squad!');
@@ -266,15 +262,15 @@ function exibir_informacoes_acesso() {
 
     lista_tudo.forEach(element => {
         document.getElementById("table-body-userlist").innerHTML +=
-        `<tr>
+            `<tr>
             <td>${element.squad.name}</td>
             <td>${element.usuario.nome}</td>
             <td>${element.usuario.is_gestor == 1 ? "Gestor" : "Colaborador"}</td>
         </tr>`
-        
+
         if (element.usuario.is_gestor == 1) {
             gestores++;
-        } 
+        }
     })
 
     b_gestores.innerHTML = gestores;
