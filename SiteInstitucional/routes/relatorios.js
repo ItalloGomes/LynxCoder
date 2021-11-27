@@ -23,3 +23,5 @@ router.get('/usuariosEmpresa/:idSquad/:offSet', (req, res, next) => {
     });
 
 });
+
+module.exports = router;
