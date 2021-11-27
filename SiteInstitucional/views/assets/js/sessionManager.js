@@ -6,12 +6,23 @@ function redirect_login() {
 
 function check_authentication() {
 
+<<<<<<< HEAD
     if (userSession.login == undefined || userSession.login_admin == undefined)  {
         redirect_login();
+=======
+    if (userSession.tipoLogin != 0) {
+        if (userSession.login == undefined) {
+            redirect_login();
+        }
+    } else if (userSession.tipoLogin == 0) {
+        if (userSession.login_admin == undefined) {
+            redirect_login();
+        }
+>>>>>>> refs/remotes/origin/main
     } else {
         session_validate();
     }
-    
+
 }
 
 function logoff() { 
@@ -21,19 +32,19 @@ function logoff() {
 }
 
 function session_validate() {
-    fetch(`/login/sessao/${userSession.login}`, {cache:'no-store'})
-    .then(resposta => {
-        if (resposta.ok) {
-            resposta.text().then(texto => {
-                console.log('Sessão :) ', texto);    
-            });
-        } else {
-            console.error('Sessão :.(');
-            logoff();
-        } 
-    });    
+    fetch(`/login/sessao/${userSession.login}`, { cache: 'no-store' })
+        .then(resposta => {
+            if (resposta.ok) {
+                resposta.text().then(texto => {
+                    console.log('Sessão :) ', texto);
+                });
+            } else {
+                console.error('Sessão :.(');
+                logoff();
+            }
+        });
 }
 
 function close_session() {
-    fetch(`/login/sair/${userSession.login}`, {cache:'no-store'});
+    fetch(`/login/sair/${userSession.login}`, { cache: 'no-store' });
 }

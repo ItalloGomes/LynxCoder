@@ -1,130 +1,91 @@
-const user = JSON.parse(sessionStorage.getItem('userData'));
 
-class InitAppDataUser{
 
-    constructor(user){
-        
-        this.user = user;
-        this.initComponents();
+async function initComponents(user) {
 
-        /*
-            Para usar as sessiosStorages não precisa levar essa classe, ela só
-            defini quando o usuário entra no sistema dps é só puxar
-
-            const <receptaculo> = JSON.parse(sessionStorage.getItem('<objetoQueQuiser>'));
-        */
-
-        this.supervisor = JSON.parse(sessionStorage.getItem('userSuper'));
-        this.squad = JSON.parse(sessionStorage.getItem('userSquad'));
-        this.empresa = JSON.parse(sessionStorage.getItem('userEmpresa'));
-
+    // INIT COMPONENTES ------------------------------------------------------------------
+    if(user.foto_usuario != null){
+        document.getElementById('foto_perfil_usuario_log_out').src = user.foto_usuario;
+    } else {
+        document.getElementById('foto_perfil_usuario_log_out').src = "https://www.pinpng.com/pngs/m/226-2269397_gnar-bot-is-a-hd-png-download.png";
     }
 
-    initComponents() {
-        getDataSupervisor(this.user.fk_supervisor);
-        getDataSquad(this.user.fk_squad);
-        getDataEmpresa(this.user.fk_empresa);
-    }
+    let nameSplit = user.nome_usuario.split(' ');
 
-    logComponentsReceived() {
-        console.log(this.squad);
-        console.log("--");
-        console.log(this.empresa);
-    }
-
-}
-
-function getDataSupervisor(id) {
-
-    if(id == null) return null;
+    // NOME E TIPO USUÁRIO
+    document.getElementById('nome_usuario_log_out').innerHTML = `${nameSplit[0]} ${nameSplit[nameSplit.length-1]}`;
     
-    fetch(`/usuarios/getUsuarioById/${id}`, {
+    document.getElementById('tipo_usuario_log_out').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
+
+    getTarefasPendentes(user.id_usuario);
+
+    getMaquinaUsuario(user.id_usuario);
+
+};
+
+function getTarefasPendentes(idUser) {
+    fetch(`/tarefas/pendentes/${idUser}`, {
         method: "GET"
     }).then( response => {
-
+                    
         if (response.ok) {
-
-            response.json().then( supervisor => {
+            response.json().then( tarefas => {
+                var count = 1;
                 
-                // console.log(supervisor);
+                if(tarefas.length > 0) {
+                    tarefas.forEach(element => {
+    
+                        let container = document.getElementById('atividadesPends');
+    
+                        let div = document.createElement('div');
+                        div.className = 'card_atvd';
+    
+                        let h2 = document.createElement('h2');
+    
+                        let b = document.createElement('b');
+                        b.textContent = `Nº${count}`;
+    
+                        let txt = document.createTextNode(` - ${element.nome_tarefa}`);
+    
+                        h2.appendChild(b);
+                        h2.appendChild(txt);
+    
+                        let p = document.createElement('p');
+                        p.textContent = `${element.total_concluido}%`;
+    
+                        div.appendChild(h2);
+                        div.appendChild(p);
+    
+                        container.appendChild(div);
+    
+                    });
+                } else {
 
-                let texto = JSON.stringify(supervisor);
-                sessionStorage.setItem('userSuper', texto);
+                    let container = document.getElementById('atividadesPends');
+
+                    let div = document.createElement('div');
+
+                    let b = document.createElement('b');
+
+                    let txt = document.createTextNode(`Sem Tarefas pendentes`);
+
+                    b.appendChild(txt);
+
+                    let center = document.createElement('center');
+
+                    center.appendChild(b);
+
+                    div.appendChild(center);
+
+                    container.appendChild(div);
+                
+                }
 
             });
-
         } else {
             response.text().then(function (resposta) {
-                console.log("ERRO: " + resposta);
+                console.log("Erro: " + resposta);
             });
         }
-    }).catch( () => {
-        console.log("erro supervisor");
-        return null;
+                
     });
-
 }
-
-function getDataSquad(id) {
-    
-    if(id == null) return null;
-
-    fetch(`/squads/getSquadById/${id}`, {
-        method: "GET"
-    }).then( response => {
-
-        if (response.ok) {
-
-            response.json().then( squad => {
-                
-                // console.log(squad);
-                
-                let texto = JSON.stringify(squad);
-                sessionStorage.setItem('userSquad', texto);
-
-            });
-
-        } else {
-            response.text().then(function (resposta) {
-                console.log("ERRO: " + resposta);
-            });
-        }
-    }).catch( () => {
-        console.log("erro squad");
-        return null;
-    });;
-
-}
-
-function getDataEmpresa(id) {
-    
-    if(id == null) return null;
-
-    fetch(`/empresas/getEmpresaById/${id}`, {
-        method: "GET"
-    }).then( response => {
-
-        if (response.ok) {
-
-            response.json().then( empresa => {
-                
-                // console.log(empresa);
-
-                let texto = JSON.stringify(empresa);
-                sessionStorage.setItem('userEmpresa', texto);
-            
-            });
-
-        } else {
-            response.text().then(function (resposta) {
-                console.log("ERRO: " + resposta);
-            });
-        }
-    }).catch( () => {
-        console.log("erro empresa");
-        return null;
-    });;
-
-}
-
-new InitAppDataUser(user);
