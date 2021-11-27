@@ -6,10 +6,6 @@ function redirect_login() {
 
 function check_authentication() {
 
-<<<<<<< HEAD
-    if (userSession.login == undefined || userSession.login_admin == undefined)  {
-        redirect_login();
-=======
     if (userSession.tipoLogin != 0) {
         if (userSession.login == undefined) {
             redirect_login();
@@ -18,7 +14,6 @@ function check_authentication() {
         if (userSession.login_admin == undefined) {
             redirect_login();
         }
->>>>>>> refs/remotes/origin/main
     } else {
         session_validate();
     }
