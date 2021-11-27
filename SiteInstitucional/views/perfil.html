@@ -11,6 +11,7 @@
     
     <script src="assets/js/initDataComponentsPerfil.js"></script>
     <script src="assets/js/sessionManager.js"></script>
+    <script src="assets/js/navManager.js"></script>
 
     <script src="assets/js/perfil.js"></script>
 
@@ -33,9 +34,7 @@
                 <input type="text" placeholder="Search...">
                 <span class="tooltip">Search</span>
             </li>
-
-            <!-- Colaborador -->
-
+            
             <li>
                 <a href="#">
                     <i class='bx bxs-user-circle'></i>
@@ -44,7 +43,9 @@
                 <span class="tooltip">Perfil</span>
             </li>
 
-            <li>
+            <!-- Colaborador -->
+            
+            <li id="navDashboard">
                 <a href="dashboard.html">
                     <i class='bx bxs-dashboard'></i>
                     <span class="links_name">Dashboard</span>
@@ -52,7 +53,7 @@
                 <span class="tooltip">Dashboard</span>
             </li>
 
-            <li>
+            <li id="navRelatorios">
                 <a href="relatorios.html">
                     <i class='bx bx-line-chart'></i>
                     <span class="links_name">Relatórios</span>
@@ -62,7 +63,7 @@
 
             <!-- Gestor -->
 
-            <li>
+            <li id="navEquipe">
                 <a href="equipe.html">
                     <i class='bx bxs-group'></i>
                     <span class="links_name">Equipe</span>
@@ -70,7 +71,7 @@
                 <span class="tooltip">Equipe</span>
             </li>
 
-            <li>
+            <li id="navSprint">
                 <a href="sprint.html">
                     <i class='bx bxs-bar-chart-alt-2'></i>
                     <span class="links_name">Sprint</span>
@@ -78,7 +79,7 @@
                 <span class="tooltip">Sprint</span>
             </li>
 
-            <li>
+            <li id="navConfig">
                 <a href="">
                     <i class='bx bxs-cog'></i>
                     <span class="links_name">Configurações</span>
@@ -185,6 +186,10 @@
 
 <script>
 
+const supervisorUser = JSON.parse(sessionStorage.getItem('userSuper'));
+const squadUser = JSON.parse(sessionStorage.getItem('userSquad'));
+const empresaUser = JSON.parse(sessionStorage.getItem('userEmpresa'));
+
 var pendentes = 0;
 var concluidas = 0;
 var sprintAtiva = 0;
@@ -195,15 +200,11 @@ var sprintAtiva = 0;
 
     const user = JSON.parse(sessionStorage.getItem('userData'));
 
+    // NAVEGADORES
+    accessControl(user);
+
     // SPRINT-ATIVA
     getSprintAtiva(user.id_usuario);
-
-    const supervisorUser = JSON.parse(sessionStorage.getItem('userSuper'));
-    const squadUser = JSON.parse(sessionStorage.getItem('userSquad'));
-    const empresaUser = JSON.parse(sessionStorage.getItem('userEmpresa'));
-
-    // TAREFAS-CONCLUIDAS
-    // await getTarefasConcluidas(user.id_usuario);
 
     // FK_SUPERVISOR ----------------------------------------------------
     if(user.fk_supervisor == null || user.fk_supervisor == 'null') {
@@ -211,9 +212,6 @@ var sprintAtiva = 0;
     }else{
         supervisorUser = getDataSupervisor(user.fk_supervisor);
     }
-
-    // TAREFAS-PENDENTES
-    // getTarefasPendentes(user.id_usuario);
 
     // INIT COMPONENTES ------------------------------------------------------------------
     if(user.foto_usuario != null){

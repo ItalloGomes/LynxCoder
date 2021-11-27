@@ -133,15 +133,11 @@ function getTarefasPendentes(idUser, sprintId) {
 
                     let div = document.createElement('div');
 
-                    let b = document.createElement('b');
-
                     let txt = document.createTextNode(`Sem Tarefas pendentes`);
-
-                    b.appendChild(txt);
 
                     let center = document.createElement('center');
 
-                    center.appendChild(b);
+                    center.appendChild(txt);
 
                     div.appendChild(center);
 
