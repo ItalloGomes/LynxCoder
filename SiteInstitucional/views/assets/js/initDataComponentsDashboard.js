@@ -1,6 +1,16 @@
+var sprintAtiva;
 
+var usuarioId;
+var grafico;
 
-async function initComponents(user) {
+var backgroundColor = ['#322f5036', '#322f5036', '#322f5036', '#322f5036', '#62958D', '#7EBC89', '#C3706B', '#9E66A2'];
+var borderColor = ['#605ca1', '#605ca1', '#605ca1', '#605ca1', '#23B59F', '#33C44B', '#B83E35', '#911A9A'];
+                
+
+async function initComponents(user, graficoBar) {
+
+    usuarioId = user.id_usuario;
+    grafico = graficoBar;
 
     // INIT COMPONENTES ------------------------------------------------------------------
     if(user.foto_usuario != null){
@@ -15,15 +25,74 @@ async function initComponents(user) {
     document.getElementById('nome_usuario_log_out').innerHTML = `${nameSplit[0]} ${nameSplit[nameSplit.length-1]}`;
     
     document.getElementById('tipo_usuario_log_out').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
-
-    getTarefasPendentes(user.id_usuario);
-
+    
     getMaquinaUsuario(user.id_usuario);
+    
+    getSprintAtiva(user.id_usuario);
 
 };
 
-function getTarefasPendentes(idUser) {
-    fetch(`/tarefas/pendentes/${idUser}`, {
+function getSprintAtiva(idUser){
+    fetch(`/sprints/sprintAtivaUsuario/${idUser}`, {
+        method: 'GET'
+    }).then(response => {
+
+        if (response.ok) {
+
+            response.json().then( sprint => {
+              
+                sprintAtiva = sprint[0].id_sprint;
+
+                setAllTarefasChartUser();
+                
+            });
+
+        }else{
+            response.text().then(function (resposta) {
+                console.log("Erro: " + resposta);
+            });
+        }
+
+    });
+};
+
+function setAllTarefasChartUser() {
+    fetch(`/tarefas/allOfSprint/${usuarioId}/${sprintAtiva}`, {
+        method: 'GET'
+    }).then(response => {
+
+        if (response.ok) {
+
+            response.json().then( tarefas => {
+              
+                let count = 1;
+                tarefas.forEach( element => {
+
+                    grafico.config.data.labels.push(`ATVD ${count}`);
+                    grafico.config.data.datasets[0].data.push(element.total_concluido);
+                    grafico.config.data.datasets[0].backgroundColor.push(backgroundColor[count]);
+                    grafico.config.data.datasets[0].borderColor.push(borderColor[count]);
+
+                    grafico.update();
+
+                    count++;
+                })
+
+            });
+
+            getTarefasPendentes(usuarioId, sprintAtiva);
+
+        }else{
+            response.text().then(function (resposta) {
+                console.log("Erro: " + resposta);
+            });
+        }
+
+    });
+}
+
+function getTarefasPendentes(idUser, sprintId) {
+    fetch(`/tarefas/pendentes/${idUser}/${sprintId}`, {
         method: "GET"
     }).then( response => {
                     
@@ -64,15 +133,11 @@ function getTarefasPendentes(idUser) {
 
                     let div = document.createElement('div');
 
-                    let b = document.createElement('b');
-
                     let txt = document.createTextNode(`Sem Tarefas pendentes`);
-
-                    b.appendChild(txt);
 
                     let center = document.createElement('center');
 
-                    center.appendChild(b);
+                    center.appendChild(txt);
 
                     div.appendChild(center);
 

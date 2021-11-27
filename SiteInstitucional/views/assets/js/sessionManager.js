@@ -20,7 +20,7 @@ function check_authentication() {
 
 }
 
-function logoff() {
+function logoff() { 
     close_session();
     sessionStorage.clear();
     redirect_login();

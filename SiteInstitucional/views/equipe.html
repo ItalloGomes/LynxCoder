@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="assets/css/estiloBase.css">
     <link rel="stylesheet" href="assets/css/responsiveDashboard.css">
 
+    <script src="assets/js/navManager.js"></script>
+
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <title>Portal Lynx Coder | Relatórios</title>
 </head>
@@ -37,15 +39,35 @@
                 <span class="tooltip">Perfil</span>
             </li>
 
-            <li>
-                <a href="equipe.html">
+            <!-- Colaborador -->
+            
+            <li id="navDashboard">
+                <a href="dashboard.html">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+
+            <li id="navRelatorios">
+                <a href="relatorios.html">
+                    <i class='bx bx-line-chart'></i>
+                    <span class="links_name">Relatórios</span>
+                </a>
+                <span class="tooltip">Relatórios</span>
+            </li>
+
+            <!-- Gestor -->
+
+            <li id="navEquipe">
+                <a href="#">
                     <i class='bx bxs-group'></i>
                     <span class="links_name">Equipe</span>
                 </a>
                 <span class="tooltip">Equipe</span>
             </li>
 
-            <li>
+            <li id="navSprint">
                 <a href="sprint.html">
                     <i class='bx bxs-bar-chart-alt-2'></i>
                     <span class="links_name">Sprint</span>
@@ -53,7 +75,7 @@
                 <span class="tooltip">Sprint</span>
             </li>
 
-            <li>
+            <li id="navConfig">
                 <a href="">
                     <i class='bx bxs-cog'></i>
                     <span class="links_name">Configurações</span>
@@ -63,14 +85,14 @@
 
             <li class="profile">
                 <div class="profile-details">
-                    <img src="data:image/jpeg;base64,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" alt="profileImg">
+                    <img id="foto_perfil_usuario_log_out" src="" alt="profileImg">
                     
                     <div class="name_job">
-                        <div class="name">Mateus Breno</div>
-                        <div class="job">Colaborador</div>
+                        <div class="name" id="nome_usuario_log_out"></div>
+                        <div class="job" id="tipo_usuario_log_out"></div>
                     </div>
                 </div>
-                <i class='bx bx-log-out' id="log_out" ></i>
+                <i class='bx bx-log-out' id="log_out" onclick="logoff()"></i>
             </li>
         </ul>
     </div>
@@ -230,6 +252,30 @@
 </html>
 
 <script>
+
+(function (){
+
+    const user = JSON.parse(sessionStorage.getItem('userData'));
+
+    // NAVEGADORES
+    accessControl(user);
+
+    // INIT COMPONENTES ------------------------------------------------------------------
+    if(user.foto_usuario != null){
+        document.getElementById('foto_perfil_usuario_log_out').src = user.foto_usuario;
+    } else {
+        document.getElementById('foto_perfil_usuario_log_out').src = "https://www.pinpng.com/pngs/m/226-2269397_gnar-bot-is-a-hd-png-download.png";
+    }
+
+    let nameSplit = user.nome_usuario.split(' ');
+
+    // NOME E TIPO USUÁRIO
+    document.getElementById('nome_usuario_log_out').innerHTML = `${nameSplit[0]} ${nameSplit[nameSplit.length-1]}`;
+    
+    document.getElementById('tipo_usuario_log_out').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
+
+})();
+
 
     let sidebar = document.querySelector(".sidebar");
     let filter = document.querySelector(".filter");

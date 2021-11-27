@@ -138,16 +138,19 @@ router.post('/atualizarProgresso/:concluido/:idTarefa', (req, res) => {
         });
     
 });
-router.get('/pendentes/:userId', (req, res) => {
+router.get('/pendentes/:userId/:sprintID', (req, res) => {
 
-    console.log("Tarefas pendentes");
+    console.log("Tarefas pendentes Sprint");
 
     const params = {
-        userId: req.params.userId
+        userId: req.params.userId,
+        sprintId: req.params.sprintID
     }
     
     sql = `select * from tb_tarefa 
-    where fk_usuario='${params.userId}' and total_concluido < 100.00`;
+                where fk_usuario='${params.userId}' 
+                and fk_sprint='${params.sprintId}' 
+                and total_concluido < 100.00`;
     
     db.sequelizeConnection.query(sql, {
         model: Tarefa
@@ -164,16 +167,19 @@ router.get('/pendentes/:userId', (req, res) => {
     
 });
 
-router.get('/concluidas/:userId', (req, res) => {
+router.get('/concluidas/:userId/:sprintID', (req, res) => {
 
-    console.log("Tarefas concluidas");
+    console.log("Tarefas concluidas Sprint");
 
     const params = {
-        userId: req.params.userId
+        userId: req.params.userId,
+        sprintId: req.params.sprintID
     }
 
     sql = `select * from tb_tarefa 
-    where fk_usuario='${params.userId}' and total_concluido = 100.00`;
+                where fk_usuario='${params.userId}' 
+                and fk_sprint='${params.sprintId}' 
+                and total_concluido = 100.00`;
     
     db.sequelizeConnection.query(sql, {
         model: Tarefa
