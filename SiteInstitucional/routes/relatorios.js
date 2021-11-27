@@ -1,6 +1,4 @@
 const router = require("express").Router();
-const { where } = require("sequelize/types");
-const db = require('../config/connectDatabase');
 const Usuario = require("../models/Usuario");
 
 router.get('/usuariosEmpresa/:idSquad/:offSet', (req, res, next) => {
@@ -13,13 +11,13 @@ router.get('/usuariosEmpresa/:idSquad/:offSet', (req, res, next) => {
         }
     }).then(response => {
 
-        console.log(`${resultado.count} registros`);
+        console.log(`${response.count} registros`);
 
-		res.json(resultado.rows);
+		res.json(response.rows);
     
     }).catch(err => {
-        console.error(erro);
-		res.status(500).send(erro.message);
+        console.error(err);
+		res.status(500).send(err.message);
     });
 
 });
