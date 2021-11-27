@@ -270,7 +270,7 @@ function gerar_chart_squad() {
                     datasets.unshift({
                         data: [entregues, pontuacao, participantes],
                         label: sprint.descricao,
-                        borderColor: "#43318f"
+                        backgroundColor: "#43318f"
                     });
 
                     count++;
