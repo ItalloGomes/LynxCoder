@@ -166,7 +166,7 @@
     
     document.getElementById('tipo_usuario_log_out').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
 
-    fetch("/test/test", {
+    fetch("/relatorios/test", {
         method: 'GET',
     }).then(function(response){
         if (response.ok) {
