@@ -117,12 +117,16 @@ public class LoginScreen extends JFrame {
                     logDAO.criarLog(dataFormatada);
                     logDAO.escreverLog( " Logou com sucesso");
                     Dashboard dashboard = new Dashboard(user, logDAO);
+<<<<<<< HEAD
+                    logDAO.escreverLog("Usuário: " + user.getNome());
+=======
                     logDAO.escreverLog(" Usuário: " + user.getNome());
                     logDAO.escreverLog(" Fabricante: " + looca.getProcessador().getNome());
                     logDAO.escreverLog(" Processador: " + looca.getProcessador().getFabricante());
                     logDAO.escreverLog(" Sistema: " + looca.getSistema().getSistemaOperacional());
                     logDAO.escreverLog("memoria: " + byteCountConvert(looca.getMemoria().getTotal()));
 //                    logDAO.escreverLog("volume de disco: " + byteCountConvert(v.getTotal() - v.getDisponivel()));
+>>>>>>> refs/remotes/origin/main
                     slackDAO.welcomeMessage(user);
 
                     dispose();

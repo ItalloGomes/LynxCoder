@@ -55,9 +55,9 @@
 </html>
 
 <script>
-    
+
     function logar() {
-    
+
         loading.classList.remove('ocult');
 
         aguardar();
@@ -75,18 +75,25 @@
 
                 response.json().then(usuario => {
 
-                    let texto = JSON.stringify(usuario);
-                    sessionStorage.setItem('userData', texto);
+                    if (usuario != null) {
+                        usuario["tipoLogin"] = tipoLogin.value;
+                        let texto = JSON.stringify(usuario);
 
-                    if( usuario.is_gestor || !usuario.is_gestor 
-                                          && usuario.is_gestor != undefined) {
+                        sessionStorage.setItem('userData', texto);
 
-                        window.location.href = 'http://localhost:8081/dashboard.html';
+                        window.location.href = 'http://localhost:8081/dashboard';
                     
                     } else {
                         window.location.href = 'http://localhost:8081/admin.html';
+                        if (tipoLogin.value == 0) {
+                            window.location.href = 'http://localhost:8081/admin.html';
+                        } else if (tipoLogin.value == 1) {
+                            window.location.href = 'http://localhost:8081/sprint.html';
+                        } else {
+                            window.location.href = 'http://localhost:8081/dashboard.html';
+                        }
                     }
-    
+
                 });
 
             } else {

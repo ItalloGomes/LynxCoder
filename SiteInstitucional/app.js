@@ -16,6 +16,7 @@ const tarefaRouter = require('./routes/tarefas');
 const usuarioRouter = require('./routes/usuarios');
 const trelloRouter = require('./routes/trello');
 const maquinasRouter = require('./routes/maquinas');
+const relatoriosRouter = require('./routes/relatorios');
 
 
 // Preset de engine
@@ -39,6 +40,7 @@ app.use('/tarefas', tarefaRouter);
 app.use('/usuarios', usuarioRouter);
 app.use('/trello', trelloRouter);
 app.use('/maquinas', maquinasRouter);
+app.use('/relatorios', relatoriosRouter);
 
 app.listen( porta, function() {
     console.log(`Servidor rodando em: http://localhost:${porta}`);

@@ -166,6 +166,15 @@
     
     document.getElementById('tipo_usuario_log_out').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
 
+    fetch("/relatorios/test", {
+        method: 'GET',
+    }).then(function(response){
+        if (response.ok) {
+            alert('paginação feita com sucesso!');
+        } else {
+            alert('erro ao paginar!');
+        }
+    });
 
 })();
 

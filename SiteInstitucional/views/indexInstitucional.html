@@ -58,21 +58,20 @@
     </div>
 
     <div class="box-cadastro ocult" id="boxCad">
-        <form id="form_cadEmpresa" method="post" class="box-cadEmpresa">
+        <form id="form_cadEmpresa" method="post" class="box-cadEmpresa"  onsubmit="return registrar_empresa()">
             <h1>Registre sua Empresa!</h1>
             <p>Para finalizar nos informe algumas informações da sua empresa</p>
             <div class="hr" style="width: 100%;"></div>
 
-            <input name="nomeEmpresa" class="inputAll" type="text" placeholder="Nome da Empresa">
-            <input name="cnpj" class="inputMet" type="text" placeholder="CNPJ">
-            <input name="cep" class="inputMet" type="text" placeholder="CEP">
-            <input name="endereco" class="inputAll" type="text" placeholder="Endereço">
-            <input name="telefone" class="inputMet" type="text" placeholder="Telefone">
-            <input name="numero" class="inputMet" type="text" placeholder="Número">
-            <input name="cidade" class="inputMet" type="text" placeholder="Cidade">
-            <input name="estado" class="inputMet" type="text" placeholder="UF">
-            <input name="bairro" class="inputMet" type="text" placeholder="Bairro">
-            <input name="logradouro" class="inputMet" type="text" placeholder="Logradouro">
+            <input name="nomeEmpresa" id="nomeEmpresa" class="inputAll" type="text" placeholder="Nome da Empresa">
+            <input name="cnpjEmpresa" id="cnpjEmpresa" class="inputMet" type="text" placeholder="CNPJ">
+            <input name="cepEmpresa" id="cepEmpresa" class="inputMet" type="text" placeholder="CEP">
+            <input name="logoEmpresa" id="logoEmpresa" class="inputAll" type="text" placeholder="Logo URL">
+            <input name="telefoneEmpresa" id="telefoneEmpresa" class="inputMet" type="text" placeholder="Telefone">
+            <input name="cidadeEmpresa" id="cidadeEmpresa" class="inputMet" type="text" placeholder="Cidade">
+            <input name="estadoEmpresa" id="estadoEmpresa" class="inputMet" type="text" placeholder="estado">
+            <input name="numeroEmpresa" id="numeroEmpresa" class="inputMet" type="text" placeholder="Nº">
+            <input name="logradouro" id="logradouro" class="inputMet" type="text" placeholder="Logradouro">
             
             <div class="hr"></div>
 
@@ -372,5 +371,22 @@
 
 </html>
 
+<script>
 
+    function registrar_empresa() {
+        var formulario = new URLSearchParams(new FormData(form_cadEmpresa));
+
+        fetch(`/empresas/addEmpresa`, {
+            method: "POST",
+            body: formulario
+        }).then(function (response) {
+            if (response.ok) {
+                alert(`Empresa cadastrada!!`);
+            } else {
+                alert(`Erro ao tentar cadastrar empresa!`);
+            }
+        });
+    }
+
+</script>
 
