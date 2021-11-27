@@ -113,7 +113,7 @@ public class LoginScreen extends JFrame {
                     logDAO.criarLog(dataFormatada);
                     logDAO.escreverLog( " Logou com sucesso");
                     Dashboard dashboard = new Dashboard(user, logDAO);
-//                    logDAO.escreverLog("Usuário: " + user.getNome());
+                    logDAO.escreverLog("Usuário: " + user.getNome());
                     slackDAO.welcomeMessage(user);
 
                     dispose();

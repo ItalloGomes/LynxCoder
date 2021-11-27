@@ -6,7 +6,7 @@ function redirect_login() {
 
 function check_authentication() {
 
-    if (userSession.login == undefined)  {
+    if (userSession.login == undefined || userSession.login_admin == undefined)  {
         redirect_login();
     } else {
         session_validate();
@@ -14,7 +14,7 @@ function check_authentication() {
     
 }
 
-function logoff() {
+function logoff() { 
     close_session();
     sessionStorage.clear();
     redirect_login();

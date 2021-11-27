@@ -43,7 +43,9 @@ router.post('/logar', (req, res) => {
             
             console.log(`Usuario: ${resultado[0]}`);
             
-            sessao.push(resultado[0].dataValues.login);
+            user.tipo == 0 ? sessao.push(resultado[0].dataValues.login_admin)
+                            : sessao.push(resultado[0].dataValues.login);
+
             
             res.json( resultado[0] );
 
