@@ -1,0 +1,6 @@
+26/11/2021 14:56:56 Logou com sucesso
+26/11/2021 14:56:56 Usuário: Itallo David da Silva Gomes
+26/11/2021 14:56:56 Fabricante: Intel(R) Core(TM) i7-10510U CPU @ 1.80GHz
+26/11/2021 14:56:56 Processador: GenuineIntel
+26/11/2021 14:56:56 Sistema: Windows
+26/11/2021 14:56:56memoria: 15,8 GiB

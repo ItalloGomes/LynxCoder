@@ -187,18 +187,23 @@
 
 var pendentes = 0;
 var concluidas = 0;
+var sprintAtiva = 0;
 
 (async function () {
 
     check_authentication();
 
     const user = JSON.parse(sessionStorage.getItem('userData'));
+
+    // SPRINT-ATIVA
+    getSprintAtiva(user.id_usuario);
+
     const supervisorUser = JSON.parse(sessionStorage.getItem('userSuper'));
     const squadUser = JSON.parse(sessionStorage.getItem('userSquad'));
     const empresaUser = JSON.parse(sessionStorage.getItem('userEmpresa'));
 
     // TAREFAS-CONCLUIDAS
-    await this.getTarefasConcluidas(user.id_usuario);
+    // await getTarefasConcluidas(user.id_usuario);
 
     // FK_SUPERVISOR ----------------------------------------------------
     if(user.fk_supervisor == null || user.fk_supervisor == 'null') {
@@ -208,7 +213,7 @@ var concluidas = 0;
     }
 
     // TAREFAS-PENDENTES
-    await this.getTarefasPendentes(user.id_usuario);
+    // getTarefasPendentes(user.id_usuario);
 
     // INIT COMPONENTES ------------------------------------------------------------------
     if(user.foto_usuario != null){
@@ -236,25 +241,47 @@ var concluidas = 0;
     document.getElementById("squad_usuario").innerHTML = `${squadUser.nome}`;
     document.getElementById("empresa_usuario").innerHTML = `${empresaUser.nome}`;
 
-    concls = document.getElementById("tarefas_c_usuario").textContent;
-    pends = document.getElementById("tarefas_p_usuario").textContent;
-
-    let aproveitamento = concls > 0 ? (concls*100) / (concls+pends) : 0;
-
-    document.getElementById("aproveitamento_usuario").innerHTML = `${aproveitamento}%`;
-
 })();
 
+function getSprintAtiva(idUser){
+    fetch(`/sprints/sprintAtivaUsuario/${idUser}`, {
+        method: 'GET'
+    }).then(response => {
+
+        if (response.ok) {
+
+            response.json().then( sprint => {
+              
+                sprintAtiva = sprint[0].id_sprint;
+
+                // TAREFAS-PENDENTES
+                getTarefasPendentes(user.id_usuario);
+                
+            });
+
+        }else{
+            response.text().then(function (resposta) {
+                console.log("Erro: " + resposta);
+            });
+        }
+
+    });
+};
+
+
 async function getTarefasPendentes(idUser) {
-    await fetch(`/tarefas/pendentes/${idUser}`, {
+    await fetch(`/tarefas/pendentes/${idUser}/${sprintAtiva}`, {
         method: "GET"
     }).then( response => {
                     
         if (response.ok) {
             response.json().then((tarefas) => {
 
+                pendentes = tarefas.length;
+
                 document.getElementById("tarefas_p_usuario").innerHTML = `${tarefas.length}`;
 
+                getTarefasConcluidas(idUser);
             });
         } else {
             response.text().then(function (resposta) {
@@ -266,15 +293,19 @@ async function getTarefasPendentes(idUser) {
 }
 
 async function getTarefasConcluidas(idUser) {
-    await fetch(`/tarefas/concluidas/${idUser}`, {
+    await fetch(`/tarefas/concluidas/${idUser}/${sprintAtiva}`, {
         method: "GET"
     }).then( response => {
                     
         if (response.ok) {
             response.json().then((tarefas) => {
+
+                concluidas = tarefas.length
                 
                 document.getElementById("tarefas_c_usuario").innerHTML = `${tarefas.length}`;
          
+                calculaAproveitamento();
+
             });
         } else {
             response.text().then(function (resposta) {
@@ -283,6 +314,14 @@ async function getTarefasConcluidas(idUser) {
         }
                 
     });
+}
+
+function calculaAproveitamento(){
+
+    let aproveitamento = concluidas > 0 ? (concluidas*100) / (concluidas+pendentes) : 0;
+
+    document.getElementById("aproveitamento_usuario").innerHTML = `${aproveitamento}%`;
+
 }
 
 </script>

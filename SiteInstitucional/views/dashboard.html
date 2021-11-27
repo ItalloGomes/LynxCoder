@@ -153,17 +153,6 @@
     var test_bar = document.getElementById('testBar');
     var test_line = document.getElementById('testLine');
 
-    function init(){
-
-        check_authentication();
-
-        const userSession = JSON.parse(sessionStorage.getItem('userData'));
-
-        initComponents(userSession);
-
-    }
-
-
     var graficoCpu = new Chart(
         cpu_canvas, {
             type: 'doughnut',
@@ -251,11 +240,11 @@
     var graficoLine = new Chart(test_line, {
         type: 'line',
         data: {
-            labels: ['ATVD1', 'ATVD2', 'ATVD3', 'ATVD4'],
+            labels: [],
             datasets: [ {
-                data: [100, 0, 70, 70],
-                backgroundColor: ['#322f5036', '#322f5036', '#322f5036', '#322f5036'],
-                borderColor: ['#605ca1', '#605ca1', '#605ca1', '#605ca1'],
+                data: [],
+                backgroundColor: ['#322f5036', '#322f5036', '#322f5036', '#322f5036', '#62958D', '#7EBC89', '#C3706B', '#9E66A2'],
+                borderColor: ['#605ca1', '#605ca1', '#605ca1', '#605ca1', '#23B59F', '#33C44B', '#B83E35', '#911A9A'],
                 borderWidth: 3
             }]
         },
@@ -272,11 +261,11 @@
     var graficoBar = new Chart(test_bar, {
         type: 'bar',
         data: {
-            labels: ['ATVD1', 'ATVD2', 'ATVD3', 'ATVD4'],
+            labels: [],
             datasets: [ {
-                data: [100, 0, 50, 80],
-                backgroundColor: ['#52cc6852', '#322f5036', '#322f5036', '#322f5036'],
-                borderColor: ['#52cc68', '#605ca1', '#605ca1', '#605ca1'],
+                data: [],
+                backgroundColor: [],
+                borderColor: [],
                 borderWidth: 2
             }]
         },
@@ -290,6 +279,13 @@
             scales: {
                 xAxes: [{
                     barThickness : 50
+                }], 
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0,
+                        max: 100
+                    }
                 }]
             }
         }
@@ -338,12 +334,10 @@
             if( resultado.ok ){
 
                 resultado.json().then( maquina => {
-
-                    console.log(maquina)
     
                     maquinaUsuario = maquina.id;
 
-                    getLeiturasMaquina();
+                    // getLeiturasMaquina();
                 
                 });
 
@@ -356,44 +350,56 @@
     }
 
     function getLeiturasMaquina() {
-    setInterval(() => {
+        setInterval(() => {
 
-        fetch(`/maquinas/leiturasMaquina/${maquinaUsuario}`, {
-            method: "GET"
-        }).then( resultado => {
+            fetch(`/maquinas/leiturasMaquina/${maquinaUsuario}`, {
+                method: "GET"
+            }).then( resultado => {
 
-            if( resultado.ok ) {
+                if( resultado.ok ) {
 
-            resultado.json().then( leituraMaquina => {
+                resultado.json().then( leituraMaquina => {
 
-                graficoCpu.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_cpu}%`;
-                graficoCpu.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_cpu;
-                graficoCpu.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_cpu);
+                    console.log(leituraMaquina);
 
-                graficoDisco.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_disco}%`;
-                graficoDisco.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_disco;
-                graficoDisco.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_disco);
+                    graficoCpu.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_cpu}%`;
+                    graficoCpu.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_cpu;
+                    graficoCpu.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_cpu);
+
+                    graficoDisco.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_disco}%`;
+                    graficoDisco.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_disco;
+                    graficoDisco.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_disco);
+                    
+                    graficoMemoria.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_ram}%`;
+                    graficoMemoria.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_ram;
+                    graficoMemoria.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_ram);
+
+                    graficoCpu.update();
+                    graficoDisco.update();
+                    graficoMemoria.update();
+
+                });
+
+                } else {
+
+                    console.log("erro ao recuperar leituras de maquina");
                 
-                graficoMemoria.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_ram}%`;
-                graficoMemoria.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_ram;
-                graficoMemoria.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_ram);
-
-                graficoCpu.update();
-                graficoDisco.update();
-                graficoMemoria.update();
+                }
 
             });
 
-            } else {
+        }, 3000);
+    }
 
-                console.log("erro ao recuperar leituras de maquina");
-            
-            }
+    function init(){
 
-        });
+        check_authentication();
 
-    }, 3000);
-}
+        const userSession = JSON.parse(sessionStorage.getItem('userData'));
+
+        initComponents(userSession, graficoBar);
+
+    }
 
     init();
 

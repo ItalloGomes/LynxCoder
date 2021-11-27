@@ -23,11 +23,8 @@ public class LogDAO {
 
 
         try {
-<<<<<<< HEAD
             arquivo = new File("C:\\PI\\LynxCoder\\API\\lynxcoder", nomeArquivo);
-=======
-            arquivo = new File("C:\\Users\\fabiane.segato\\OneDrive - Yandeh\\Documentos\\Sprints\\LynxCoder-sprint3\\LynxCoder\\API\\lynxcoder", nomeArquivo);
->>>>>>> 429a56735d50c770ce0cd477c555ca7fd47c9173
+
 
             if (arquivo.createNewFile()) {
                 System.out.println("Arquivo criado");
