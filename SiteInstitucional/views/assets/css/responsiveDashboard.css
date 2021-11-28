@@ -600,7 +600,7 @@ p.title_rel:last-of-type{
   
 .content-table th,
 .content-table td {
-    padding: 12px 15px;
+    padding: 12px 40px;
 }
   
 .content-table tbody tr {
@@ -619,6 +619,21 @@ p.title_rel:last-of-type{
 .content-table tbody tr.active-row {
     font-weight: bold;
     color: #43318f;
+}
+
+.content-table tbody tr.active-row1 {
+    font-weight: bold;
+    color: #ffd700;
+}
+
+.content-table tbody tr.active-row2 {
+    font-weight: bold;
+    color: #777777;
+}
+
+.content-table tbody tr.active-row3 {
+    font-weight: bold;
+    color: #be610a;
 }
 
 .rel button{
