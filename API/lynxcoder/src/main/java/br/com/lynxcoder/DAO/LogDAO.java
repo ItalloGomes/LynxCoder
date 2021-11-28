@@ -15,20 +15,20 @@ public class LogDAO {
     String dataFormatada = dateFormat.format(data);
     Looca looca = new Looca();
     File arquivo;
+    String caminho;
 
-
-    public void criarLog(String nomeArquivo) {
+    public void criarLog( String nomeArquivo) {
 
         nomeArquivo += ".txt";
 
 
         try {
-            arquivo = new File("C:\\PI\\LynxCoder\\API\\lynxcoder", nomeArquivo);
+            arquivo = new File(caminho, nomeArquivo);
 
 
             if (arquivo.createNewFile()) {
-                System.out.println("Arquivo criado");
-                System.out.println("Registro criado: " + dataFormatada);
+                System.out.println("Log criado com sucesso");
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,11 +44,11 @@ public class LogDAO {
                 escritor.write(dataFormatada + conteudo + "\n");
 
                 escritor.close();
-                System.out.println("Registro criado: " + dataFormatada);
+
 
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("Registro não criado: " + dataFormatada);
+
             }
 
 
