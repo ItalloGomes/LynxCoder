@@ -171,22 +171,32 @@ router.get('/getUsuarioById/:id', function (req, res, next) {
     
 });
 
-router.put('/updateUsuario', function (req, res, next) {
+router.put('/editUsuario/:idUser', function (req, res, next) {
+    
+    if(req.body == null) return res.status(500);
 
-    if(req.body == null) return;
+    var camposModifi = {};
+    if(req.body.nomeUsuario.length > 2){
+        camposModifi.nome = req.body.nomeUsuario;
+    }
+    if(req.body.fotoUsuario.length > 5){
+        camposModifi.foto = req.body.fotoUsuario;
+    }
+    if(req.body.senhaUsuario.length > 5){
+        camposModifi.senha = req.body.senhaUsuario;
+    }
 
     Usuario.update(
+        camposModifi,
         { 
-            nome: req.body.nomeUsuario,
-            foto: req.body.fotoUsuario,
-            senha: req.body.senhaUsuario, 
-        },
-        { 
-            where: { id: req.body.idUsuario } 
+            where: { id_usuario: req.params.idUser } 
         }
     ).then( resultado => {
-        console.log("Usuario: "+resultado.nome+" atualizado!");
+
+        console.log("usuario: "+resultado);
+
         res.json(resultado);
+    
     }).catch(erro => {
         console.error(erro);
         res.status(500).send(erro.message);

@@ -111,17 +111,20 @@
     </div>
 
     <div class="box-edit-perfil ocult" id="boxModal">
-        <form class="edit-perfil">
+        <form class="edit-perfil" id="form_editUser" method="PUT" onsubmit="return updateUsuario()">
             <i class='bx bx-x' onclick="closedForm()"></i>
 
             <h1>Editar Perfil!</h1>
             <div class="hr" style="width: 100%;"></div>
-            
-            <input name="nomeUsuario" class="inputAll" type="text" placeholder="Novo Nome">
+
+            <input name="nomeUsuario" class="inputAll" autocomplete="off"  
+                        type="text" placeholder="Novo Nome">
             <br>
-            <input name="senhaUsuario" class="inputAll" type="password" placeholder="Nova Senha">
+            <input name="senhaUsuario" class="inputAll" autocomplete="off" 
+                        type="password" placeholder="Nova Senha">
             <br>
-            <input name="fotoUsuario" class="inputAll" type="text" placeholder="URL da Foto">
+            <input name="fotoUsuario" class="inputAll" autocomplete="off" 
+                        type="text" placeholder="URL da Foto">
 
             <div class="hr"></div>
 
@@ -148,7 +151,7 @@
                 </div>
             </div>
     
-            <div class="perfil">
+            <div class="perfil" id="conquistasColab">
                 <h1>Conquistas</h1>
                 <div class="conquistas">
                     <div class="conquistas_item">
@@ -186,19 +189,22 @@
 
 <script>
 
-const supervisorUser = JSON.parse(sessionStorage.getItem('userSuper'));
-const squadUser = JSON.parse(sessionStorage.getItem('userSquad'));
-const empresaUser = JSON.parse(sessionStorage.getItem('userEmpresa'));
-
 var pendentes = 0;
 var concluidas = 0;
 var sprintAtiva = 0;
+var usuarioId;
 
 (async function () {
-
+    
     check_authentication();
-
+    
     const user = JSON.parse(sessionStorage.getItem('userData'));
+    
+    const supervisorUser = JSON.parse(sessionStorage.getItem('userSuper'));
+    const squadUser = JSON.parse(sessionStorage.getItem('userSquad'));
+    const empresaUser = JSON.parse(sessionStorage.getItem('userEmpresa'));
+
+    usuarioId = user.id_usuario;
 
     // NAVEGADORES
     accessControl(user);
@@ -214,7 +220,7 @@ var sprintAtiva = 0;
     }
 
     // INIT COMPONENTES ------------------------------------------------------------------
-    if(user.foto_usuario != null){
+    if(user.foto_usuario != null || user.foto_usuario != "" || user.foto_usuario != " "){
         document.getElementById('foto_perfil_usuario').src = user.foto_usuario;
         document.getElementById('foto_perfil_usuario_log_out').src = user.foto_usuario;
     } else {
@@ -230,16 +236,26 @@ var sprintAtiva = 0;
     
     document.getElementById('tipo_usuario').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
     document.getElementById('tipo_usuario_log_out').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
-
-    // INFORMAÇÕES ADICIONAIS
-
-    let txtDescGestor = supervisorUser !== null ? `${supervisorUser.nome_usuario}` : ``;
     
-    document.getElementById("nome_gestor").innerHTML = txtDescGestor;
-    document.getElementById("squad_usuario").innerHTML = `${squadUser.nome}`;
-    document.getElementById("empresa_usuario").innerHTML = `${empresaUser.nome}`;
+    if(user.is_gestor) {
+        document.getElementById('conquistasColab').style.display = 'none';
+    }else{
+        document.getElementById('conquistasColab').style.display = 'block';
+    }
 
+    initAddInfo(supervisorUser, squadUser, empresaUser);
+    
 })();
+
+function initAddInfo(sup, squad, empresa) {
+    
+    let txtDescGestor = sup !== null ? `${sup.nome_usuario}` : ``;
+
+    document.getElementById("nome_gestor").innerHTML = txtDescGestor;
+    document.getElementById("squad_usuario").innerHTML = `${squad.nome}`;
+    document.getElementById("empresa_usuario").innerHTML = `${empresa.nome}`;
+
+}
 
 function getSprintAtiva(idUser){
     fetch(`/sprints/sprintAtivaUsuario/${idUser}`, {
@@ -319,6 +335,31 @@ function calculaAproveitamento(){
     let aproveitamento = concluidas > 0 ? (concluidas*100) / (concluidas+pendentes) : 0;
 
     document.getElementById("aproveitamento_usuario").innerHTML = `${aproveitamento}%`;
+
+}
+
+function updateUsuario(){
+
+    var formUpdateUser = new URLSearchParams(new FormData(form_editUser));
+
+    fetch(`/usuarios/editUsuario/${usuarioId}`, {
+            method: "PUT",
+            body: formUpdateUser
+    }).then(function (response) {
+        if (response.ok) {
+
+            console.log("atualizado!");
+
+        } else {
+            response.text().then(function (resposta) {
+                console.log("Erro ao atualizar: " + resposta);
+            });
+        }
+    });
+
+    closedForm();
+
+    return false;
 
 }
 

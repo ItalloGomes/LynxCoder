@@ -1,0 +1,3 @@
+listar as tarefas da máquina e consumo dela
+
+alertar gestor de uma determinada tarefa
