@@ -65,7 +65,7 @@ router.delete('/removeFeedback/:idFeedback', (req, res) => {
     
 // });
 
-router.get('/:sprintId', (req, res) => {
+router.get('/allFromSprint/:sprintId', (req, res) => {
 
     console.log("Listando todos feedbacks do usuario");
 
@@ -73,7 +73,30 @@ router.get('/:sprintId', (req, res) => {
     where fk_sprint='${req.params.sprintId}'`;
     
     db.sequelizeConnection.query(sql, {
-        model: FeedBack
+    }).then(resultado => {
+
+        console.log(`Feedbacks encontrados: ${resultado.length}`);
+
+        res.json(resultado);
+        
+    }).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+  	});
+    
+});
+
+router.get('/:userId', (req, res) => {
+
+    console.log("Listando os feedbacks pendentes do usuario");
+
+    sql = `select * from tb_feedback 
+    join tb_sprint 
+    on fk_sprint = id_sprint
+    where fk_usuario = ${req.params.userId}
+	and aproveitamento_feedback IS NULL;`;
+    
+    db.sequelizeConnection.query(sql, {
     }).then(resultado => {
 
         console.log(`Feedbacks encontrados: ${resultado.length}`);
@@ -115,5 +138,28 @@ router.get('/:userId/:sprintId', (req, res) => {
 });
 
 
+router.post('/preencher', (req, res) => {
+
+    console.log("Atualizando feedback");
+
+    sql = `update tb_feedback 
+    set aproveitamento_feedback = ${req.body.aproveitamento} 
+    ,facilidade_feedback = ${req.body.facilidade} 
+    ,mensagem_feedback = '${req.body.mensagem}'
+    where id_feedback = ${req.body.fk}`
+    
+    db.sequelizeConnection.query(sql, {
+    }).then(resultado => {
+
+        console.log(`Feedback atualizado!`);
+
+        res.json(resultado);
+        
+    }).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+  	});
+
+});
 
 module.exports = router;

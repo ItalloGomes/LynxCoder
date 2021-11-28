@@ -12,6 +12,7 @@
     <script src="assets/js/initDataComponentsDashboard.js"></script>
     <script src="assets/js/sessionManager.js"></script>
     <script src="assets/js/navManager.js"></script>
+    <script src="assets/js/relatorios.js"></script>
 
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <title>Portal Lynx Coder | Relatórios</title>
@@ -99,25 +100,33 @@
         </ul>
     </div>
 
+    <div class="box-edit-feedback ocult" id="boxFeedback">
+        <form name="formFeedback" class="edit-feedback" method="post" onsubmit="return submitFeedback()">
+            <i class='bx bx-x' onclick="closeForm()"></i>
+
+            <h1>Feedback <span id="spnSprintName"></span></h1>
+            <div class="hr" style="width: 100%;"></div>
+            
+            <input name="aproveitamento" class="inputAll" type="number" placeholder="Aproveitamento 0 - 10">
+            <br>
+            <input name="facilidade" class="inputAll" type="number" placeholder="Facilidade 0 - 10">
+            <br>
+            <input name="mensagem" class="inputAll" type="text" placeholder="Mensagem">
+            <br>
+            <input id="inputFkFeedback" name="fk" style="display: none;" type="number">
+
+            <div class="hr"></div>
+
+            <input class="inputAll" type="submit" value="Enviar Informações">
+
+        </form>
+    </div>
+
     <section class="home-section rel">
         <h1 class="title_rel">Relatórios</h1>
 
-        <p class="title_rel">Individual</p>
+        <p class="title_rel">Feedbacks Pendentes</p>
         <div class="report" id="relInd">
-            <div class="cards_rep">
-                <h2>Produtividade Sprint 1</h2>
-                <p>Alto</p>
-
-                <p>Parabéns, você se dedicou bastante, obrigado...</p>
-            </div>
-
-            <div class="cards_rep">
-                <h2>Produtividade Sprint 2</h2>
-                <p>Médio</p>
-
-                <p>Obrigado pela contribuição, você ainda pode evoluir bastante conosco...</p>
-            </div>
-
             <div class="btn_prev"><i class='bx bxs-left-arrow'></i></div>
             <div class="btn_next"><i class='bx bxs-right-arrow'></i></div>
         </div>
@@ -156,18 +165,7 @@
             </tbody>
         </table>
 
-        <div class="align_btn">
-            <button>Ver mais...</button>
-        </div>
     </section>
-
-    <div class="filter">
-        <div class="filter-details">
-            <i class='bx bxs-filter-alt icon'></i>
-            <div class="logo_name">Filtros</div>
-            <i class='bx bxs-left-arrow'id="btnFilter"></i>
-        </div>
-    </div>
 
     <script src="./assets/js/sidebar.js"></script>
 
@@ -207,6 +205,9 @@
             alert('erro ao paginar!');
         }
     });
+
+    // FEEDBACKS PENDENTES
+    getFeedbacks(user);
 
 })();
 

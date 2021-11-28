@@ -1,3 +1,11 @@
+function closeLoading() {
+    document.getElementById("loading").classList.add("ocult");
+}
+
+function openLoading() {
+    document.getElementById("loading").classList.remove("ocult");
+}
+
 let gestor;
 let squad;
 let usuarios_squad;
@@ -307,11 +315,13 @@ function gerar_chart_squad() {
                     }
                 }
             });
+            closeLoading();
         }
     }, 1000);
 }
 
 function fechar_sprint() {
+    openLoading();
     fetch(`sprints/fecharSprint/${sprintAtual.id}`, {
         method: "POST"
     }).then(function (resultado) {
@@ -357,12 +367,12 @@ function gerar_feedbacks() {
 }
 
 function buscar_feedbacks(sprint) {
-    fetch(`feedbacks/${sprint.id}`, {
+    fetch(`feedbacks/allFromSprint/${sprint.id}`, {
         method: "GET"
     }).then(function (resultado) {
         if (resultado.ok) {
             resultado.json().then(feedbacks => {
-                feedbacks.forEach(feedback => {
+                feedbacks[0].forEach(feedback => {
                     if (feedback.aproveitamento_feedback != null) {
                         span_nofeedback.style.display = `none`;
                         div_feedbacks.innerHTML += `
@@ -371,6 +381,7 @@ function buscar_feedbacks(sprint) {
 
                             <h3>Aproveitamento: <b>${feedback.aproveitamento_feedback}</b></h3>
                             <h3>Facilidade: <b>${feedback.facilidade_feedback}</b></h3>
+                            <h3><b>></b> ${feedback.mensagem_feedback}</h3>
                         </div>`
                     }
                 });
@@ -382,6 +393,7 @@ function buscar_feedbacks(sprint) {
 }
 
 function iniciar_sprint() {
+    openLoading();
     fetch(`https://trello.com/1/boards/${squad.id_trello}/lists?key=${key}&token=${token}`, {
         method: "GET"
     }).then(function (resultado) {
