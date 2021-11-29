@@ -569,7 +569,7 @@ public class Dashboard extends JFrame implements MouseListener {
 
                     slackDAO.showSlackData(percentUsoVolumes, percentUsoCPU, percentUsoRAM);
                     showHardwareInfo(usoRAM, percentUsoVolumes, percentUsoCPU, percentUsoRAM);
-                    //  insertHardwareInfo(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
+                    insertHardwareInfo(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
 
                 }
             } catch (Exception e) {

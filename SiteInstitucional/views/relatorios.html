@@ -141,26 +141,12 @@
                     <th>Atividades</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="body-table">
                 <tr class="active-row">
                     <td>1</td>
                     <td>Mateus Breno</td>
                     <td>88</td>
                     <td>3/5</td>
-                </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>Pedro Guilherme</td>
-                    <td>72</td>
-                    <td>6/6</td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>Jeniffer Sales</td>
-                    <td>52</td>
-                    <td>1/8</td>
                 </tr>
             </tbody>
         </table>
@@ -172,6 +158,8 @@
 </body>
 
 <script>
+
+var i = 0;
 
 (function () {
 
@@ -196,20 +184,81 @@
     
     document.getElementById('tipo_usuario_log_out').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
 
-    fetch("/relatorios/test", {
-        method: 'GET',
-    }).then(function(response){
-        if (response.ok) {
-            alert('paginação feita com sucesso!');
-        } else {
-            alert('erro ao paginar!');
-        }
-    });
+    console.log(user);
+
+    return ver_mais(user);
 
     // FEEDBACKS PENDENTES
     getFeedbacks(user);
 
 })();
+
+function interator() {
+    i+=1;
+}
+
+async function ver_mais(a) {
+
+    // const usersContainer = document.querySelector('.content-table #body_table');
+    
+    // interator();
+
+    // let response = fetch(`/usuarios/usuariosSquad/${user.fk_squad}/${i}`, {
+    //     method: 'GET',
+    // });
+
+    // let users = await response.json();
+    // console.log(users);
+
+    // users.forEach(user => {
+    //     usersContainer.innerHTML += `
+    //     <tbody id="body-table">
+    //         <tr>
+    //             <td>${user.id_usuario}/td>
+    //             <td>${user.nome_usuario}</td>
+    //             <td>88</td>
+    //             <td>3/5</td>
+    //         </tr>
+    //     </tbody>`;
+    // });
+
+    const Main = {
+        init: () => {
+            Main.buildUsers();
+        },
+        getUsers: async () => {
+            interator();
+
+            let response = await fetch(`/usuarios/usuariosSquad/${a.fk_squad}/${i}`, {
+                method: 'GET',
+            });
+
+            let users = await response.json();
+            console.log(users);
+
+            return users;
+        },
+        buildUsers: async () => {
+            const users = await Main.getUsers();
+            const usersContainer = document.querySelector('.content-table #body_table');
+
+            users.forEach(user => {
+                usersContainer.innerHTML += `
+                <tbody id="body-table">
+                    <tr>
+                        <td>${user.id_usuario}/td>
+                        <td>${user.nome_usuario}</td>
+                        <td>88</td>
+                        <td>3/5</td>
+                    </tr>
+                </tbody>`;
+            });
+        }
+    }
+
+    Main.init();
+
+}
 
 </script>
 

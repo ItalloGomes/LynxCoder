@@ -136,12 +136,12 @@
                 </div>
     
                 <div class="components">
-                    <h1>Sprint</h1>
+                    <h1>Acompanhamento Máquina</h1>
                     
                     <br><br><br>
                     <div class="chart_sprint">
                         <div class="canvas">
-                            <canvas id="testLine"></canvas>
+                            <canvas id="testBarAcomp"></canvas>
                         </div>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
     var disco_canvas = document.getElementById('discoCanvas');
     var memory_canvas = document.getElementById('memoriaCanvas');
     var test_bar = document.getElementById('testBar');
-    var test_line = document.getElementById('testLine');
+    var test_barAcomp = document.getElementById('testBarAcomp');
 
     var graficoCpu = new Chart(
         cpu_canvas, {
@@ -266,23 +266,53 @@
         }
     );
 
-    var graficoLine = new Chart(test_line, {
-        type: 'line',
+    var graficoBarAcomp = new Chart(test_barAcomp, {
+        type: 'bar',
         data: {
-            labels: [],
-            datasets: [ {
+            labels: [ 'Baixo', 'Moderado', 'Alto', 'Crítico'],
+            datasets: [ 
+                {
                 data: [],
-                backgroundColor: ['#322f5036', '#322f5036', '#322f5036', '#322f5036', '#62958D', '#7EBC89', '#C3706B', '#9E66A2'],
-                borderColor: ['#605ca1', '#605ca1', '#605ca1', '#605ca1', '#23B59F', '#33C44B', '#B83E35', '#911A9A'],
-                borderWidth: 3
-            }]
+                label: ['CPU'],
+                backgroundColor: '#322f5036',
+                borderColor: '#605ca1',
+                borderWidth: 1
+                },
+                {
+                data: [],
+                label: ['Disco'],
+                backgroundColor: '#62958D',
+                borderColor: '#23B59F',
+                borderWidth: 1
+                },
+                {
+                data: [],
+                label: ['RAM'],
+                backgroundColor: '#C3706B',
+                borderColor: '#B83E35',
+                borderWidth: 1
+                }
+            ]
         },
         options: {
             title: {
                 display: false
             },
             legend: {
-                display: false
+                display: true
+            },
+            scales: {
+                xAxes: [{
+                    barThickness : 50
+                }], 
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0,
+                        max: 50
+                    }
+                }]
             }
         }
     });
@@ -357,25 +387,26 @@
     });
 
     function getMaquinaUsuario(idUser) {
-    fetch(`/maquinas/${idUser}`, {
-        method: "GET"
-    }).then( resultado => {
-            if( resultado.ok ){
+        fetch(`/maquinas/${idUser}`, {
+            method: "GET"
+        }).then( resultado => {
+                if( resultado.ok ){
 
-                resultado.json().then( maquina => {
-    
-                    maquinaUsuario = maquina.id;
+                    resultado.json().then( maquina => {
+        
+                        maquinaUsuario = maquina.id;
 
-                    // getLeiturasMaquina();
-                
-                });
+                        // getLeiturasMaquina();
+                        getAcompanhamentoMaquina();
+                    
+                    });
 
-            } else {
+                } else {
 
-                console.log("erro ao recuperar maquina");
+                    console.log("erro ao recuperar maquina");
 
-            }
-        })
+                }
+            })
     }
 
     function getLeiturasMaquina() {
@@ -389,7 +420,7 @@
 
                 resultado.json().then( leituraMaquina => {
 
-                    console.log(leituraMaquina);
+                    // console.log(leituraMaquina);
 
                     graficoCpu.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_cpu}%`;
                     graficoCpu.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_cpu;
@@ -418,6 +449,47 @@
             });
 
         }, 3000);
+    }
+
+    function getAcompanhamentoMaquina() {
+        
+        fetch(`/maquinas/alertasQuartis/${maquinaUsuario}`, {
+            method: "GET"
+        }).then( resultado => {
+
+            if( resultado.ok ) {
+
+            resultado.json().then( resposta => {
+
+                // console.log(resposta);
+
+                graficoBarAcomp.config.data.datasets[0].data.push(resposta[0].CPU_baixo);
+                graficoBarAcomp.config.data.datasets[0].data.push(resposta[0].CPU_moderado);
+                graficoBarAcomp.config.data.datasets[0].data.push(resposta[0].CPU_alto);
+                graficoBarAcomp.config.data.datasets[0].data.push(resposta[0].CPU_critico);
+
+                graficoBarAcomp.config.data.datasets[1].data.push(resposta[0].Disco_baixo);
+                graficoBarAcomp.config.data.datasets[1].data.push(resposta[0].Disco_moderado);
+                graficoBarAcomp.config.data.datasets[1].data.push(resposta[0].Disco_alto);
+                graficoBarAcomp.config.data.datasets[1].data.push(resposta[0].Disco_critico);
+
+                graficoBarAcomp.config.data.datasets[2].data.push(resposta[0].RAM_baixo);
+                graficoBarAcomp.config.data.datasets[2].data.push(resposta[0].RAM_moderado);
+                graficoBarAcomp.config.data.datasets[2].data.push(resposta[0].RAM_alto);
+                graficoBarAcomp.config.data.datasets[2].data.push(resposta[0].RAM_critico);
+
+                graficoBarAcomp.update();
+                
+            });
+
+            } else {
+
+                console.log("erro ao recuperar leituras de maquina");
+            
+            }
+
+        });
+
     }
 
     function init(){

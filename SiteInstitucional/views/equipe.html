@@ -106,137 +106,14 @@
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
-                    <th>Cargo</th>
                     <th>Quantidade Atividades(Sprint)</th>
-                    <th>Desempenho(%)</th>
+                    <th>Pontuação</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr class="active-row">
-                    <td>1</td>
-                    <td>Mateus Breno</td>
-                    <td>Dev. Back-End Sênior</td>
-                    <td>10/10</td>
-                    <td>98</td>
-                </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>Pedro Guilherme</td>
-                    <td>DevOps</td>
-                    <td>6/6</td>
-                    <td>98</td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>Jeniffer Sales</td>
-                    <td>DevOps</td>
-                    <td>9/10</td>
-                    <td>95</td>
-                </tr>
-
-                <tr>
-                    <td>4</td>
-                    <td>Giovanna Nunes</td>
-                    <td>Dev. Back-End Jr.</td>
-                    <td>5/5</td>
-                    <td>90</td>
-                </tr>
-
-                <tr>
-                    <td>5</td>
-                    <td>Cauê Moura</td>
-                    <td>DBA</td>
-                    <td>6/8</td>
-                    <td>90</td>
-                </tr>
-
-                <tr>
-                    <td>6</td>
-                    <td>Felipe Alcantará</td>
-                    <td>DevOps</td>
-                    <td>2/6</td>
-                    <td>87</td>
-                </tr>
-
-                <tr>
-                    <td>7</td>
-                    <td>Felipe Góis</td>
-                    <td>Dev. Back-End Jr.</td>
-                    <td>7/7</td>
-                    <td>85</td>
-                </tr>
-
-                <tr>
-                    <td>8</td>
-                    <td>Bill Gates</td>
-                    <td>DBA</td>
-                    <td>3/4</td>
-                    <td>80</td>
-                </tr>
-
-                <tr>
-                    <td>9</td>
-                    <td>Samuel Jackson</td>
-                    <td>52</td>
-                    <td>1/1</td>
-                    <td>65</td>
-                </tr>
-
-                <tr>
-                    <td>10</td>
-                    <td>Levi Hamilton</td>
-                    <td>Dev. Front-End Pleno</td>
-                    <td>3/7</td>
-                    <td>64</td>
-                </tr>
-
-                <tr>
-                    <td>11</td>
-                    <td>Neymar Jr.</td>
-                    <td>Dev. Back-End Sênior</td>
-                    <td>5/8</td>
-                    <td>60</td>
-                </tr>
-
-                <tr>
-                    <td>12</td>
-                    <td>Gustavo Lima</td>
-                    <td>DevOps</td>
-                    <td>8/9</td>
-                    <td>59</td>
-                </tr>
-
-                <tr>
-                    <td>13</td>
-                    <td>Anteto cumpo</td>
-                    <td>DBA</td>
-                    <td>4/8</td>
-                    <td>54</td>
-                </tr>
-
-                <tr>
-                    <td>14</td>
-                    <td>Fábio Assunção</td>
-                    <td>Dev. Back-End Pleno</td>
-                    <td>1/2</td>
-                    <td>51</td>
-                </tr>
-
-                <tr>
-                    <td>15</td>
-                    <td>Von Clandner Clap</td>
-                    <td>Analista de Sistemas</td>
-                    <td>1/8</td>
-                    <td>50</td>
-                </tr>
+            <tbody id="listColabsSquad">
+                
             </tbody>
         </table>
-
-        <div class="align_btn">
-            <button>Ver mais...</button>
-        </div>
     </section>
 
     <div class="filter">
@@ -253,9 +130,14 @@
 
 <script>
 
-(function (){
+var sprintAtiva;
+
+(async function (){
 
     const user = JSON.parse(sessionStorage.getItem('userData'));
+    const squad = JSON.parse(sessionStorage.getItem('userSquad'));
+
+    getSprintAtiva(user.id_usuario, squad.id);
 
     // NAVEGADORES
     accessControl(user);
@@ -324,6 +206,92 @@
             closeBtnFilter.classList.replace("bx-filter", "bxs-left-arrow");
         }
 
+    }
+
+    function getSprintAtiva(idUser, idSquad){
+    fetch(`/sprints/sprintAtivaUsuario/${idUser}`, {
+        method: 'GET'
+    }).then(response => {
+
+            if (response.ok) {
+
+                response.json().then( sprint => {
+                
+                    sprintAtiva = sprint[0].id_sprint;
+
+                    listColabsEquipe(idSquad, sprintAtiva);
+                    
+                });
+
+            }else{
+                response.text().then(function (resposta) {
+                    console.log("Erro: " + resposta);
+                });
+            }
+
+        });
+    };
+
+    function listColabsEquipe(idSquad, sprintId){
+        fetch(`/usuarios/colaboradoresSquad/${idSquad}/${sprintId}`, {
+            method: 'GET'
+        }).then(response => {
+
+            if(response.ok){
+               
+                response.json().then( colabs => {
+
+                    var count = 1;
+
+                    if(colabs.length > 0) {
+                    
+                        var list = document.getElementById('listColabsSquad');
+                    
+                        colabs.forEach(colab => {
+                           
+                            var tr = document.createElement('tr');
+                            tr.className = `active-row${count}`;
+
+                            var tdId = document.createElement('td');
+                            tdId.textContent = `${colab.id_usuario}`;
+
+                            var tdName = document.createElement('td');
+                            tdName.textContent = `${colab.nome_usuario}`;
+
+                            var tdCT = document.createElement('td');
+                            tdCT.textContent = `${colab['total concluidas']} / ${colab.total}`;
+                            tdCT.style.textAlign = 'center';
+
+                            var tdPT = document.createElement('td');
+                            tdPT.textContent = `${colab.pontuacao}`;
+                            tdPT.style.textAlign = 'center';
+                            
+                            if(count > 3) {
+                                tr.className = '';
+                            }else{
+                                count++;
+                            }
+
+                            tr.appendChild(tdId);
+                            tr.appendChild(tdName);
+                            tr.appendChild(tdCT);
+                            tr.appendChild(tdPT);
+                            
+                            list.appendChild(tr);
+
+                        });
+
+                    }
+
+                });
+
+            }else{
+                console.log("Não listado!");
+            }
+
+        }).catch( erro => {
+            console.log("erro lista colabs: "+erro);
+        });
     }
 
 </script>
