@@ -17,6 +17,7 @@
 
 .ocult{
     opacity: 0;
+    display: none;
     pointer-events: none;
     transition: .5s ease-in-out;
 }
@@ -307,6 +308,7 @@ _________________________________ */
     height: 100vh;
     display: flex;
     justify-content: center;
+    z-index: 100001;
     align-items: center;
     position: fixed;
     background: #42318f71;

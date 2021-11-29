@@ -4,6 +4,7 @@ let squads_dif = [];
 let usuarios_trello = [];
 let usuarios_banco = [];
 let usuarios_dif = [];
+let usuarios_sem_trello = [];
 let lista_tudo = [];
 
 function open_trello_modal() {
@@ -20,6 +21,85 @@ function open_loading() {
 
 function close_loading() {
     loading.classList.add('ocult');
+}
+
+function open_remove(id, nome) {
+    document.getElementById("modalRemoveContb").innerHTML = 
+    `<h1>Deseja remover o contribuidor ${nome} ?</h1>
+    <button onclick="remove_user(${id})" id="btnRemoveUser">Remover</button>
+    <button onclick="cancel_remove()">Cancelar</button>`
+    document.getElementById("boxRemoveContb").classList.remove("ocult");
+}
+
+function cancel_remove() {
+    document.getElementById("boxRemoveContb").classList.add("ocult");
+}
+
+function remove_user(id) {
+    fetch(`usuarios/removeUsuario/${id}`, {
+        method: "DELETE"
+    }).then(function (resultado) {
+        if (resultado.ok) {
+            console.log("Usuário removido")
+            window.location.reload();
+        } else {
+            console.log("Erro ao remover usuário");
+        }
+    });
+}
+
+function open_add_user() {
+    document.getElementById("inputFkEmpresa").value = fk_empresa;
+
+    squads_banco.forEach(squad => {
+        document.getElementById("slFkSquad").innerHTML +=
+            `<option value="${squad.id}">${squad.nome}</option>`
+    });
+
+    document.getElementById("boxUser").classList.remove("ocult");
+}
+
+function close_add_user() {
+    document.getElementById("boxUser").classList.add("ocult");
+}
+
+function submitUser() {
+    if (inputSenha.value != inputConfSenha.value) {
+        boxAlert.classList.remove('ocult');
+        boxAlert.classList.add('alert-active');
+        titleAlert.innerHTML = "Alerta!";
+        descAlert.innerHTML = "As senhas não correspondem";
+
+        setTimeout(() => {
+            boxAlert.classList.add('ocult');
+            boxAlert.classList.remove('alert-active');
+        }, 5000);
+    } else if (inputNome.value.length < 3 || inputLogin.value.length < 3) {
+        boxAlert.classList.remove('ocult');
+        boxAlert.classList.add('alert-active');
+        titleAlert.innerHTML = "Alerta!";
+        descAlert.innerHTML = "Nome e login devem ter pelo menos 3 letras";
+
+        setTimeout(() => {
+            boxAlert.classList.add('ocult');
+            boxAlert.classList.remove('alert-active');
+        }, 5000);
+    } else {
+        var form = new URLSearchParams(new FormData(formUser));
+        fetch("/usuarios/addUsuario", {
+            method: "POST",
+            body: form
+        }).then(function (response) {
+
+            if (response.ok) {
+                console.log("Usuario registrado!");
+                window.location.reload();
+            } else {
+                console.log("Erro ao registrar usuário")
+            }
+        });
+    }
+    return false;
 }
 
 let callbackSquadsTrello = false;
@@ -115,6 +195,7 @@ function sincronizar_usuarios() {
         if (countUsuariosTrello == usuarios_trello.length + squads_trello.length && callbackusuariosBanco) {
             clearInterval(getCallbackInterval);
             usuarios_trello = uniq = [...new Set(usuarios_trello)];
+
             for (let i = 0; i < usuarios_trello.length; i++) {
                 const usuario_trello = usuarios_trello[i];
                 let exists = false;
@@ -128,6 +209,20 @@ function sincronizar_usuarios() {
                     usuarios_dif.push(usuario_trello);
                 }
             }
+
+            for (let i = 0; i < usuarios_banco.length; i++) {
+                const usuario_banco = usuarios_banco[i];
+                let exists = false;
+                for (let j = 0; j < usuarios_trello.length; j++) {
+                    const usuario_trello = usuarios_trello[j];
+                    if (usuario_banco.id_trello == usuario_trello.id_trello) {
+                        exists = true;
+                    }
+                }
+                if (!exists) {
+                    usuarios_sem_trello.push(usuario_banco);
+                }
+            }
             if (usuarios_dif.length > 0) {
                 spanTrelloMsg.innerHTML = `${usuarios_dif.length} 
                 novo(s) usuário(s)`
@@ -135,7 +230,6 @@ function sincronizar_usuarios() {
                 btnCadastrarUsuarios.style.display = 'inline';
                 open_trello_modal();
                 close_loading();
-
             } else {
                 exibir_informacoes_acesso();
             }
@@ -214,7 +308,7 @@ function buscar_usuarios_banco() {
     }).then(function (resultado) {
         if (resultado.ok) {
             resultado.json().then(usuariosBanco => {
-                usuarios_banco = usuariosBanco;
+                usuarios_banco = usuariosBanco[0];
                 callbackusuariosBanco = true;
             });
         } else {
@@ -295,6 +389,7 @@ function exibir_informacoes_acesso() {
             <td>${element.squad.name}</td>
             <td>${element.usuario.nome}</td>
             <td>${element.usuario.is_gestor == 1 ? "Gestor" : "Colaborador"}</td>
+            <td><img src="assets/img/trello-icon.png"></td>
         </tr>`
 
         if (element.usuario.is_gestor == 1) {
@@ -302,8 +397,22 @@ function exibir_informacoes_acesso() {
         }
     })
 
+    usuarios_sem_trello.forEach(element => {
+        document.getElementById("table-body-userlist").innerHTML +=
+            `<tr>
+            <td>${element.nome_squad}</td>
+            <td>${element.nome_usuario}</td>
+            <td>${element.is_gestor == 1 ? "Gestor" : "Colaborador"}</td>
+            <td onclick="open_remove(${element.id_usuario}, '${element.nome_usuario}')"><img src="assets/img/trash-can.png"></td>
+        </tr>`
+
+        if (element.is_gestor == 1) {
+            gestores++;
+        }
+    })
+
     b_gestores.innerHTML = gestores;
-    b_colaboradores.innerHTML = usuarios_trello.length - gestores;
+    b_colaboradores.innerHTML = usuarios_trello.length + usuarios_sem_trello.length - gestores;
 
     b_squads.innerHTML = squads_trello.length;
 

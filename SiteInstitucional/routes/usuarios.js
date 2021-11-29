@@ -65,20 +65,22 @@ router.get('/', function(req, res, next) {
 router.get('/usuariosEmpresa/:idEmpresa', function(req, res, next) {
 	console.log('Todos os usuários de uma empresa');
 	
-    Usuario.findAndCountAll({ 
-        where: {
-            fk_empresa: req.params.idEmpresa
-        }
+    sql = `select tb_usuario.*, tb_squad.id_squad, tb_squad.nome_squad, tb_squad.id_trello as id_trello_squad from tb_usuario inner join tb_squad
+                on fk_squad = id_squad 
+                where tb_usuario.fk_empresa = ${req.params.idEmpresa}`;
+    
+    db.sequelizeConnection.query(sql, {
     }).then(resultado => {
-		
-        console.log(`${resultado.count} registros`);
 
-		res.json(resultado.rows);
+        console.log(`${resultado} registros`);
 
-	}).catch(erro => {
-		console.error(erro);
-		res.status(500).send(erro.message);
-  	});
+        res.json(resultado);
+
+    }).catch(erro => {
+        console.error(erro);
+        res.status(500).send(erro.message);
+    });
+
 });
 
 router.get('/usuarioIdTrello/:id_trello', function(req, res, next) {

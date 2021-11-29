@@ -12,7 +12,7 @@ const Usuario = db.sequelizeConnection.define('Usuario',
         },
         id_trello: {
             field: 'id_trello',
-            allowNull: false,
+            allowNull: true,
             type: db.Sequelize.STRING,
         },
         nome: {

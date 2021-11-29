@@ -21,6 +21,13 @@
 
 <body>
 
+    <div class="alert ocult" id="boxAlert" style="z-index: 100002;">
+        <i class='bx bxs-comment-error'></i>
+
+        <h3 id="titleAlert">Teste</h3>
+        <p id="descAlert">ddashduahdusahfhjsrhfjhsjshjfsjhssjsfsjshjdhjsahajdhsajdsadhajsdhsajhdu</p>
+    </div>
+
     <div class="box-loading" id="loading">
         <span class="circle circle-1"></span>
         <span class="circle circle-2"></span>
@@ -59,12 +66,16 @@
                         <div class="job">Administrador</div>
                     </div>
                 </div>
-                <i class='bx bx-log-out' id="log_out" ></i>
+                <i class='bx bx-log-out' id="log_out" onclick="logoff()"></i>
             </li>
         </ul>
     </div>
 
     <div class="base">
+        <div class="container-bar">
+            <button onclick="open_add_user()">Novo Usuário</button>
+        </div>
+
         <div class="container-admin">
             <div class="cards">
                 <h1>Informações gerais</h1>
@@ -115,6 +126,41 @@
             <button onclick="cadastrar_squads()" id="btnCadastrarSquads">Ok</button>
             <button onclick="cadastrar_usuarios()" id="btnCadastrarUsuarios">Ok</button>
         </div>
+    </div>
+
+    <div class="modals ocult" id="boxRemoveContb">
+        <div id="modalRemoveContb" class="modal-trello">
+            <h1>Deseja remover o contribuidor <span id="spanContbName"></span>?</h1>
+            <button onclick="remove_user()" id="btnRemoveUser">Remover</button>
+            <button onclick="cancel_remove()">Cancelar</button>
+        </div>
+    </div>
+
+    <div class="box-add-user ocult" id="boxUser">
+        <form name="formUser" class="add-user" method="post" onsubmit="return submitUser()">
+            <i class='bx bx-x' onclick="close_add_user()"></i>
+
+            <h1>Novo Usuário</h1>
+            <div class="hr" style="width: 100%;"></div>
+            
+            <input id="inputNome" name="nome" type="text" placeholder="Nome">
+            <br>
+            <input id="inputLogin" name="login" type="text" placeholder="Login">
+            <br>
+            <input id="inputSenha" name="senha" type="password" placeholder="Senha">
+            <br>
+            <input id="inputConfSenha" name="confSenha" type="password" placeholder="Confirmar Senha">
+            <br>
+            <select id="slFkSquad" name="fk_squad"></select>
+            <br>
+            <input id="inputFkEmpresa" name="fk_empresa" style="display: none;" type="number">
+            <input name="is_gestor" style="display: none;" type="number" value="0">
+
+            <div class="hr"></div>
+
+            <input type="submit" value="Cadastrar Usuário">
+
+        </form>
     </div>
 
     <script src="./assets/js/sidebar.js"></script>
