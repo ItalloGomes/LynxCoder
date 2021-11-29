@@ -14,6 +14,7 @@
 
     <script src="assets/js/sessionManager.js"></script>
     <script src="assets/js/initDataComponentsDashboard.js"></script>
+    <script src="assets/js/navManager.js"></script>
 
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <title>Portal Lynx Coder | Desempenho</title>
@@ -43,20 +44,48 @@
                 <span class="tooltip">Perfil</span>
             </li>
 
-            <li>
-                <a href="">
+            <!-- Colaborador -->
+            
+            <li id="navDashboard">
+                <a href="#">
                     <i class='bx bxs-dashboard'></i>
                     <span class="links_name">Dashboard</span>
                 </a>
                 <span class="tooltip">Dashboard</span>
             </li>
 
-            <li>
+            <li id="navRelatorios">
                 <a href="relatorios.html">
                     <i class='bx bx-line-chart'></i>
                     <span class="links_name">Relatórios</span>
                 </a>
                 <span class="tooltip">Relatórios</span>
+            </li>
+
+            <!-- Gestor -->
+
+            <li id="navEquipe">
+                <a href="equipe.html">
+                    <i class='bx bxs-group'></i>
+                    <span class="links_name">Equipe</span>
+                </a>
+                <span class="tooltip">Equipe</span>
+            </li>
+
+            <li id="navSprint">
+                <a href="sprint.html">
+                    <i class='bx bxs-bar-chart-alt-2'></i>
+                    <span class="links_name">Sprint</span>
+                </a>
+                <span class="tooltip">Sprint</span>
+            </li>
+
+            <li id="navConfig">
+                <a href="">
+                    <i class='bx bxs-cog'></i>
+                    <span class="links_name">Configurações</span>
+                </a>
+                <span class="tooltip">Configurações</span>
             </li>
 
             <li class="profile">
@@ -107,12 +136,12 @@
                 </div>
     
                 <div class="components">
-                    <h1>Sprint</h1>
+                    <h1>Acompanhamento Máquina</h1>
                     
                     <br><br><br>
                     <div class="chart_sprint">
                         <div class="canvas">
-                            <canvas id="testLine"></canvas>
+                            <canvas id="testBarAcomp"></canvas>
                         </div>
                     </div>
                 </div>
@@ -151,18 +180,7 @@
     var disco_canvas = document.getElementById('discoCanvas');
     var memory_canvas = document.getElementById('memoriaCanvas');
     var test_bar = document.getElementById('testBar');
-    var test_line = document.getElementById('testLine');
-
-    function init(){
-
-        check_authentication();
-
-        const userSession = JSON.parse(sessionStorage.getItem('userData'));
-
-        initComponents(userSession);
-
-    }
-
+    var test_barAcomp = document.getElementById('testBarAcomp');
 
     var graficoCpu = new Chart(
         cpu_canvas, {
@@ -248,23 +266,53 @@
         }
     );
 
-    var graficoLine = new Chart(test_line, {
-        type: 'line',
+    var graficoBarAcomp = new Chart(test_barAcomp, {
+        type: 'bar',
         data: {
-            labels: ['ATVD1', 'ATVD2', 'ATVD3', 'ATVD4'],
-            datasets: [ {
-                data: [100, 0, 70, 70],
-                backgroundColor: ['#322f5036', '#322f5036', '#322f5036', '#322f5036'],
-                borderColor: ['#605ca1', '#605ca1', '#605ca1', '#605ca1'],
-                borderWidth: 3
-            }]
+            labels: [ 'Baixo', 'Moderado', 'Alto', 'Crítico'],
+            datasets: [ 
+                {
+                data: [],
+                label: ['CPU'],
+                backgroundColor: '#322f5036',
+                borderColor: '#605ca1',
+                borderWidth: 1
+                },
+                {
+                data: [],
+                label: ['Disco'],
+                backgroundColor: '#62958D',
+                borderColor: '#23B59F',
+                borderWidth: 1
+                },
+                {
+                data: [],
+                label: ['RAM'],
+                backgroundColor: '#C3706B',
+                borderColor: '#B83E35',
+                borderWidth: 1
+                }
+            ]
         },
         options: {
             title: {
                 display: false
             },
             legend: {
-                display: false
+                display: true
+            },
+            scales: {
+                xAxes: [{
+                    barThickness : 50
+                }], 
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0,
+                        max: 50
+                    }
+                }]
             }
         }
     });
@@ -272,11 +320,11 @@
     var graficoBar = new Chart(test_bar, {
         type: 'bar',
         data: {
-            labels: ['ATVD1', 'ATVD2', 'ATVD3', 'ATVD4'],
+            labels: [],
             datasets: [ {
-                data: [100, 0, 50, 80],
-                backgroundColor: ['#52cc6852', '#322f5036', '#322f5036', '#322f5036'],
-                borderColor: ['#52cc68', '#605ca1', '#605ca1', '#605ca1'],
+                data: [],
+                backgroundColor: [],
+                borderColor: [],
                 borderWidth: 2
             }]
         },
@@ -290,6 +338,13 @@
             scales: {
                 xAxes: [{
                     barThickness : 50
+                }], 
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0,
+                        max: 100
+                    }
                 }]
             }
         }
@@ -332,56 +387,99 @@
     });
 
     function getMaquinaUsuario(idUser) {
-    fetch(`/maquinas/${idUser}`, {
-        method: "GET"
-    }).then( resultado => {
-            if( resultado.ok ){
+        fetch(`/maquinas/${idUser}`, {
+            method: "GET"
+        }).then( resultado => {
+                if( resultado.ok ){
 
-                resultado.json().then( maquina => {
+                    resultado.json().then( maquina => {
+        
+                        maquinaUsuario = maquina.id;
 
-                    console.log(maquina)
-    
-                    maquinaUsuario = maquina.id;
+                        // getLeiturasMaquina();
+                        getAcompanhamentoMaquina();
+                    
+                    });
 
-                    getLeiturasMaquina();
-                
-                });
+                } else {
 
-            } else {
+                    console.log("erro ao recuperar maquina");
 
-                console.log("erro ao recuperar maquina");
-
-            }
-        })
+                }
+            })
     }
 
     function getLeiturasMaquina() {
-    setInterval(() => {
+        setInterval(() => {
 
-        fetch(`/maquinas/leiturasMaquina/${maquinaUsuario}`, {
+            fetch(`/maquinas/leiturasMaquina/${maquinaUsuario}`, {
+                method: "GET"
+            }).then( resultado => {
+
+                if( resultado.ok ) {
+
+                resultado.json().then( leituraMaquina => {
+
+                    // console.log(leituraMaquina);
+
+                    graficoCpu.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_cpu}%`;
+                    graficoCpu.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_cpu;
+                    graficoCpu.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_cpu);
+
+                    graficoDisco.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_disco}%`;
+                    graficoDisco.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_disco;
+                    graficoDisco.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_disco);
+                    
+                    graficoMemoria.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_ram}%`;
+                    graficoMemoria.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_ram;
+                    graficoMemoria.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_ram);
+
+                    graficoCpu.update();
+                    graficoDisco.update();
+                    graficoMemoria.update();
+
+                });
+
+                } else {
+
+                    console.log("erro ao recuperar leituras de maquina");
+                
+                }
+
+            });
+
+        }, 3000);
+    }
+
+    function getAcompanhamentoMaquina() {
+        
+        fetch(`/maquinas/alertasQuartis/${maquinaUsuario}`, {
             method: "GET"
         }).then( resultado => {
 
             if( resultado.ok ) {
 
-            resultado.json().then( leituraMaquina => {
+            resultado.json().then( resposta => {
 
-                graficoCpu.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_cpu}%`;
-                graficoCpu.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_cpu;
-                graficoCpu.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_cpu);
+                // console.log(resposta);
 
-                graficoDisco.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_disco}%`;
-                graficoDisco.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_disco;
-                graficoDisco.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_disco);
+                graficoBarAcomp.config.data.datasets[0].data.push(resposta[0].CPU_baixo);
+                graficoBarAcomp.config.data.datasets[0].data.push(resposta[0].CPU_moderado);
+                graficoBarAcomp.config.data.datasets[0].data.push(resposta[0].CPU_alto);
+                graficoBarAcomp.config.data.datasets[0].data.push(resposta[0].CPU_critico);
+
+                graficoBarAcomp.config.data.datasets[1].data.push(resposta[0].Disco_baixo);
+                graficoBarAcomp.config.data.datasets[1].data.push(resposta[0].Disco_moderado);
+                graficoBarAcomp.config.data.datasets[1].data.push(resposta[0].Disco_alto);
+                graficoBarAcomp.config.data.datasets[1].data.push(resposta[0].Disco_critico);
+
+                graficoBarAcomp.config.data.datasets[2].data.push(resposta[0].RAM_baixo);
+                graficoBarAcomp.config.data.datasets[2].data.push(resposta[0].RAM_moderado);
+                graficoBarAcomp.config.data.datasets[2].data.push(resposta[0].RAM_alto);
+                graficoBarAcomp.config.data.datasets[2].data.push(resposta[0].RAM_critico);
+
+                graficoBarAcomp.update();
                 
-                graficoMemoria.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_ram}%`;
-                graficoMemoria.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_ram;
-                graficoMemoria.config.data.datasets[0].data[1] = (100-leituraMaquina.porcentagem_uso_ram);
-
-                graficoCpu.update();
-                graficoDisco.update();
-                graficoMemoria.update();
-
             });
 
             } else {
@@ -392,8 +490,37 @@
 
         });
 
-    }, 3000);
-}
+    }
+
+    function init(){
+
+        check_authentication();
+        
+        const user = JSON.parse(sessionStorage.getItem('userData'));
+
+        // NAVEGADORES
+        accessControl(user);
+
+
+        // INIT COMPONENTES ------------------------------------------------------------------
+        if(user.foto_usuario != null){
+            document.getElementById('foto_perfil_usuario_log_out').src = user.foto_usuario;
+        } else {
+            document.getElementById('foto_perfil_usuario_log_out').src = "https://www.pinpng.com/pngs/m/226-2269397_gnar-bot-is-a-hd-png-download.png";
+        }
+
+        let nameSplit = user.nome_usuario.split(' ');
+
+        // NOME E TIPO USUÁRIO
+        document.getElementById('nome_usuario_log_out').innerHTML = `${nameSplit[0]} ${nameSplit[nameSplit.length-1]}`;
+        
+        document.getElementById('tipo_usuario_log_out').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
+
+
+
+        initComponents(user, graficoBar);
+
+    }
 
     init();
 

@@ -113,20 +113,22 @@ public class LoginScreen extends JFrame {
                     Date data = new Date();
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
                     String dataFormatada = dateFormat.format(data);
+                    String path;
+
+
 
                     logDAO.criarLog(dataFormatada);
-                    logDAO.escreverLog( " Logou com sucesso");
+                    logDAO.escreverLog( " Você logou com sucesso, bem-vindo(a) à aplicação Lynx Coder!");
                     Dashboard dashboard = new Dashboard(user, logDAO);
-<<<<<<< HEAD
-                    logDAO.escreverLog("Usuário: " + user.getNome());
-=======
+
+
                     logDAO.escreverLog(" Usuário: " + user.getNome());
                     logDAO.escreverLog(" Fabricante: " + looca.getProcessador().getNome());
                     logDAO.escreverLog(" Processador: " + looca.getProcessador().getFabricante());
                     logDAO.escreverLog(" Sistema: " + looca.getSistema().getSistemaOperacional());
-                    logDAO.escreverLog("memoria: " + byteCountConvert(looca.getMemoria().getTotal()));
-//                    logDAO.escreverLog("volume de disco: " + byteCountConvert(v.getTotal() - v.getDisponivel()));
->>>>>>> refs/remotes/origin/main
+                    logDAO.escreverLog(" Memória: " + byteCountConvert(looca.getMemoria().getTotal()));
+//
+
                     slackDAO.welcomeMessage(user);
 
                     dispose();

@@ -144,6 +144,37 @@ router.get('/usuariosSquad/:idSquad', function(req, res, next) {
   	});
 });
 
+router.get('/colaboradoresSquad/:idSquad/:idSprint', function(req, res, next) {
+	console.log('Todos os usuários de uma squad e seus pontos na sprint');
+
+    var params = {
+        squad: req.params.idSquad,
+        sprint: req.params.idSprint
+    }
+
+    var sql = `select  u.id_usuario, u.nome_usuario, 
+                (select count(*) from tb_tarefa as t where t.fk_usuario = u.id_usuario and t.fk_sprint = s.id_sprint and t.total_concluido = 100.00) as 'total concluidas',
+                (select count(*) from tb_tarefa as t where t.fk_usuario = u.id_usuario and t.fk_sprint = s.id_sprint) as 'total',
+                (select count(*) from tb_tarefa as t where t.fk_usuario = u.id_usuario and t.fk_sprint = s.id_sprint and t.total_concluido = 100.00) * 10 as 'pontuacao'
+                from tb_usuario as u
+                inner join tb_squad as sq
+                    on sq.id_squad = u.fk_squad
+                inner join tb_sprint as s
+                    on s.fk_squad = sq.id_squad
+                where sq.id_squad = ${params.squad} and s.id_sprint = ${params.sprint} and u.is_gestor = 0 order by 'pontuacao' desc`
+	
+    db.sequelizeConnection.query(sql, {
+        model: Usuario
+    }).then(resultado => {
+		
+		res.json(resultado);
+
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+  	});
+});
+
 router.get('/adminEmpresa/:fk_empresa', function(req, res, next) {
 	console.log('Recuperando admin da empresa');
 	
@@ -196,22 +227,32 @@ router.get('/getUsuarioById/:id', function (req, res, next) {
     
 });
 
-router.put('/updateUsuario', function (req, res, next) {
+router.put('/editUsuario/:idUser', function (req, res, next) {
+    
+    if(req.body == null) return res.status(500);
 
-    if(req.body == null) return;
+    var camposModifi = {};
+    if(req.body.nomeUsuario.length > 2){
+        camposModifi.nome = req.body.nomeUsuario;
+    }
+    if(req.body.fotoUsuario.length > 5){
+        camposModifi.foto = req.body.fotoUsuario;
+    }
+    if(req.body.senhaUsuario.length > 5){
+        camposModifi.senha = req.body.senhaUsuario;
+    }
 
     Usuario.update(
+        camposModifi,
         { 
-            nome: req.body.nomeUsuario,
-            foto: req.body.fotoUsuario,
-            senha: req.body.senhaUsuario, 
-        },
-        { 
-            where: { id: req.body.idUsuario } 
+            where: { id_usuario: req.params.idUser } 
         }
     ).then( resultado => {
-        console.log("Usuario: "+resultado.nome+" atualizado!");
+
+        console.log("usuario: "+resultado);
+
         res.json(resultado);
+    
     }).catch(erro => {
         console.error(erro);
         res.status(500).send(erro.message);
