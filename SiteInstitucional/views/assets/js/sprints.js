@@ -40,7 +40,7 @@ function get_squad() {
 }
 
 function get_usuarios_squad() {
-    fetch(`usuarios/usuariosSquad/${squad.id}`, {
+    fetch(`/usuarios/usuariosSquad/${squad.id}`, {
         method: "GET"
     }).then(function (resultado) {
         if (resultado.ok) {

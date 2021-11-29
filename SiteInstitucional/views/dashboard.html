@@ -274,23 +274,23 @@
                 {
                 data: [],
                 label: ['CPU'],
-                backgroundColor: '#322f5036',
-                borderColor: '#605ca1',
-                borderWidth: 1
+                backgroundColor: '#83CEB6',
+                borderColor: '#169E72',
+                borderWidth: 2
                 },
                 {
                 data: [],
                 label: ['Disco'],
-                backgroundColor: '#62958D',
-                borderColor: '#23B59F',
-                borderWidth: 1
+                backgroundColor: '#DBDB6F',
+                borderColor: '#D2D21B',
+                borderWidth: 2
                 },
                 {
                 data: [],
                 label: ['RAM'],
-                backgroundColor: '#C3706B',
-                borderColor: '#B83E35',
-                borderWidth: 1
+                backgroundColor: '#CAA066',
+                borderColor: '#ED9821',
+                borderWidth: 2
                 }
             ]
         },
@@ -396,7 +396,7 @@
         
                         maquinaUsuario = maquina.id;
 
-                        // getLeiturasMaquina();
+                        getLeiturasMaquina();
                         getAcompanhamentoMaquina();
                     
                     });
@@ -419,8 +419,6 @@
                 if( resultado.ok ) {
 
                 resultado.json().then( leituraMaquina => {
-
-                    // console.log(leituraMaquina);
 
                     graficoCpu.config.options.elements.center.text = `${leituraMaquina.porcentagem_uso_cpu}%`;
                     graficoCpu.config.data.datasets[0].data[0] = leituraMaquina.porcentagem_uso_cpu;
@@ -460,8 +458,6 @@
             if( resultado.ok ) {
 
             resultado.json().then( resposta => {
-
-                // console.log(resposta);
 
                 graficoBarAcomp.config.data.datasets[0].data.push(resposta[0].CPU_baixo);
                 graficoBarAcomp.config.data.datasets[0].data.push(resposta[0].CPU_moderado);
@@ -515,8 +511,6 @@
         document.getElementById('nome_usuario_log_out').innerHTML = `${nameSplit[0]} ${nameSplit[nameSplit.length-1]}`;
         
         document.getElementById('tipo_usuario_log_out').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
-
-
 
         initComponents(user, graficoBar);
 

@@ -235,7 +235,7 @@ async function ver_usuarios(a) {
 
     const usersContainer = document.querySelector('.content-table .body-table');
 
-    let response = await fetch(`/usuarios/usuariosSquad/${a.fk_squad}/${length_list}`, {
+    let response = await fetch(`/usuarios/usuariosSquadLimited/${a.fk_squad}/${length_list}`, {
         method: 'GET',
     });
 
