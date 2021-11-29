@@ -124,16 +124,18 @@ router.get('/usuariosSquad/:idSquad', function(req, res, next) {
 router.get('/usuariosSquadLimited/:idSquad/:limitUsers', function(req, res, next) {
 	console.log('Alguns de usuários de uma squad');
 	
-    Usuario.findAndCountAll({ 
-        limit: req.body.limitUsers,
-        where: {
-            fk_squad: req.params.idSquad
-        }
+    var params = {
+        limitUsers: req.params.limitUsers,
+        fkSquad: req.params.idSquad
+    }
+
+    sql = `select top ${params.limitUsers} * FROM tb_usuario where fk_squad = ${params.fkSquad}`;
+
+    db.sequelizeConnection.query(sql, {
+        model: Usuario
     }).then(resultado => {
 		
-        console.log(`${resultado.count} registros`);
-
-		res.json(resultado.rows);
+		res.json(resultado);
 
 	}).catch(erro => {
 		console.error(erro);
