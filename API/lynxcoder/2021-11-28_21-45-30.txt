@@ -1,0 +1,8 @@
+28/11/2021 21:45:28 Você logou com sucesso, bem-vindo(a) à aplicação Lynx Coder!
+28/11/2021 21:45:28 Usuário: Guilherme Costa
+28/11/2021 21:45:28 Fabricante: Intel(R) Core(TM) i7-10510U CPU @ 1.80GHz
+28/11/2021 21:45:28 Processador: GenuineIntel
+28/11/2021 21:45:28 Sistema: Windows
+28/11/2021 21:45:28 Memória: 15,8 GiB
+28/11/2021 21:45:28 Dados inseridos no banco com sucesso!
+28/11/2021 21:45:28 Dados inseridos no banco com sucesso!
