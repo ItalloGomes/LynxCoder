@@ -642,7 +642,7 @@ public class Dashboard extends JFrame implements MouseListener {
                     });
 
                     showProcessInfo(listProcessos);
-//                    insertProcessInfo(listProcessos);
+                    insertProcessInfo(listProcessos);
 
                 }
             } catch (Exception e) {
