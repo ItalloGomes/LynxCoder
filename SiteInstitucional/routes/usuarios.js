@@ -102,7 +102,26 @@ router.get('/usuarioIdTrello/:id_trello', function(req, res, next) {
   	});
 });
 
-router.get('/usuariosSquad/:idSquad/:limitUsers', function(req, res, next) {
+router.get('/usuariosSquad/:idSquad', function(req, res, next) {
+	console.log('Usuários de uma squad');
+	
+    Usuario.findAndCountAll({ 
+        where: {
+            fk_squad: req.params.idSquad
+        }
+    }).then(resultado => {
+		
+        console.log(`${resultado.count} registros`);
+
+		res.json(resultado.rows);
+
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+  	});
+});
+
+router.get('/usuariosSquadLimited/:idSquad/:limitUsers', function(req, res, next) {
 	console.log('Alguns de usuários de uma squad');
 	
     var params = {

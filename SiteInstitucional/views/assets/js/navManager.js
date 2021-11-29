@@ -9,7 +9,6 @@ function accessControl(user){
         
         document.getElementById('navEquipe').style.display = 'none';
         document.getElementById('navSprint').style.display = 'none';
-        document.getElementById('navConfig').style.display = 'none';
 
     }
 
