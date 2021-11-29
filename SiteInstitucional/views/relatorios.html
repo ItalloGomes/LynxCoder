@@ -141,16 +141,14 @@
                     <th>Atividades</th>
                 </tr>
             </thead>
-            <tbody id="body-table">
-                <tr class="active-row">
-                    <td>1</td>
-                    <td>Mateus Breno</td>
-                    <td>88</td>
-                    <td>3/5</td>
-                </tr>
-            </tbody>
+            <tbody class="body-table"></tbody>
         </table>
 
+        <div class="rel">
+            <div class="align_btn">
+                <button onclick="return ver_mais()">Ver mais</button>
+            </div>
+        </div>
     </section>
 
     <script src="./assets/js/sidebar.js"></script>
@@ -160,6 +158,15 @@
 <script>
 
 var i = 0;
+
+var sprintAtiva = 0;
+
+var concluidas = [];
+var pendentes = [];
+
+var length_list = 3;
+
+var user_pad = null;
 
 (function () {
 
@@ -184,9 +191,13 @@ var i = 0;
     
     document.getElementById('tipo_usuario_log_out').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
 
+    user_pad = user;
+    
     console.log(user);
+    // console.log(user_pad);
+    // return ver_usuarios(user);
 
-    return ver_mais(user);
+    return getSprintAtiva(user.id_usuario)
 
     // FEEDBACKS PENDENTES
     getFeedbacks(user);
@@ -197,67 +208,95 @@ function interator() {
     i+=1;
 }
 
-async function ver_mais(a) {
+async function getSprintAtiva(idUser){
+    fetch(`/sprints/sprintAtivaUsuario/${idUser}`, {
+        method: 'GET'
+    }).then(response => {
 
-    // const usersContainer = document.querySelector('.content-table #body_table');
-    
-    // interator();
+        if (response.ok) {
 
-    // let response = fetch(`/usuarios/usuariosSquad/${user.fk_squad}/${i}`, {
-    //     method: 'GET',
-    // });
+            response.json().then( sprint => {
+              
+                sprintAtiva = sprint[0].id_sprint;
+                ver_usuarios(user_pad);
 
-    // let users = await response.json();
-    // console.log(users);
-
-    // users.forEach(user => {
-    //     usersContainer.innerHTML += `
-    //     <tbody id="body-table">
-    //         <tr>
-    //             <td>${user.id_usuario}/td>
-    //             <td>${user.nome_usuario}</td>
-    //             <td>88</td>
-    //             <td>3/5</td>
-    //         </tr>
-    //     </tbody>`;
-    // });
-
-    const Main = {
-        init: () => {
-            Main.buildUsers();
-        },
-        getUsers: async () => {
-            interator();
-
-            let response = await fetch(`/usuarios/usuariosSquad/${a.fk_squad}/${i}`, {
-                method: 'GET',
             });
 
-            let users = await response.json();
-            console.log(users);
-
-            return users;
-        },
-        buildUsers: async () => {
-            const users = await Main.getUsers();
-            const usersContainer = document.querySelector('.content-table #body_table');
-
-            users.forEach(user => {
-                usersContainer.innerHTML += `
-                <tbody id="body-table">
-                    <tr>
-                        <td>${user.id_usuario}/td>
-                        <td>${user.nome_usuario}</td>
-                        <td>88</td>
-                        <td>3/5</td>
-                    </tr>
-                </tbody>`;
+        }else{
+            response.text().then(function (resposta) {
+                console.log("Erro: " + resposta);
             });
         }
-    }
 
-    Main.init();
+    });
+};
 
+async function ver_usuarios(a) {
+
+    const usersContainer = document.querySelector('.content-table .body-table');
+
+    let response = await fetch(`/usuarios/usuariosSquad/${a.fk_squad}/${length_list}`, {
+        method: 'GET',
+    });
+
+    let users = await response.json();
+    console.log(users);
+
+    let i = 0;
+    users.forEach(b => {
+        console.log(concluidas);
+        concluidas.push(verifica_atvds(b.id));
+
+
+        if(i == 0)
+        usersContainer.innerHTML += `
+        <tbody class="body-table">
+            <tr class="active-row">
+                <td>${b.id}</td>
+                <td>${b.nome}</td>
+                <td>88</td>
+                <td>${pendentes}/${concluidas[i]}</td>
+            </tr>
+        </tbody>`;
+        else
+        usersContainer.innerHTML += `
+        <tbody class="body-table">
+            <tr>
+                <td>${b.id}</td>
+                <td>${b.nome}</td>
+                <td>88</td>
+                <td>${pendentes}/${concluidas[i]}</td>
+            </tr>
+        </tbody>`;
+
+        i++;
+    });
+
+}
+
+async function verifica_atvds(idUser) {
+    await fetch(`/tarefas/allOfSprint/${idUser}/${sprintAtiva}`, {
+        method: 'GET',
+    }).then( response => {          
+        if (response.ok) {
+            response.json().then((tarefas) => {
+
+                console.log(tarefas.length);
+                return tarefas.length;
+
+            });
+        } else {
+            response.text().then(function (resposta) {
+                console.log("Erro: " + resposta);
+            });
+        }
+                
+    });
+}
+
+function ver_mais() {
+    length_list += 3;
+    ver_usuarios(user_pad);
 }
 
 </script>

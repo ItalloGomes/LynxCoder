@@ -3,31 +3,6 @@ const db = require('../config/connectDatabase');
 const Usuario = require("../models/Usuario");
 const Administrador = require("../models/Administrador");
 
-router.get('/usuariosSquad/:idSquad/:offSet', async function(req, res, next) {
-
-    const usuarios = await Usuario.findAll({ 
-        limit: 3,
-        offset: req.params.offSet,
-        where: {
-            fk_squad: req.params.idSquad
-        }
-    });
-    
-    res.send(usuarios);
-
-    // res.send(usuarios).then(response => {
-
-    //     console.log(`${resultado.count} registros`);
-
-	// 	res.json(resultado.rows);
-    
-    // }).catch(erro => {
-    //     console.error(erro);
-	// 	res.status(500).send(erro.message);
-    // });
-
-});
-
 router.post('/addUsuario', (req, res) => {
 
     Usuario.create({
@@ -125,10 +100,11 @@ router.get('/usuarioIdTrello/:id_trello', function(req, res, next) {
   	});
 });
 
-router.get('/usuariosSquad/:idSquad', function(req, res, next) {
-	console.log('Todos os usuários de uma squad');
+router.get('/usuariosSquad/:idSquad/:limitUsers', function(req, res, next) {
+	console.log('Alguns de usuários de uma squad');
 	
     Usuario.findAndCountAll({ 
+        limit: req.body.limitUsers,
         where: {
             fk_squad: req.params.idSquad
         }
