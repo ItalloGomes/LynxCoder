@@ -3,6 +3,31 @@ const db = require('../config/connectDatabase');
 const Usuario = require("../models/Usuario");
 const Administrador = require("../models/Administrador");
 
+router.get('/usuariosSquad/:idSquad/:offSet', async function(req, res, next) {
+
+    const usuarios = await Usuario.findAll({ 
+        limit: 3,
+        offset: req.params.offSet,
+        where: {
+            fk_squad: req.params.idSquad
+        }
+    });
+    
+    res.send(usuarios);
+
+    // res.send(usuarios).then(response => {
+
+    //     console.log(`${resultado.count} registros`);
+
+	// 	res.json(resultado.rows);
+    
+    // }).catch(erro => {
+    //     console.error(erro);
+	// 	res.status(500).send(erro.message);
+    // });
+
+});
+
 router.post('/addUsuario', (req, res) => {
 
     Usuario.create({
