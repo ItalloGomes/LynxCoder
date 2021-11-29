@@ -193,10 +193,6 @@ var user_pad = null;
 
     user_pad = user;
     
-    console.log(user);
-    // console.log(user_pad);
-    // return ver_usuarios(user);
-
     return getSprintAtiva(user.id_usuario)
 
     // FEEDBACKS PENDENTES
@@ -235,7 +231,9 @@ async function ver_usuarios(a) {
 
     const usersContainer = document.querySelector('.content-table .body-table');
 
-    let response = await fetch(`/usuarios/usuariosSquad/${a.fk_squad}/${length_list}`, {
+    console.log(length_list);
+
+    let response = await fetch(`/usuarios/usuariosSquad/${a.fk_squad}/${parseInt(length_list)}`, {
         method: 'GET',
     });
 
@@ -245,27 +243,27 @@ async function ver_usuarios(a) {
     let i = 0;
     users.forEach(b => {
         console.log(concluidas);
-        concluidas.push(verifica_atvds(b.id));
+        concluidas.push(verifica_atvds(b.id_usuario));
 
 
         if(i == 0)
         usersContainer.innerHTML += `
         <tbody class="body-table">
             <tr class="active-row">
-                <td>${b.id}</td>
-                <td>${b.nome}</td>
+                <td>${b.id_usuario}</td>
+                <td>${b.nome_usuario}</td>
                 <td>88</td>
-                <td>${pendentes}/${concluidas[i]}</td>
+                <td>${pendentes}/${concluidas[i].length}</td>
             </tr>
         </tbody>`;
         else
         usersContainer.innerHTML += `
         <tbody class="body-table">
             <tr>
-                <td>${b.id}</td>
-                <td>${b.nome}</td>
+                <td>${b.id_usuario}</td>
+                <td>${b.nome_usuario}</td>
                 <td>88</td>
-                <td>${pendentes}/${concluidas[i]}</td>
+                <td>${pendentes}/${concluidas[i].length}</td>
             </tr>
         </tbody>`;
 
@@ -281,8 +279,11 @@ async function verifica_atvds(idUser) {
         if (response.ok) {
             response.json().then((tarefas) => {
 
-                console.log(tarefas.length);
-                return tarefas.length;
+                console.log("aquiiii hein: ");
+                console.log(tarefas);
+
+                // console.log(tarefas.length);
+                return tarefas;
 
             });
         } else {
