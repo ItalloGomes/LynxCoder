@@ -79,8 +79,8 @@ router.get('/allOfSprint/:userId/:sprintId', (req, res) => {
         sprintId: req.params.sprintId
     }
 
-    sql = `select * from tb_tarefa where fk_usuario='${params.userId}' 
-                                        and fk_sprint='${params.sprintId}'`;
+    sql = `select * from tb_tarefa 
+    where fk_usuario='${params.userId}' and fk_sprint='${params.sprintId}'`;
     
     db.sequelizeConnection.query(sql, {
         model: Tarefa

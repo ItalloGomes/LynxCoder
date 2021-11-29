@@ -223,18 +223,19 @@ async function ver_usuarios(a) {
 
     const usersContainer = document.querySelector('.content-table .body-table');
 
-    let response = await fetch(`/usuarios/usuariosSquad/${a.fk_squad}/${length_list}`, {
+    let response = await fetch(`/usuarios/usuariosSquadLimited/${a.fk_squad}/${length_list}`, {
         method: 'GET',
     });
 
     let users = await response.json();
     console.log(users);
 
+    usersContainer.innerHTML = ``;
+
     let i = 0;
     users.forEach(b => {
         console.log(concluidas);
         concluidas.push(verifica_atvds(b.id_usuario));
-
 
         if(i == 0)
         usersContainer.innerHTML += `
@@ -253,7 +254,7 @@ async function ver_usuarios(a) {
                 <td>${b.id_usuario}</td>
                 <td>${b.nome_usuario}</td>
                 <td>88</td>
-                <td>${pendentes}/${concluidas[i].length}</td>
+                <td>${pendentes}/${concluidas[i]}</td>
             </tr>
         </tbody>`;
 
@@ -272,7 +273,6 @@ async function verifica_atvds(idUser) {
                 console.log("aquiiii hein: ");
                 console.log(tarefas);
 
-                // console.log(tarefas.length);
                 return tarefas;
 
             });
@@ -286,7 +286,7 @@ async function verifica_atvds(idUser) {
 }
 
 function ver_mais() {
-    length_list += 3;
+    length_list += 2;
     ver_usuarios(user_pad);
 }
 
