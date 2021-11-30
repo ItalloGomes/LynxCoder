@@ -109,13 +109,13 @@
             <h1>Editar Perfil!</h1>
             <div class="hr" style="width: 100%;"></div>
 
-            <input name="nomeUsuario" class="inputAll" autocomplete="off"  
+            <input id="newName" name="nomeUsuario" class="inputAll" autocomplete="off"  
                         type="text" placeholder="Novo Nome">
             <br>
-            <input name="senhaUsuario" class="inputAll" autocomplete="off" 
+            <input id="newPass" name="senhaUsuario" class="inputAll" autocomplete="off" 
                         type="password" placeholder="Nova Senha">
             <br>
-            <input name="fotoUsuario" class="inputAll" autocomplete="off" 
+            <input id="newFoto" name="fotoUsuario" class="inputAll" autocomplete="off" 
                         type="text" placeholder="URL da Foto">
 
             <div class="hr"></div>
@@ -340,7 +340,10 @@ function updateUsuario(){
     }).then(function (response) {
         if (response.ok) {
 
-            console.log("atualizado!");
+            response.json().then( result => {
+
+
+            });
 
         } else {
             response.text().then(function (resposta) {

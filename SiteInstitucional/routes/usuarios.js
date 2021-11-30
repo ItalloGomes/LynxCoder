@@ -246,9 +246,7 @@ router.put('/editUsuario/:idUser', function (req, res, next) {
         { 
             where: { id_usuario: req.params.idUser } 
         }
-    ).then( resultado => {
-
-        console.log("usuario: "+resultado);
+    ).then( resultado => { 
 
         res.json(resultado);
     

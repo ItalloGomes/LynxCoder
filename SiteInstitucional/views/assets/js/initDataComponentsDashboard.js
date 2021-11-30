@@ -40,6 +40,8 @@ function getSprintAtiva(idUser){
         if (response.ok) {
 
             response.json().then( sprint => {
+
+                console.log(sprint)
               
                 sprintAtiva = sprint[0].id_sprint;
 
