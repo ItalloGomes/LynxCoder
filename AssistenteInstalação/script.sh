@@ -54,10 +54,9 @@ if [ "$nome" = "y" ] ; then
 
     java -jar lynxcoder.jar
 
-else if [ "$nome" = "n" ] ; then
-    echo 
+else 
+    echo -n "Pressione qualquer tecla para sair..."
+    read
+    exit
 fi
 
-echo -n "Pressione qualquer tecla para sair..."
-read
-exit
