@@ -11,12 +11,23 @@
 
     <script src="assets/js/initDataComponentsDashboard.js"></script>
     <script src="assets/js/sessionManager.js"></script>
+    <script src="assets/js/navManager.js"></script>
+    <script src="assets/js/relatorios.js"></script>
 
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <title>Portal Lynx Coder | Relatórios</title>
 </head>
 
 <body>
+
+    <div class="box-loading ocult" id="loading">
+        <span class="circle circle-1"></span>
+        <span class="circle circle-2"></span>
+        <span class="circle circle-3"></span>
+        <span class="circle circle-4"></span>
+        <span class="circle circle-5"></span>
+        <span class="circle circle-6"></span>
+    </div>
 
     <div class="sidebar">
         <div class="logo-details">
@@ -40,7 +51,9 @@
                 <span class="tooltip">Perfil</span>
             </li>
 
-            <li>
+            <!-- Colaborador -->
+            
+            <li id="navDashboard">
                 <a href="dashboard.html">
                     <i class='bx bxs-dashboard'></i>
                     <span class="links_name">Dashboard</span>
@@ -48,12 +61,30 @@
                 <span class="tooltip">Dashboard</span>
             </li>
 
-            <li>
+            <li id="navRelatorios">
                 <a href="#">
                     <i class='bx bx-line-chart'></i>
                     <span class="links_name">Relatórios</span>
                 </a>
                 <span class="tooltip">Relatórios</span>
+            </li>
+
+            <!-- Gestor -->
+
+            <li id="navEquipe">
+                <a href="equipe.html">
+                    <i class='bx bxs-group'></i>
+                    <span class="links_name">Equipe</span>
+                </a>
+                <span class="tooltip">Equipe</span>
+            </li>
+
+            <li id="navSprint">
+                <a href="sprint.html">
+                    <i class='bx bxs-bar-chart-alt-2'></i>
+                    <span class="links_name">Sprint</span>
+                </a>
+                <span class="tooltip">Sprint</span>
             </li>
 
             <li class="profile">
@@ -70,25 +101,33 @@
         </ul>
     </div>
 
+    <div class="box-edit-feedback ocult" id="boxFeedback">
+        <form name="formFeedback" class="edit-feedback" method="post" onsubmit="return submitFeedback()">
+            <i class='bx bx-x' onclick="closeForm()"></i>
+
+            <h1>Feedback <span id="spnSprintName"></span></h1>
+            <div class="hr" style="width: 100%;"></div>
+            
+            <input name="aproveitamento" class="inputAll" type="number" placeholder="Aproveitamento 0 - 10">
+            <br>
+            <input name="facilidade" class="inputAll" type="number" placeholder="Facilidade 0 - 10">
+            <br>
+            <input name="mensagem" class="inputAll" type="text" placeholder="Mensagem">
+            <br>
+            <input id="inputFkFeedback" name="fk" style="display: none;" type="number">
+
+            <div class="hr"></div>
+
+            <input class="inputAll" type="submit" value="Enviar Informações">
+
+        </form>
+    </div>
+
     <section class="home-section rel">
         <h1 class="title_rel">Relatórios</h1>
 
-        <p class="title_rel">Individual</p>
+        <p class="title_rel">Feedbacks Pendentes</p>
         <div class="report" id="relInd">
-            <div class="cards_rep">
-                <h2>Produtividade Sprint 1</h2>
-                <p>Alto</p>
-
-                <p>Parabéns, você se dedicou bastante, obrigado...</p>
-            </div>
-
-            <div class="cards_rep">
-                <h2>Produtividade Sprint 2</h2>
-                <p>Médio</p>
-
-                <p>Obrigado pela contribuição, você ainda pode evoluir bastante conosco...</p>
-            </div>
-
             <div class="btn_prev"><i class='bx bxs-left-arrow'></i></div>
             <div class="btn_next"><i class='bx bxs-right-arrow'></i></div>
         </div>
@@ -103,42 +142,15 @@
                     <th>Atividades</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr class="active-row">
-                    <td>1</td>
-                    <td>Mateus Breno</td>
-                    <td>88</td>
-                    <td>3/5</td>
-                </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>Pedro Guilherme</td>
-                    <td>72</td>
-                    <td>6/6</td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>Jeniffer Sales</td>
-                    <td>52</td>
-                    <td>1/8</td>
-                </tr>
-            </tbody>
+            <tbody class="body-table"></tbody>
         </table>
 
-        <div class="align_btn">
-            <button>Ver mais...</button>
+        <div class="rel">
+            <div class="align_btn">
+                <button onclick="return ver_mais()">Ver mais</button>
+            </div>
         </div>
     </section>
-
-    <div class="filter">
-        <div class="filter-details">
-            <i class='bx bxs-filter-alt icon'></i>
-            <div class="logo_name">Filtros</div>
-            <i class='bx bxs-left-arrow'id="btnFilter"></i>
-        </div>
-    </div>
 
     <script src="./assets/js/sidebar.js"></script>
 
@@ -146,11 +158,25 @@
 
 <script>
 
+var i = 0;
+
+var sprintAtiva = 0;
+
+var concluidas = [];
+var pendentes = [];
+
+var length_list = 3;
+
+var user_pad = null;
+
 (function () {
 
     check_authentication();
 
     const user = JSON.parse(sessionStorage.getItem('userData'));
+
+    // NAVEGADORES
+    accessControl(user);
 
     // INIT COMPONENTES ------------------------------------------------------------------
     if(user.foto_usuario != null){
@@ -166,8 +192,120 @@
     
     document.getElementById('tipo_usuario_log_out').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
 
+    user_pad = user;
+    
+    return getSprintAtiva(user.id_usuario)
+
+    // FEEDBACKS PENDENTES
+    getFeedbacks(user);
 
 })();
+
+function interator() {
+    i+=1;
+}
+
+async function getSprintAtiva(idUser) {
+
+    loading.classList.remove('ocult');
+
+    fetch(`/sprints/sprintAtivaUsuario/${idUser}`, {
+        method: 'GET'
+    }).then(response => {
+
+        if (response.ok) {
+
+            response.json().then( sprint => {
+              
+                sprintAtiva = sprint[0].id_sprint;
+                ver_usuarios(user_pad);
+
+            });
+
+        }else{
+            response.text().then(function (resposta) {
+                console.log("Erro: " + resposta);
+            });
+        }
+
+    });
+
+};
+
+async function ver_usuarios(a) {
+
+    loading.classList.remove('ocult');
+
+    const usersContainer = document.querySelector('.content-table .body-table');
+
+    let response = await fetch(`/usuarios/usuariosSquadLimited/${a.fk_squad}/${length_list}`, {
+        method: 'GET',
+    });
+
+    let users = await response.json();
+    console.log(users);
+
+    usersContainer.innerHTML = ``;
+
+    let i = 0;
+    users.forEach(b => {
+        console.log(concluidas);
+        concluidas.push(verifica_atvds(b.id_usuario));
+
+        if(i == 0)
+        usersContainer.innerHTML += `
+        <tbody class="body-table">
+            <tr class="active-row">
+                <td>${b.id_usuario}</td>
+                <td>${b.nome_usuario}</td>
+                <td>88</td>
+                <td>${pendentes}/${concluidas[i].length}</td>
+            </tr>
+        </tbody>`;
+        else
+        usersContainer.innerHTML += `
+        <tbody class="body-table">
+            <tr>
+                <td>${b.id_usuario}</td>
+                <td>${b.nome_usuario}</td>
+                <td>88</td>
+                <td>${pendentes}/${concluidas[i]}</td>
+            </tr>
+        </tbody>`;
+    
+        loading.classList.add('ocult');
+
+        i++;
+    });
+
+}
+
+async function verifica_atvds(idUser) {
+    await fetch(`/tarefas/allOfSprint/${idUser}/${sprintAtiva}`, {
+        method: 'GET',
+    }).then( response => {          
+        if (response.ok) {
+            response.json().then((tarefas) => {
+
+                console.log("aquiiii hein: ");
+                console.log(tarefas);
+
+                return tarefas;
+
+            });
+        } else {
+            response.text().then(function (resposta) {
+                console.log("Erro: " + resposta);
+            });
+        }
+                
+    });
+}
+
+function ver_mais() {
+    length_list += 2;
+    ver_usuarios(user_pad);
+}
 
 </script>
 

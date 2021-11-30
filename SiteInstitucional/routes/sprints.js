@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const db = require('../config/connectDatabase');
 const Sprint = require("../models/Sprint");
 
 router.post('/addSprint', (req, res) => {
@@ -88,6 +89,31 @@ router.get('/', function (req, res, next) {
         console.error(erro);
         res.status(500).send(erro.message);
     });
+});
+
+router.get('/sprintAtivaUsuario/:userId', function(req, res, next) {
+
+    sql = `select * from tb_sprint as sprint
+                inner join tb_squad as squad
+                on sprint.fk_squad = squad.id_squad 
+                inner join tb_usuario as usuario
+                on usuario.fk_squad = squad.id_squad
+                where usuario.id_usuario = ${req.params.userId} 
+                and sprint.ativa = 1`;
+    
+    db.sequelizeConnection.query(sql, {
+        model: Sprint
+    }).then(resultado => {
+
+        console.log(`${resultado} registros`);
+
+        res.json(resultado);
+
+    }).catch(erro => {
+        console.error(erro);
+        res.status(500).send(erro.message);
+    });
+
 });
 
 module.exports = router;

@@ -26,7 +26,7 @@ public class Dashboard extends JFrame implements MouseListener {
 
     Looca looca = new Looca();
     SlackDAO slackDAO = new SlackDAO();
-    private final int hardwareThreadSleep = 10_000;
+    private final int hardwareThreadSleep = 5_000;
     private final int processThreadSleep = 15_000;
 
     List<Volume> listVolume = looca.getGrupoDeDiscos().getVolumes();
@@ -569,7 +569,8 @@ public class Dashboard extends JFrame implements MouseListener {
 
                     slackDAO.showSlackData(percentUsoVolumes, percentUsoCPU, percentUsoRAM);
                     showHardwareInfo(usoRAM, percentUsoVolumes, percentUsoCPU, percentUsoRAM);
-               //     insertHardwareInfo(percentUsoRAM, percentUsoCPU, percentUsoVolumes)
+                    insertHardwareInfo(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
+
                 }
             } catch (Exception e) {
                 logDAO.escreverLog(e.toString());
@@ -601,7 +602,7 @@ public class Dashboard extends JFrame implements MouseListener {
 
     private void insertHardwareInfo(Double percentUsoRAM, Double percentUsoCPU, Double percentUsoVolumes) {
 
-        Leitura dado = null;
+        Leitura dado = new Leitura();
         try {
             dado.setPorcentagemUsoMemoria(percentUsoRAM);
             dado.setPorcentagemUsoCPU(percentUsoCPU);
@@ -612,7 +613,6 @@ public class Dashboard extends JFrame implements MouseListener {
             leituraDao = new LeituraDAO();
             leituraDao.save(dado);
 
-            dado = new Leitura();
         } catch (Exception e) {
             logDAO.escreverLog(e.toString());
             e.printStackTrace();
@@ -642,7 +642,7 @@ public class Dashboard extends JFrame implements MouseListener {
                     });
 
                     showProcessInfo(listProcessos);
-//                    insertProcessInfo(listProcessos);
+                    insertProcessInfo(listProcessos);
 
                 }
             } catch (Exception e) {

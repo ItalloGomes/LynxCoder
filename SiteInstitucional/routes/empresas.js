@@ -17,7 +17,8 @@ router.post('/addEmpresa', (req, res) => {
         
         console.log(`Registro criado: ${resultado}`)
 
-        res.sendStatus(200);
+        res.send(resultado);
+        // res.sendStatus(200);
         
     }).catch(erro => {
         console.error(erro);

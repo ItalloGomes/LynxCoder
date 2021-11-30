@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="assets/css/estiloBase.css">
     <link rel="stylesheet" href="assets/css/responsiveDashboard.css">
     
-    <script src="assets/js/initDataComponentsDashboard.js"></script>
+    <script src="assets/js/initDataComponentsPerfil.js"></script>
     <script src="assets/js/sessionManager.js"></script>
+    <script src="assets/js/navManager.js"></script>
 
     <script src="assets/js/perfil.js"></script>
 
@@ -33,9 +34,7 @@
                 <input type="text" placeholder="Search...">
                 <span class="tooltip">Search</span>
             </li>
-
-            <!-- Colaborador -->
-
+            
             <li>
                 <a href="#">
                     <i class='bx bxs-user-circle'></i>
@@ -44,7 +43,9 @@
                 <span class="tooltip">Perfil</span>
             </li>
 
-            <li>
+            <!-- Colaborador -->
+            
+            <li id="navDashboard">
                 <a href="dashboard.html">
                     <i class='bx bxs-dashboard'></i>
                     <span class="links_name">Dashboard</span>
@@ -52,7 +53,7 @@
                 <span class="tooltip">Dashboard</span>
             </li>
 
-            <li>
+            <li id="navRelatorios">
                 <a href="relatorios.html">
                     <i class='bx bx-line-chart'></i>
                     <span class="links_name">Relatórios</span>
@@ -62,7 +63,7 @@
 
             <!-- Gestor -->
 
-            <li>
+            <li id="navEquipe">
                 <a href="equipe.html">
                     <i class='bx bxs-group'></i>
                     <span class="links_name">Equipe</span>
@@ -70,20 +71,12 @@
                 <span class="tooltip">Equipe</span>
             </li>
 
-            <li>
+            <li id="navSprint">
                 <a href="sprint.html">
                     <i class='bx bxs-bar-chart-alt-2'></i>
                     <span class="links_name">Sprint</span>
                 </a>
                 <span class="tooltip">Sprint</span>
-            </li>
-
-            <li>
-                <a href="">
-                    <i class='bx bxs-cog'></i>
-                    <span class="links_name">Configurações</span>
-                </a>
-                <span class="tooltip">Configurações</span>
             </li>
 
             <li class="profile">
@@ -110,17 +103,20 @@
     </div>
 
     <div class="box-edit-perfil ocult" id="boxModal">
-        <form class="edit-perfil">
+        <form class="edit-perfil" id="form_editUser" method="PUT" onsubmit="return updateUsuario()">
             <i class='bx bx-x' onclick="closedForm()"></i>
 
             <h1>Editar Perfil!</h1>
             <div class="hr" style="width: 100%;"></div>
-            
-            <input name="nomeUsuario" class="inputAll" type="text" placeholder="Novo Nome">
+
+            <input name="nomeUsuario" class="inputAll" autocomplete="off"  
+                        type="text" placeholder="Novo Nome">
             <br>
-            <input name="senhaUsuario" class="inputAll" type="password" placeholder="Nova Senha">
+            <input name="senhaUsuario" class="inputAll" autocomplete="off" 
+                        type="password" placeholder="Nova Senha">
             <br>
-            <input name="fotoUsuario" class="inputAll" type="text" placeholder="URL da Foto">
+            <input name="fotoUsuario" class="inputAll" autocomplete="off" 
+                        type="text" placeholder="URL da Foto">
 
             <div class="hr"></div>
 
@@ -147,7 +143,7 @@
                 </div>
             </div>
     
-            <div class="perfil">
+            <div class="perfil" id="conquistasColab">
                 <h1>Conquistas</h1>
                 <div class="conquistas">
                     <div class="conquistas_item">
@@ -187,15 +183,26 @@
 
 var pendentes = 0;
 var concluidas = 0;
+var sprintAtiva = 0;
+var usuarioId;
 
-(function () {
-
+(async function () {
+    
     check_authentication();
-
+    
     const user = JSON.parse(sessionStorage.getItem('userData'));
+    
     const supervisorUser = JSON.parse(sessionStorage.getItem('userSuper'));
     const squadUser = JSON.parse(sessionStorage.getItem('userSquad'));
     const empresaUser = JSON.parse(sessionStorage.getItem('userEmpresa'));
+
+    usuarioId = user.id_usuario;
+
+    // NAVEGADORES
+    accessControl(user);
+
+    // SPRINT-ATIVA
+    getSprintAtiva(user.id_usuario);
 
     // FK_SUPERVISOR ----------------------------------------------------
     if(user.fk_supervisor == null || user.fk_supervisor == 'null') {
@@ -205,7 +212,7 @@ var concluidas = 0;
     }
 
     // INIT COMPONENTES ------------------------------------------------------------------
-    if(user.foto_usuario != null){
+    if(user.foto_usuario != null || user.foto_usuario != "" || user.foto_usuario != " "){
         document.getElementById('foto_perfil_usuario').src = user.foto_usuario;
         document.getElementById('foto_perfil_usuario_log_out').src = user.foto_usuario;
     } else {
@@ -221,35 +228,89 @@ var concluidas = 0;
     
     document.getElementById('tipo_usuario').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
     document.getElementById('tipo_usuario_log_out').innerHTML = !user.is_gestor ? "Colaborador" : "Gestor";
-
-    // INFORMAÇÕES ADICIONAIS
-
-    let txtDescGestor = supervisorUser !== null ? `${supervisorUser.nome_usuario}` : ``;
     
-    document.getElementById("nome_gestor").innerHTML = txtDescGestor;
-    document.getElementById("squad_usuario").innerHTML = `${squadUser.nome}`;
-    document.getElementById("empresa_usuario").innerHTML = `${empresaUser.nome}`;
+    if(user.is_gestor) {
+        document.getElementById('conquistasColab').style.display = 'none';
+    }else{
+        document.getElementById('conquistasColab').style.display = 'block';
+    }
 
-    // TAREFAS
-    getTarefasPendentes(user.id_usuario);
-    getTarefasConcluidas(user.id_usuario);
-
-    let aproveitamento = concluidas > 0 ? (concluidas*100) / (concluidas+pendentes) : 0;
-
-    document.getElementById("aproveitamento_usuario").innerHTML = `${aproveitamento}%`;
-
+    initAddInfo(supervisorUser, squadUser, empresaUser);
+    
 })();
 
-function getTarefasPendentes(idUser) {
-    fetch(`/tarefas/pendentes/${idUser}`, {
+function initAddInfo(sup, squad, empresa) {
+    
+    let txtDescGestor = sup !== null ? `${sup.nome_usuario}` : ``;
+
+    document.getElementById("nome_gestor").innerHTML = txtDescGestor;
+    document.getElementById("squad_usuario").innerHTML = `${squad.nome}`;
+    document.getElementById("empresa_usuario").innerHTML = `${empresa.nome}`;
+
+}
+
+function getSprintAtiva(idUser){
+    fetch(`/sprints/sprintAtivaUsuario/${idUser}`, {
+        method: 'GET'
+    }).then(response => {
+
+        if (response.ok) {
+
+            response.json().then( sprint => {
+              
+                sprintAtiva = sprint[0].id_sprint;
+
+                // TAREFAS-PENDENTES
+                getTarefasPendentes(user.id_usuario);
+                
+            });
+
+        }else{
+            response.text().then(function (resposta) {
+                console.log("Erro: " + resposta);
+            });
+        }
+
+    });
+};
+
+
+async function getTarefasPendentes(idUser) {
+    await fetch(`/tarefas/pendentes/${idUser}/${sprintAtiva}`, {
         method: "GET"
     }).then( response => {
                     
         if (response.ok) {
-            response.json().then( tarefas => {
+            response.json().then((tarefas) => {
+
+                pendentes = tarefas.length;
 
                 document.getElementById("tarefas_p_usuario").innerHTML = `${tarefas.length}`;
-                pendentes = tarefas.length;
+
+                getTarefasConcluidas(idUser);
+            });
+        } else {
+            response.text().then(function (resposta) {
+                console.log("Erro: " + resposta);
+            });
+        }
+                
+    });
+}
+
+async function getTarefasConcluidas(idUser) {
+    await fetch(`/tarefas/concluidas/${idUser}/${sprintAtiva}`, {
+        method: "GET"
+    }).then( response => {
+                    
+        if (response.ok) {
+            response.json().then((tarefas) => {
+
+                concluidas = tarefas.length
+                
+                document.getElementById("tarefas_c_usuario").innerHTML = `${tarefas.length}`;
+         
+                calculaAproveitamento();
 
             });
         } else {
@@ -261,25 +322,37 @@ function getTarefasPendentes(idUser) {
     });
 }
 
-function getTarefasConcluidas(idUser) {
-    fetch(`/tarefas/concluidas/${idUser}`, {
-        method: "GET"
-    }).then( response => {
-                    
+function calculaAproveitamento(){
+
+    let aproveitamento = concluidas > 0 ? (concluidas*100) / (concluidas+pendentes) : 0;
+
+    document.getElementById("aproveitamento_usuario").innerHTML = `${aproveitamento}%`;
+
+}
+
+function updateUsuario(){
+
+    var formUpdateUser = new URLSearchParams(new FormData(form_editUser));
+
+    fetch(`/usuarios/editUsuario/${usuarioId}`, {
+            method: "PUT",
+            body: formUpdateUser
+    }).then(function (response) {
         if (response.ok) {
-            response.json().then( tarefas => {
 
-                document.getElementById("tarefas_c_usuario").innerHTML = `${tarefas.length}`;
-                concluidas = tarefas.length;
+            console.log("atualizado!");
 
-            });
         } else {
             response.text().then(function (resposta) {
-                console.log("Erro: " + resposta);
+                console.log("Erro ao atualizar: " + resposta);
             });
         }
-                
     });
+
+    closedForm();
+
+    return false;
+
 }
 
 </script>
