@@ -20,6 +20,15 @@
 
 <body>
 
+    <div class="box-loading ocult" id="loading">
+        <span class="circle circle-1"></span>
+        <span class="circle circle-2"></span>
+        <span class="circle circle-3"></span>
+        <span class="circle circle-4"></span>
+        <span class="circle circle-5"></span>
+        <span class="circle circle-6"></span>
+    </div>
+
     <div class="sidebar">
         <div class="logo-details">
             <img src="assets/img/logo-type3.1.png" class="icon" alt="">
@@ -196,7 +205,10 @@ function interator() {
     i+=1;
 }
 
-async function getSprintAtiva(idUser){
+async function getSprintAtiva(idUser) {
+
+    loading.classList.remove('ocult');
+
     fetch(`/sprints/sprintAtivaUsuario/${idUser}`, {
         method: 'GET'
     }).then(response => {
@@ -217,24 +229,28 @@ async function getSprintAtiva(idUser){
         }
 
     });
+
 };
 
 async function ver_usuarios(a) {
 
+    loading.classList.remove('ocult');
+
     const usersContainer = document.querySelector('.content-table .body-table');
 
-    let response = await fetch(`/usuarios/usuariosSquad/${a.fk_squad}/${length_list}`, {
+    let response = await fetch(`/usuarios/usuariosSquadLimited/${a.fk_squad}/${length_list}`, {
         method: 'GET',
     });
 
     let users = await response.json();
     console.log(users);
 
+    usersContainer.innerHTML = ``;
+
     let i = 0;
     users.forEach(b => {
         console.log(concluidas);
         concluidas.push(verifica_atvds(b.id_usuario));
-
 
         if(i == 0)
         usersContainer.innerHTML += `
@@ -253,9 +269,11 @@ async function ver_usuarios(a) {
                 <td>${b.id_usuario}</td>
                 <td>${b.nome_usuario}</td>
                 <td>88</td>
-                <td>${pendentes}/${concluidas[i].length}</td>
+                <td>${pendentes}/${concluidas[i]}</td>
             </tr>
         </tbody>`;
+    
+        loading.classList.add('ocult');
 
         i++;
     });
@@ -272,7 +290,6 @@ async function verifica_atvds(idUser) {
                 console.log("aquiiii hein: ");
                 console.log(tarefas);
 
-                // console.log(tarefas.length);
                 return tarefas;
 
             });
@@ -286,7 +303,7 @@ async function verifica_atvds(idUser) {
 }
 
 function ver_mais() {
-    length_list += 3;
+    length_list += 2;
     ver_usuarios(user_pad);
 }
 

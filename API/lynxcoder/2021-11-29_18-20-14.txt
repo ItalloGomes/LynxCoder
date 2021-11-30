@@ -1,0 +1,11 @@
+29/11/2021 18:20:11 Você logou com sucesso, bem-vindo(a) à aplicação Lynx Coder!
+29/11/2021 18:20:11 Usuário: Itallo David
+29/11/2021 18:20:11 Fabricante: Intel(R) Core(TM) i7-10510U CPU @ 1.80GHz
+29/11/2021 18:20:11 Processador: GenuineIntel
+29/11/2021 18:20:11 Sistema: Windows
+29/11/2021 18:20:11 Memória: 15,8 GiB
+29/11/2021 18:20:11 Dados inseridos no banco com sucesso!
+29/11/2021 18:20:11 Dados inseridos no banco com sucesso!
+29/11/2021 18:20:11 Dados inseridos no banco com sucesso!
+29/11/2021 18:20:11 Dados inseridos no banco com sucesso!
+29/11/2021 18:20:11 Dados inseridos no banco com sucesso!
