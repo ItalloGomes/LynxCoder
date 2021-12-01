@@ -363,6 +363,7 @@ _________________________________ */
     top: 20px;
     right: 50px;
     transition: .5s ease-in-out;
+    z-index: 10000000000000;
 }
 
 .alert-active{transform: translateX(0%)}

@@ -19,6 +19,22 @@
 
 <body>
 
+    <div class="alert ocult" id="boxAlert">
+        <i class='bx bxs-comment-error'></i>
+
+        <h3 id="titleAlert"></h3>
+        <p id="descAlert"></p>
+    </div>
+
+    <div class="box-loading ocult" id="loading">
+        <span class="circle circle-1"></span>
+        <span class="circle circle-2"></span>
+        <span class="circle circle-3"></span>
+        <span class="circle circle-4"></span>
+        <span class="circle circle-5"></span>
+        <span class="circle circle-6"></span>
+    </div>
+
     <header id="header">
         <div class="container">
             <nav class="navbar" id="navBar">
@@ -63,15 +79,15 @@
             <p>Para finalizar nos informe algumas informações da sua empresa</p>
             <div class="hr" style="width: 100%;"></div>
 
-            <input name="nomeEmpresa" id="nomeEmpresa" class="inputAll" type="text" placeholder="Nome da Empresa">
-            <input name="cnpjEmpresa" id="cnpjEmpresa" class="inputMet" type="text" placeholder="CNPJ">
-            <input name="cepEmpresa" id="cepEmpresa" class="inputMet" type="text" placeholder="CEP">
-            <input name="logoEmpresa" id="logoEmpresa" class="inputAll" type="text" placeholder="Logo URL">
-            <input name="telefoneEmpresa" id="telefoneEmpresa" class="inputMet" type="text" placeholder="Telefone">
-            <input name="cidadeEmpresa" id="cidadeEmpresa" class="inputMet" type="text" placeholder="Cidade">
-            <input name="estadoEmpresa" id="estadoEmpresa" class="inputMet" type="text" placeholder="estado">
-            <input name="numeroEmpresa" id="numeroEmpresa" class="inputMet" type="text" placeholder="Nº">
-            <input name="logradouro" id="logradouro" class="inputMet" type="text" placeholder="Logradouro">
+            <input name="nomeEmpresa" id="nomeEmpresa" class="inputAll" type="text" placeholder="Nome da Empresa" required>
+            <input name="cnpjEmpresa" id="cnpjEmpresa" class="inputMet" type="text" placeholder="CNPJ" required>
+            <input name="cepEmpresa" id="cepEmpresa" class="inputMet" type="text" placeholder="CEP" required>
+            <input name="logoEmpresa" id="logoEmpresa" class="inputAll" type="text" placeholder="Logo URL" required>
+            <input name="telefoneEmpresa" id="telefoneEmpresa" class="inputMet" type="text" placeholder="Telefone" required>
+            <input name="cidadeEmpresa" id="cidadeEmpresa" class="inputMet" type="text" placeholder="Cidade" required>
+            <input name="estadoEmpresa" id="estadoEmpresa" class="inputMet" type="text" placeholder="estado" required>
+            <input name="numeroEmpresa" id="numeroEmpresa" class="inputMet" type="text" placeholder="Nº" required>
+            <input name="logradouro" id="logradouro" class="inputMet" type="text" placeholder="Logradouro" required>
             
             <div class="hr"></div>
 
@@ -374,18 +390,30 @@
 <script>
 
     function registrar_empresa() {
+        loading.classList.remove('ocult');
+
         var formulario = new URLSearchParams(new FormData(form_cadEmpresa));
 
         fetch(`/empresas/addEmpresa`, {
             method: "POST",
             body: formulario
         }).then(function (response) {
+            loading.classList.add('ocult');
+
             if (response.ok) {
-                alert(`Empresa cadastrada!!`);
+                boxAlert.classList.remove('ocult');
+                boxAlert.classList.add('alert-active');
+                titleAlert.innerHTML = "Concluido!";
+                descAlert.innerHTML = "Empresa cadastrada com sucesso!";
             } else {
-                alert(`Erro ao tentar cadastrar empresa!`);
+                boxAlert.classList.remove('ocult');
+                boxAlert.classList.add('alert-active');
+                titleAlert.innerHTML = "Erro!";
+                descAlert.innerHTML = "Falha para cadastrar empresa, tente novamente!";
             }
         });
+
+        return false;
     }
 
 </script>
