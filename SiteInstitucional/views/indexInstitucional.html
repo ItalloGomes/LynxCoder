@@ -79,7 +79,8 @@
             <p>Para finalizar nos informe algumas informações da sua empresa</p>
             <div class="hr" style="width: 100%;"></div>
 
-            <input name="nomeEmpresa" id="nomeEmpresa" class="inputAll" type="text" placeholder="Nome da Empresa" required>
+            <input name="nomeEmpresa" id="nomeEmpresa" class="inputMet" type="text" placeholder="Nome da Empresa" required>
+            <input name="emailEmpresa" id="emailEmpresa" class="inputMet" type="text" placeholder="Email da Empresa" required>
             <input name="cnpjEmpresa" id="cnpjEmpresa" class="inputMet" type="text" placeholder="CNPJ" required>
             <input name="cepEmpresa" id="cepEmpresa" class="inputMet" type="text" placeholder="CEP" required>
             <input name="logoEmpresa" id="logoEmpresa" class="inputAll" type="text" placeholder="Logo URL" required>
@@ -87,7 +88,7 @@
             <input name="cidadeEmpresa" id="cidadeEmpresa" class="inputMet" type="text" placeholder="Cidade" required>
             <input name="estadoEmpresa" id="estadoEmpresa" class="inputMet" type="text" placeholder="estado" required>
             <input name="numeroEmpresa" id="numeroEmpresa" class="inputMet" type="text" placeholder="Nº" required>
-            <input name="logradouro" id="logradouro" class="inputMet" type="text" placeholder="Logradouro" required>
+            <input name="logradouro" id="logradouro" class="inputAll" type="text" placeholder="Logradouro" required>
             
             <div class="hr"></div>
 
@@ -401,15 +402,17 @@
             loading.classList.add('ocult');
 
             if (response.ok) {
-                boxAlert.classList.remove('ocult');
-                boxAlert.classList.add('alert-active');
-                titleAlert.innerHTML = "Concluido!";
-                descAlert.innerHTML = "Empresa cadastrada com sucesso!";
+                alert("Empresa cadastrada com sucesso!");
+                // boxAlert.classList.remove('ocult');
+                // boxAlert.classList.add('alert-active');
+                // titleAlert.innerHTML = "Concluido!";
+                // descAlert.innerHTML = "Empresa cadastrada com sucesso!";
             } else {
-                boxAlert.classList.remove('ocult');
-                boxAlert.classList.add('alert-active');
-                titleAlert.innerHTML = "Erro!";
-                descAlert.innerHTML = "Falha para cadastrar empresa, tente novamente!";
+                alert("Falha para cadastrar empresa, tente novamente!");
+                // boxAlert.classList.remove('ocult');
+                // boxAlert.classList.add('alert-active');
+                // titleAlert.innerHTML = "Erro!";
+                // descAlert.innerHTML = "Falha para cadastrar empresa, tente novamente!";
             }
         });
 

@@ -5,8 +5,9 @@ router.post('/addEmpresa', async function (req, res) {
 
     console.log("Inserindo empresa");
 
-    let empresaCad = await Empresa.create({
+    await Empresa.create({
         nome: req.body.nomeEmpresa,
+        email: req.body.emailEmpresa,
         logo: req.body.logoEmpresa,
         cnpj: req.body.cnpjEmpresa,
         telefone: req.body.telefoneEmpresa,
@@ -16,8 +17,11 @@ router.post('/addEmpresa', async function (req, res) {
         logradouro: req.body.logradouro,
         numero: req.body.numeroEmpresa
     }).then(resultado => {
-        console.log(`Registro criado: ${resultado}`)
-        res.send(resultado);
+
+        console.log(`Registro criado: ${resultado}`);
+
+        res.sendStatus(200);
+    
     }).catch(erro => {
         console.error(erro);
         res.status(500).send(erro.message);
