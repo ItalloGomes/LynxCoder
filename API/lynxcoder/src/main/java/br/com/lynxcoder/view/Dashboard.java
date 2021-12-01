@@ -223,7 +223,8 @@ public class Dashboard extends JFrame implements MouseListener {
         lblNavUsuario.setHorizontalAlignment(SwingConstants.CENTER);
         lblNavUsuario.setForeground(Color.decode(COLOR_LIGHT_TEXT));
         lblNavUsuario.setFont(new Font(FONT, Font.BOLD, 20));
-        lblNavUsuario.setText(user.getNome());
+        String firstName[] = user.getNome().split(" ");
+        lblNavUsuario.setText(firstName[0]);
 
         lblNavHardwareIcon = new JLabel();
         lblNavHardwareIcon.setBounds(
