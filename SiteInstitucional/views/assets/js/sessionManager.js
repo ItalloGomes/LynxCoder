@@ -5,22 +5,15 @@ function redirect_login() {
 }
 
 function check_authentication() {
-
-    if (userSession.tipoLogin != 0) {
-        if (userSession.login == undefined) {
-            redirect_login();
-        }
-    } else if (userSession.tipoLogin == 0) {
-        if (userSession.login_admin == undefined) {
-            redirect_login();
-        }
+    if (userSession == null) {
+        redirect_login();
     } else {
         session_validate();
     }
 
 }
 
-function logoff() { 
+function logoff() {
     close_session();
     sessionStorage.clear();
     redirect_login();

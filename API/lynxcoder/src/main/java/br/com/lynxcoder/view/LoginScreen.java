@@ -121,15 +121,13 @@ public class LoginScreen extends JFrame {
                     logDAO.escreverLog( " Você logou com sucesso, bem-vindo(a) à aplicação Lynx Coder!");
                     Dashboard dashboard = new Dashboard(user, logDAO);
 
+                    slackDAO.welcomeMessage(user);
 
                     logDAO.escreverLog(" Usuário: " + user.getNome());
                     logDAO.escreverLog(" Fabricante: " + looca.getProcessador().getNome());
                     logDAO.escreverLog(" Processador: " + looca.getProcessador().getFabricante());
                     logDAO.escreverLog(" Sistema: " + looca.getSistema().getSistemaOperacional());
                     logDAO.escreverLog(" Memória: " + byteCountConvert(looca.getMemoria().getTotal()));
-//
-
-                    slackDAO.welcomeMessage(user);
 
                     dispose();
                 }else{
