@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="assets/css/responsiveDashboard.css">
 
     <script src="assets/js/navManager.js"></script>
+    <script src="assets/js/sessionManager.js"></script>
 
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <title>Portal Lynx Coder | Relatórios</title>
@@ -125,6 +126,8 @@
 var sprintAtiva;
 
 (async function (){
+
+    check_authentication();
 
     const user = JSON.parse(sessionStorage.getItem('userData'));
     const squad = JSON.parse(sessionStorage.getItem('userSquad'));

@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
-const porta = 8081;
 
 const bodyParser = require('body-parser');
+var logger = require('morgan');
 
 // Routes consts
 const indexRouter = require('./routes/index'); 
@@ -20,6 +20,7 @@ const maquinasRouter = require('./routes/maquinas');
 
 
 // Preset de engine
+app.use(logger('dev')); 
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
 app.use(express.static(__dirname + '/views'));
@@ -42,6 +43,4 @@ app.use('/trello', trelloRouter);
 app.use('/maquinas', maquinasRouter);
 // app.use('/relatorios', relatoriosRouter);
 
-app.listen( porta, function() {
-    console.log(`Servidor rodando em: http://localhost:${porta}`);
-});
+module.exports = app;
