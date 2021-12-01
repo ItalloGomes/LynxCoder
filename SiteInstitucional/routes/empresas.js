@@ -1,10 +1,13 @@
 const router = require("express").Router();
 const Empresa = require("../models/empresa");
 
-router.post('/addEmpresa', (req, res) => {
+router.post('/addEmpresa', async function (req, res) {
 
-    Empresa.create({
+    console.log("Inserindo empresa");
+
+    await Empresa.create({
         nome: req.body.nomeEmpresa,
+        email: req.body.emailEmpresa,
         logo: req.body.logoEmpresa,
         cnpj: req.body.cnpjEmpresa,
         telefone: req.body.telefoneEmpresa,
@@ -14,12 +17,11 @@ router.post('/addEmpresa', (req, res) => {
         logradouro: req.body.logradouro,
         numero: req.body.numeroEmpresa
     }).then(resultado => {
-        
-        console.log(`Registro criado: ${resultado}`)
 
-        res.send(resultado);
-        // res.sendStatus(200);
-        
+        console.log(`Registro criado: ${resultado}`);
+
+        res.sendStatus(200);
+    
     }).catch(erro => {
         console.error(erro);
         res.status(500).send(erro.message);

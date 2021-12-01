@@ -364,6 +364,7 @@ _________________________________ */
     right: 50px;
     z-index: 100002;
     transition: .5s ease-in-out;
+    z-index: 10000000000000;
 }
 
 .alert-active{transform: translateX(0%)}

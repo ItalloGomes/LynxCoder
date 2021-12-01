@@ -1,0 +1,14 @@
+01/12/2021 08:39:34 Você logou com sucesso, bem-vindo(a) à aplicação Lynx Coder!
+01/12/2021 08:39:34 Usuário: fabiane.heckman
+01/12/2021 08:39:34 Fabricante: Intel(R) Core(TM) i7-10510U CPU @ 1.80GHz
+01/12/2021 08:39:34 Processador: GenuineIntel
+01/12/2021 08:39:34 Sistema: Windows
+01/12/2021 08:39:34 Memória: 15,8 GiB
+01/12/2021 08:39:34 Dados inseridos no banco com sucesso!
+01/12/2021 08:39:34 Dados inseridos no banco com sucesso!
+01/12/2021 08:39:34 Dados inseridos no banco com sucesso!
+01/12/2021 08:39:34 Dados inseridos no banco com sucesso!
+01/12/2021 08:39:34 Dados inseridos no banco com sucesso!
+01/12/2021 08:39:34 Dados inseridos no banco com sucesso!
+01/12/2021 08:39:34 Dados inseridos no banco com sucesso!
+01/12/2021 08:39:34java.lang.NullPointerException

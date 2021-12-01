@@ -54,6 +54,11 @@ const Empresa = db.sequelizeConnection.define('Empresa',
             field: 'numero_empresa',
             allowNull: false,
             type: db.Sequelize.STRING
+        },
+        email: {
+            field: 'email_empresa',
+            allowNull: false,
+            type: db.Sequelize.STRING
         }
     }, 
     {

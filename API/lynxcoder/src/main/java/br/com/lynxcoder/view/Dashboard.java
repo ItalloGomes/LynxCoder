@@ -567,7 +567,7 @@ public class Dashboard extends JFrame implements MouseListener {
 
                     Double percentUsoVolumes = ((total - totalDisponivel) / total) * 100;
 
-                    slackDAO.showSlackData(percentUsoVolumes, percentUsoCPU, percentUsoRAM);
+                    slackDAO.receiveMaqData(percentUsoVolumes, percentUsoRAM, user);
                     showHardwareInfo(usoRAM, percentUsoVolumes, percentUsoCPU, percentUsoRAM);
                     insertHardwareInfo(percentUsoRAM, percentUsoCPU, percentUsoVolumes);
 
